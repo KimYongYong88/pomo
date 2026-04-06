@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomo. — Professional Pomodoro Timer & Productivity Guide</title>
+<meta name="description" content="Boost your focus with Pomo. Free online Pomodoro timer with sequence mode, science-based productivity guides, and multi-language support.">
+<style>
+/* --- 기본 스타일 (기존 유지) --- */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f13;--sur:#1a1a22;--sur2:#22222e;
+  --tx:#f0f0f5;--tx2:#9090a8;--bd:rgba(255,255,255,0.08);
+  --red:#E24B4A;--green:#1D9E75;--blue:#378ADD;
+  --c-focus:#E24B4A;--c-short:#1D9E75;--c-long:#378ADD;
+  --c-quick:#EF9F27;--c-study:#7F77DD;--c-deep:#D4537E
+}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,15,19,.95);backdrop-filter:blur(12px);border-bottom:.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;gap:8px}
+.nav-left{display:flex;align-items:center;gap:8px}
+.nav-logo{font-size:16px;font-weight:600;letter-spacing:.04em;cursor:pointer;flex-shrink:0}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:4px}
+.nav-link{padding:6px 12px;border-radius:8px;font-size:13px;color:var(--tx2);cursor:pointer;transition:all .2s;border:none;background:transparent;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:var(--sur2);color:var(--tx)}
+.nav-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.global-lang{background:var(--sur2);border:.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:12px;padding:5px 7px;cursor:pointer;outline:none}
+#navThemeSwatches{display:flex;gap:3px;align-items:center}
+.page{display:none;padding-top:58px}
+.page.on{display:block}
+
+/* --- 타이머 & UI 구성요소 --- */
+.timer-page{display:flex;flex-direction:column;align-items:center;padding-bottom:3rem}
+.t-nav-bar{display:flex;justify-content:center;padding:7px 1rem;margin-bottom:.5rem}
+.t-nav-tabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
+.t-nav-btn{padding:7px 18px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.t-nav-btn.active{background:var(--sur2);color:var(--tx)}
+.t-page{display:none;width:100%;max-width:420px;padding:.5rem 1rem 1rem}
+.t-page.on{display:block}
+.glabel{font-size:10px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;padding-left:2px}
+.tsec{margin-bottom:1rem}
+.mtabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
+.mbtn{flex:1;min-width:0;padding:7px 4px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbtn.active{color:#fff}
+.mbtn.active[data-m="short"]{background:var(--c-short)}
+.mbtn.active[data-m="long"]{background:var(--c-long)}
+.tew{position:relative;flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
+.tinp{width:100%;background:transparent;border:none;outline:none;color:var(--tx2);font-size:12px;font-weight:500;text-align:center;cursor:pointer;padding:7px 4px;border-radius:9px;transition:all .2s}
+.tinp.active{color:#fff}
+.tinp.active[data-m="focus"]{background:var(--c-focus)}
+.tinp.active[data-m="quick"]{background:var(--c-quick)}
+.tinp.active[data-m="study"]{background:var(--c-study)}
+.tinp.active[data-m="deep"]{background:var(--c-deep)}
+.tinp:focus{background:var(--sur2)!important;color:var(--tx)!important;cursor:text}
+.ehint{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--tx2);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.tew:hover .ehint{opacity:1}
+.twrap{display:flex;flex-direction:column;align-items:center;margin:1rem 0}
+.rwrap{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center}
+.rwrap svg{position:absolute;top:0;left:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{stroke:var(--sur2)}
+.ring-fg{transition:stroke-dashoffset 1s linear,stroke .4s;stroke-linecap:round}
+.tdisp{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.tnum{font-size:56px;font-weight:300;letter-spacing:-3px;line-height:1}
+.tlbl{font-size:11px;color:var(--tx2);letter-spacing:.14em;text-transform:uppercase}
+.tdots{display:flex;gap:8px;margin-top:1.25rem}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--sur2);border:.5px solid var(--bd);transition:background .3s}
+.tdot.done{background:var(--c-focus);border-color:var(--c-focus)}
+.abar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
+.pbtn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;color:#fff;flex-shrink:0}
+.pbtn:hover{transform:scale(1.06)}.pbtn:active{transform:scale(.96)}
+.ibtn{width:44px;height:44px;border-radius:50%;background:var(--sur2);border:.5px solid var(--bd);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx2);transition:color .2s,background .2s;flex-shrink:0}
+.ibtn:hover{color:var(--tx);background:var(--sur)}
+.atwrap{display:flex;align-items:center;gap:5px;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:7px 10px}
+.atlbl{font-size:11px;color:var(--tx2);white-space:nowrap}
+.addbtn{padding:4px 10px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:12px;font-weight:500;cursor:pointer;transition:background .15s}
+.addbtn:hover{background:rgba(255,255,255,.1)}
+.mnbtn{width:22px;height:22px;border-radius:6px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.mnbtn:hover{background:rgba(255,255,255,.1)}
+.atinp{width:36px;background:transparent;border:none;color:var(--tx);font-size:13px;font-weight:500;text-align:center;padding:2px 0;outline:none}
+.spanel{background:var(--sur);border:.5px solid var(--bd);border-radius:16px;padding:1rem 1.25rem;margin-bottom:1rem}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--bd)}
+.prow:last-child{border-bottom:none}
+.plbl{font-size:13px;color:var(--tx2)}
+.pval{display:flex;align-items:center;gap:6px}
+.snbtn{width:24px;height:24px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.snbtn:hover{background:rgba(255,255,255,.1)}
+.nval{font-size:13px;font-weight:500;width:40px;text-align:center;background:var(--sur2);border:.5px solid var(--bd);border-radius:6px;color:var(--tx);padding:3px 0;outline:none;cursor:text}
+.nval:focus{border-color:rgba(255,255,255,.3)}
+.ulbl{font-size:11px;color:var(--tx2)}
+.tog{position:relative;width:38px;height:20px}
+.tog input{opacity:0;width:0;height:0}
+.tslider{position:absolute;inset:0;background:var(--sur2);border-radius:20px;cursor:pointer;transition:background .3s;border:.5px solid var(--bd)}
+.tslider:before{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:var(--tx2);top:2px;left:2px;transition:transform .3s,background .3s}
+input:checked+.tslider{background:var(--c-focus);border-color:var(--c-focus)}
+input:checked+.tslider:before{transform:translateX(18px);background:#fff}
+
+/* --- 통계 & 시퀀스 --- */
+.stats-wrap{width:100%;max-width:420px;padding:.5rem 1rem 2rem}
+.stats-date-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.stats-date{font-size:13px;font-weight:500}
+.stats-reset-btn{font-size:11px;color:var(--tx2);background:none;border:.5px solid var(--bd);border-radius:7px;padding:4px 10px;cursor:pointer;transition:color .2s}
+.stats-reset-btn:hover{color:var(--tx)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.stat-card{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1rem}
+.stat-val{font-size:28px;font-weight:300;letter-spacing:-.02em;margin-bottom:2px}
+.stat-lbl{font-size:11px;color:var(--tx2);letter-spacing:.05em}
+.history-section{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1rem}
+.history-title{font-size:11px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.history-list{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto}
+.history-item{display:flex;align-items:center;gap:10px;padding:7px 10px;background:var(--sur2);border-radius:9px}
+.hi-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.hi-name{font-size:13px;flex:1}
+.hi-dur{font-size:12px;color:var(--tx2)}
+.hi-time{font-size:11px;color:var(--tx2)}
+.history-empty{font-size:13px;color:var(--tx2);text-align:center;padding:1.5rem 0}
+.bar-section{margin-bottom:1.25rem}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-lbl{font-size:12px;color:var(--tx2);width:70px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--sur2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.bar-val{font-size:11px;color:var(--tx2);width:36px;flex-shrink:0}
+.spage{display:flex;flex-direction:column;gap:1rem}
+.scard{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:12px}
+.scard-title{font-size:10px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sstatus{display:flex;align-items:center;justify-content:space-between;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:10px 14px}
+.sstatus-l{display:flex;align-items:center;gap:8px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--tx2);transition:background .3s}
+.sdot.on{background:#1D9E75}
+.stxt{font-size:13px;color:var(--tx2)}.stxt.on{color:var(--tx)}
+.sonbtn{padding:5px 14px;border-radius:8px;border:.5px solid var(--bd);background:var(--sur2);color:var(--tx2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.sonbtn.on{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.snowbar{display:none;align-items:center;gap:8px;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:10px 14px}
+.snowbar.vis{display:flex}
+.snlbl{font-size:11px;color:var(--tx2)}
+.snchip{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;color:#fff}
+.snstep{font-size:11px;color:var(--tx2);margin-left:auto}
+.strack{display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-height:44px;padding:6px;background:var(--sur2);border-radius:10px;border:.5px solid var(--bd)}
+.schip{display:flex;align-items:center;gap:4px;padding:5px 9px;border-radius:7px;font-size:11px;font-weight:500;color:#fff;white-space:nowrap}
+.schip .xbtn{background:rgba(0,0,0,.25);border:none;border-radius:50%;width:15px;height:15px;color:#fff;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.schip.cur{outline:2px solid rgba(255,255,255,.8);outline-offset:1px}
+.sarrow{font-size:10px;color:var(--tx2);flex-shrink:0}
+.sempty{font-size:12px;color:var(--tx2);padding:4px 6px}
+.sgrid{display:flex;flex-direction:column;gap:6px}
+.sgbtn{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;border:none;font-size:13px;font-weight:500;cursor:pointer;color:#fff;opacity:.85;transition:opacity .15s,transform .1s;width:100%}
+.sgbtn:hover{opacity:1;transform:translateX(2px)}
+.sgbtn-left{display:flex;align-items:center;gap:8px}
+.sgbtn-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);flex-shrink:0}
+.sgbtn-time{font-size:11px;opacity:.8;font-weight:400}
+.sfooter{display:flex;align-items:center;justify-content:space-between}
+.sinfo{font-size:12px;color:var(--tx2)}
+.sclear{padding:6px 14px;border-radius:8px;border:.5px solid var(--bd);background:var(--sur2);color:var(--tx2);font-size:12px;cursor:pointer;transition:color .2s,background .2s}
+.sclear:hover{color:var(--tx);background:var(--sur)}
+
+/* --- 블로그 & 기사 스타일 --- */
+.blog-wrap{max-width:800px;margin:0 auto;padding:3rem 1.5rem}
+.blog-wrap h2{font-size:1.5rem;font-weight:400;margin-bottom:.5rem}
+.blog-wrap .sub{color:var(--tx2);font-size:14px;margin-bottom:2rem}
+.blog-list{display:flex;flex-direction:column;gap:14px}
+.blog-card{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1.25rem 1.5rem;cursor:pointer;transition:border-color .2s}
+.blog-card:hover{border-color:rgba(255,255,255,.2)}
+.blog-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.6rem}
+.blog-card h3{font-size:15px;font-weight:500;margin-bottom:.4rem}
+.blog-card p{font-size:13px;color:var(--tx2);line-height:1.6}
+.blog-meta{font-size:11px;color:var(--tx2);margin-top:.6rem}
+.article-wrap{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+.article-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer;margin-bottom:2rem;background:none;border:none;transition:color .2s}
+.article-back:hover{color:var(--tx)}
+.article-wrap h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:400;margin-bottom:.75rem;line-height:1.3}
+.article-meta{font-size:12px;color:var(--tx2);margin-bottom:2rem;display:flex;gap:12px;flex-wrap:wrap}
+.article-body h2{font-size:1.1rem;font-weight:500;margin:2rem 0 .75rem}
+.article-body p{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:1rem}
+.article-body ul,.article-body ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-body li{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:.3rem}
+.article-body .highlight{background:var(--sur);border-left:3px solid var(--red);padding:.75rem 1rem;border-radius:0 8px 8px 0;margin:1.25rem 0}
+.article-body .highlight p{margin:0;font-size:13px}
+
+/* --- 공통 정적 페이지 (About, Privacy) --- */
+.static-wrap{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+.static-wrap h1{font-size:1.8rem;font-weight:400;margin-bottom:.5rem}
+.static-wrap .lead{color:var(--tx2);font-size:15px;line-height:1.7;margin-bottom:2rem}
+.static-wrap h2{font-size:1.1rem;font-weight:500;margin:1.75rem 0 .5rem}
+.static-wrap p,.static-wrap li{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:.6rem}
+.static-wrap ul{padding-left:1.4rem;margin-bottom:1rem}
+.static-wrap a{color:var(--blue);text-decoration:underline}
+
+footer{border-top:.5px solid var(--bd);padding:1.5rem;text-align:center;font-size:12px;color:var(--tx2);display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+footer span{cursor:pointer;transition:color .2s}footer span:hover{color:var(--tx)}
+.section-title{font-size:11px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.25rem}
+
+@media(max-width:600px){
+  .nav-links .nav-link.hide-mobile{display:none}
+  .rwrap{width:200px;height:200px}
+  .tnum{font-size:44px}
+  .pbtn{width:54px;height:54px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo" onclick="show('timer')">Pomo<span>.</span></div>
+    <div id="navThemeSwatches"></div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nl-timer" onclick="show('timer')">Timer</button>
+    <button class="nav-link" id="nl-blog" onclick="show('blog')">Blog</button>
+    <button class="nav-link" id="nl-about" onclick="show('about')">About</button>
+  </div>
+  <div class="nav-right">
+    <select id="globalLangSel" class="global-lang">
+      <option value="en">🌐 EN</option>
+      <option value="ko">🇰🇷 KO</option>
+    </select>
+  </div>
+</nav>
+
+<div class="page on" id="pg-timer">
+  <div class="timer-page">
+    <div class="t-nav-bar">
+      <div class="t-nav-tabs">
+        <button class="t-nav-btn active" id="tnav-timer">Timer</button>
+        <button class="t-nav-btn" id="tnav-stats">Stats</button>
+        <button class="t-nav-btn" id="tnav-seq">Sequence</button>
+      </div>
+    </div>
+    
+    <div class="t-page on" id="tpg-timer">
+      <div class="tsec">
+        <div class="glabel" id="gl-focus">Focus</div>
+        <div class="mtabs">
+          <div class="tew"><input class="tinp active" data-m="focus" id="ti-focus" value="Pomodoro"><span class="ehint">double-click to rename</span></div>
+          <div class="tew"><input class="tinp" data-m="quick" id="ti-quick" value="Quick Task"><span class="ehint"></span></div>
+          <div class="tew"><input class="tinp" data-m="study" id="ti-study" value="Study"><span class="ehint"></span></div>
+          <div class="tew"><input class="tinp" data-m="deep" id="ti-deep" value="Deep Work"><span class="ehint"></span></div>
+        </div>
+      </div>
+      <div class="tsec">
+        <div class="glabel" id="gl-break">Break</div>
+        <div class="mtabs">
+          <button class="mbtn" data-m="short" id="ti-short">Short Break</button>
+          <button class="mbtn" data-m="long" id="ti-long">Long Break</button>
+        </div>
+      </div>
+      <div class="twrap">
+        <div class="rwrap">
+          <svg width="240" height="240" viewBox="0 0 240 240">
+            <circle class="ring-bg" cx="120" cy="120" r="108" fill="none" stroke-width="5"/>
+            <circle class="ring-fg" id="ringFg" cx="120" cy="120" r="108" fill="none" stroke-width="5" stroke="#E24B4A" stroke-dasharray="678.6" stroke-dashoffset="0"/>
+          </svg>
+          <div class="tdisp">
+            <div class="tnum" id="tnum">25:00</div>
+            <div class="tlbl" id="tlbl">Pomodoro</div>
+          </div>
+        </div>
+        <div class="tdots">
+          <div class="tdot done" id="d0"></div><div class="tdot" id="d1"></div>
+          <div class="tdot" id="d2"></div><div class="tdot" id="d3"></div>
+        </div>
+      </div>
+      <div class="abar">
+        <button class="ibtn" id="resetBtn"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></button>
+        <button class="pbtn" id="playBtn"><svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24" id="playIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+        <div class="atwrap">
+          <span class="atlbl" id="lbl-at">Add time</span>
+          <button class="mnbtn" id="atMinus">−</button>
+          <input class="atinp" id="atVal" type="text" inputmode="numeric" value="5">
+          <button class="mnbtn" id="atPlus">+</button>
+          <button class="addbtn" id="atBtn">+<span id="atDisp">5</span>m</button>
+        </div>
+      </div>
+      <div class="spanel">
+        <div class="prow"><span class="plbl" id="lbl-min">Minutes</span>
+          <div class="pval">
+            <button class="snbtn" id="minMinus">−</button>
+            <input class="nval" id="curMin" type="text" inputmode="numeric" value="25">
+            <span class="ulbl">m</span>
+            <button class="snbtn" id="minPlus">+</button>
+          </div>
+        </div>
+        <div class="prow"><span class="plbl" id="lbl-sec">Seconds</span>
+          <div class="pval">
+            <button class="snbtn" id="secMinus">−</button>
+            <input class="nval" id="curSec" type="text" inputmode="numeric" value="00">
+            <span class="ulbl">s</span>
+            <button class="snbtn" id="secPlus">+</button>
+          </div>
+        </div>
+        <div class="prow"><span class="plbl" id="lbl-auto">Auto start next</span>
+          <label class="tog"><input type="checkbox" id="autoChk"><span class="tslider"></span></label>
+        </div>
+        <div class="prow" style="border-bottom:none"><span class="plbl" id="lbl-sound">Session sound</span>
+          <div class="pval" style="gap:8px">
+            <select id="soundSel" style="background:var(--sur2);border:.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:12px;padding:4px 8px;outline:none;cursor:pointer">
+              <option value="bell">🔔 Bell</option>
+              <option value="ding">✨ Ding</option>
+              <option value="soft">🌊 Soft</option>
+              <option value="none">🔇 Off</option>
+            </select>
+            <button id="soundTestBtn" style="padding:4px 10px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx2);font-size:12px;cursor:pointer">Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-page" id="tpg-stats">
+      <div class="stats-wrap">
+        <div class="stats-date-bar">
+          <span class="stats-date" id="stats-date"></span>
+          <button class="stats-reset-btn" id="stats-reset-btn">Reset today</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val" id="stat-sessions">0</div><div class="stat-lbl" id="lbl-stat-sessions">Sessions today</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-focus-time">0m</div><div class="stat-lbl" id="lbl-stat-focus">Focus time</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-streak">0</div><div class="stat-lbl" id="lbl-stat-streak">Day streak 🔥</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-total">0m</div><div class="stat-lbl" id="lbl-stat-total">All-time focus</div></div>
+        </div>
+        <div class="bar-section">
+          <div class="section-title" id="lbl-by-mode" style="margin-bottom:.75rem">By mode</div>
+          <div id="modeBars"></div>
+        </div>
+        <div class="history-section">
+          <div class="history-title" id="lbl-history">Today's sessions</div>
+          <div class="history-list" id="historyList">
+            <div class="history-empty" id="lbl-hist-empty">No sessions yet. Start focusing!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-page" id="tpg-seq">
+      <div class="spage">
+        <div class="sstatus">
+          <div class="sstatus-l"><div class="sdot" id="sDot"></div><span class="stxt" id="sTxt">Sequence off</span></div>
+          <button class="sonbtn" id="sOnBtn">Start</button>
+        </div>
+        <div class="snowbar" id="sNowBar">
+          <span class="snlbl" id="lbl-now">Now playing</span>
+          <span class="snchip" id="sNowChip"></span>
+          <span class="snstep" id="sNowStep"></span>
+        </div>
+        <div class="scard">
+          <div class="scard-title" id="lbl-track">Your sequence</div>
+          <div class="strack" id="sTrack"><span class="sempty" id="sEmpty">Add modes below</span></div>
+        </div>
+        <div class="scard">
+          <div class="scard-title" id="lbl-add">Add to sequence</div>
+          <div class="sgrid" id="sGrid"></div>
+        </div>
+        <div class="sfooter">
+          <span class="sinfo" id="sInfo"></span>
+          <button class="sclear" id="sClear">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="pg-blog">
+  <div class="blog-wrap">
+    <h2 id="blog-h">Focus & Productivity</h2>
+    <p class="sub" id="blog-sub">Master your time with science-backed insights.</p>
+    <div class="blog-list" id="blogList"></div>
+  </div>
+</div>
+<div class="page" id="pg-article">
+  <div class="article-wrap">
+    <button class="article-back" id="article-back-btn" onclick="show('blog')">← Back to Blog</button>
+    <div id="articleContent"></div>
+  </div>
+</div>
+
+<div class="page" id="pg-about">
+  <div class="static-wrap">
+    <h1 id="about-h">About Pomo.</h1>
+    <p class="lead" id="about-lead">Pomo. is a specialized productivity tool designed to help you achieve a deep flow state through the science of time management.</p>
+    
+    <h2 id="about-h1">Our Vision</h2>
+    <p id="about-p1">In an age of constant digital distraction, protecting your attention is the most valuable skill. Pomo. provides a clean, distraction-free environment to practice the Pomodoro Technique effectively.</p>
+
+    <h2 id="about-h2">Key Focus Features</h2>
+    <ul>
+      <li id="about-li1"><strong>Sequence Mode:</strong> Automatically transition between work and break sessions without manual input.</li>
+      <li id="about-li2"><strong>Customizable Modes:</strong> From 'Deep Work' to 'Quick Tasks', rename and set times that fit your specific workflow.</li>
+      <li id="about-li3"><strong>Real-time Stats:</strong> Track your focus hours and daily streaks to stay motivated.</li>
+    </ul>
+
+    <h2 id="about-h3">Technical Integrity</h2>
+    <p id="about-p3">Built with performance in mind, Pomo. runs entirely in your browser. We prioritize speed and minimal resource usage so you can focus on what matters: your work.</p>
+  </div>
+</div>
+
+<div class="page" id="pg-privacy">
+  <div class="static-wrap">
+    <h1 id="priv-h">Privacy Policy</h1>
+    <p class="lead" id="priv-date">Last updated: April 2026</p>
+    <div class="article-body">
+      <h2 id="priv-h1">1. Information and Cookies</h2>
+      <p id="priv-p1">Pomo. uses cookies and similar tracking technologies to improve your experience and show personalized content. We use <strong>Google AdSense</strong> to serve advertisements.</p>
+      <ul>
+        <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to your website or other websites.</li>
+        <li>Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.</li>
+        <li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank">Ads Settings</a>.</li>
+      </ul>
+      <h2 id="priv-h2">2. Data Storage</h2>
+      <p id="priv-p2">All your timer settings and statistics are stored locally in your browser's LocalStorage. We do not transmit or store your personal focus data on our servers.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span onclick="show('about')">© 2026 Pomo.</span>
+  <span style="color:var(--bd)">·</span>
+  <span id="footer-blog" onclick="show('blog')">Blog</span>
+  <span style="color:var(--bd)">·</span>
+  <span id="footer-privacy" onclick="show('privacy')">Privacy Policy</span>
+</footer>
+
+<script>
+// --- GLOBAL DATA & STATE ---
+const COL={focus:'#E24B4A',short:'#1D9E75',long:'#378ADD',quick:'#EF9F27',study:'#7F77DD',deep:'#D4537E'};
+const FM=['focus','quick','study','deep'];
+const AM=['focus','quick','study','deep','short','long'];
+const CIRC=2*Math.PI*108;
+let siteLang='en';
+
+const BLOG_DATA = {
+  en: [
+    {
+      id: 'pomo-science',
+      tag: 'Science',
+      tagColor: '#E24B4A',
+      title: "Why 25 Minutes? The Science Behind Pomodoro",
+      summary: "Explore the neurological reasons why short bursts of work improve cognitive function.",
+      date: 'April 2026',
+      readTime: '8 min',
+      body: `<h2>The Brain's Rhythms</h2><p>Our brains are not designed to focus for 8 hours straight. Research shows that 'vigilance decrement' or a decline in attention occurs after about 30 minutes of a single task.</p><div class="highlight"><p>💡 Brief diversions dramatically improve focus for long periods.</p></div><h2>The Role of Dopamine</h2><p>Completing a 25-minute session triggers a small release of dopamine, the brain's reward chemical. This reinforces the habit of productivity.</p>`
+    },
+    {
+      id: 'deep-work',
+      tag: 'Method',
+      tagColor: '#D4537E',
+      title: "Deep Work vs. Shallow Work: Maximizing Output",
+      summary: "How to eliminate distractions and reach a flow state using Pomo's Deep Work mode.",
+      date: 'April 2026',
+      readTime: '10 min',
+      body: `<h2>What is Deep Work?</h2><p>Coined by Cal Newport, Deep Work is the ability to focus without distraction on a cognitively demanding task.</p><h2>Achieving Flow</h2><ul><li>Set a clear goal before starting.</li><li>Use Sequence Mode to chain sessions.</li><li>Disconnect from social media.</li></ul>`
+    }
+  ],
+  ko: [
+    {
+      id: 'pomo-science',
+      tag: '과학',
+      tagColor: '#E24B4A',
+      title: "왜 25분인가? 뽀모도로 기법의 과학적 근거",
+      summary: "짧은 집중 시간이 어떻게 뇌의 인지 기능을 향상시키는지 신경학적 관점에서 알아봅니다.",
+      date: '2026년 4월',
+      readTime: '8분',
+      body: `<h2>뇌의 리듬 이해하기</h2><p>우리 뇌는 8시간 연속으로 집중하도록 설계되지 않았습니다. 연구에 따르면 '주의력 저하'는 한 가지 작업에 약 30분 이상 머물 때 발생합니다.</p><div class="highlight"><p>💡 짧은 휴식은 장기 집중력을 극적으로 향상시킵니다.</p></div><h2>도파민의 역할</h2><p>25분간의 세션을 완료하면 뇌의 보상 화학 물질인 도파민이 소량 분비됩니다. 이는 생산적인 습관을 강화하는 역할을 합니다.</p>`
+    },
+    {
+      id: 'deep-work',
+      tag: '방법론',
+      tagColor: '#D4537E',
+      title: "딥 워크 vs 얕은 업무: 결과물의 차이",
+      summary: "방해 요소를 제거하고 Pomo의 딥 워크 모드를 사용해 몰입 상태에 도달하는 방법.",
+      date: '2026년 4월',
+      readTime: '10분',
+      body: `<h2>딥 워크(Deep Work)란?</h2><p>칼 뉴포트가 제안한 이 개념은 인지적으로 까다로운 작업에 방해 없이 집중하는 능력을 뜻합니다.</p><h2>실천 방법</h2><ul><li>시작 전 명확한 목표를 세우세요.</li><li>시퀀스 모드를 활용해 세션을 연결하세요.</li><li>모든 디지털 알림을 차단하세요.</li></ul>`
+    }
+  ]
+};
+
+// --- CORE SYSTEM (THEME, SOUND, STATS) ---
+const THEMES={
+  dark:{'--bg':'#0f0f13','--sur':'#1a1a22','--sur2':'#22222e','--tx':'#f0f0f5','--tx2':'#9090a8','--bd':'rgba(255,255,255,0.08)',label:'🌙'},
+  light:{'--bg':'#f4f4f6','--sur':'#ffffff','--sur2':'#eeeef2','--tx':'#111118','--tx2':'#72727e','--bd':'rgba(0,0,0,0.08)',label:'☀️'},
+  warm:{'--bg':'#18120e','--sur':'#241a14','--sur2':'#2e2018','--tx':'#f5ede4','--tx2':'#a0897a','--bd':'rgba(255,220,180,0.1)',label:'🍂'},
+  mint:{'--bg':'#0d1614','--sur':'#162220','--sur2':'#1e2e2b','--tx':'#e4f5f0','--tx2':'#7aaa9a','--bd':'rgba(100,220,180,0.1)',label:'🌿'},
+  slate:{'--bg':'#0e1117','--sur':'#161c27','--sur2':'#1e2535','--tx':'#e8edf5','--tx2':'#7a8aaa','--bd':'rgba(120,160,255,0.1)',label:'🌊'}
+};
+
+function applyTheme(name){
+  const t=THEMES[name];
+  Object.entries(t).forEach(([k,v])=>{if(k!=='label')document.documentElement.style.setProperty(k,v);});
+  document.querySelectorAll('.theme-swatch').forEach(sw=>{sw.style.outline=sw.dataset.theme===name?'2px solid var(--tx)':'none';});
+  try{localStorage.setItem('pomo_theme',name);}catch(e){}
+}
+
+function buildThemeSwatches(){
+  const wrap=document.getElementById('navThemeSwatches');if(!wrap)return;
+  wrap.innerHTML='';
+  const bg={dark:'#1a1a22',light:'#ffffff',warm:'#241a14',mint:'#162220',slate:'#161c27'};
+  Object.entries(THEMES).forEach(([name,t])=>{
+    const btn=document.createElement('button');
+    btn.className='theme-swatch';btn.dataset.theme=name;btn.title=name;btn.textContent=t.label;
+    btn.style.cssText=`width:26px;height:26px;border-radius:7px;border:.5px solid var(--bd);background:${bg[name]};font-size:12px;cursor:pointer;transition:transform .15s;outline-offset:2px`;
+    btn.addEventListener('click',()=>applyTheme(name));
+    wrap.appendChild(btn);
+  });
+  const saved=localStorage.getItem('pomo_theme');
+  applyTheme(saved&&THEMES[saved]?saved:'dark');
+}
+
+let audioCtx=null;
+function getCtx(){
+  if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  return audioCtx;
+}
+function playSound(type){
+  if(type==='none')return;
+  const ctx=getCtx();if(!ctx)return;
+  const now=ctx.currentTime;
+  try{
+    if(type==='bell'){[[880,.55],[1108,.35],[660,.25]].forEach(([f,v],i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f;const t=now+i*.2;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.04);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.start(t);o.stop(t+1.5);});}
+    else if(type==='ding'){const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='triangle';o.frequency.setValueAtTime(1480,now);o.frequency.exponentialRampToValueAtTime(1100,now+.5);g.gain.setValueAtTime(.7,now);g.gain.exponentialRampToValueAtTime(.0001,now+.9);o.start(now);o.stop(now+1);}
+    else if(type==='soft'){[[528,.35,1.0],[794,.2,1.4]].forEach(([f,v,dur])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(v,now+.12);g.gain.exponentialRampToValueAtTime(.0001,now+dur);o.start(now);o.stop(now+dur+.1);});}
+  }catch(e){}
+}
+document.getElementById('soundTestBtn').addEventListener('click',()=>playSound(document.getElementById('soundSel').value));
+
+function todayKey(){return new Date().toISOString().slice(0,10);}
+function loadStats(){try{return JSON.parse(localStorage.getItem('pomo_stats')||'{}');}catch(e){return {};}}
+function saveStats(s){try{localStorage.setItem('pomo_stats',JSON.stringify(s));}catch(e){}}
+function getTodayData(){const s=loadStats();const k=todayKey();if(!s[k])s[k]={sessions:[],totalFocusSecs:0,byMode:{}};return{stats:s,key:k,today:s[k]};}
+function recordSession(modeName,modeKey,dur){
+  const{stats,key,today}=getTodayData();
+  today.sessions.push({name:modeName,modeKey,dur,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  if(FM.includes(modeKey)){today.totalFocusSecs=(today.totalFocusSecs||0)+dur;today.byMode[modeKey]=(today.byMode[modeKey]||0)+dur;}
+  const yest=new Date();yest.setDate(yest.getDate()-1);const yKey=yest.toISOString().slice(0,10);
+  let streak=stats.streak||0;
+  if(stats.lastDay===yKey)streak++;else if(stats.lastDay!==key)streak=1;
+  stats.streak=streak;stats.lastDay=key;
+  if(FM.includes(modeKey))stats.allTimeSecs=(stats.allTimeSecs||0)+dur;
+  stats[key]=today;saveStats(stats);
+}
+function fmtTime(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h>0?h+'h '+m+'m':m+'m';}
+
+// --- NAV & BLOG & LANGUAGES ---
+const PAGES=['timer','blog','article','about','privacy'];
+function show(p){
+  PAGES.forEach(k=>{const el=document.getElementById('pg-'+k);if(el)el.classList.toggle('on',k===p);});
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const nl=document.getElementById('nl-'+p);if(nl)nl.classList.add('active');
+  window.scrollTo(0,0);
+  if(p==='blog')renderBlog();
+}
+
+function renderBlog(){
+  const list=document.getElementById('blogList');
+  const articles=BLOG_DATA[siteLang]||BLOG_DATA.en;
+  list.innerHTML='';
+  articles.forEach(a=>{
+    const card=document.createElement('div');
+    card.className='blog-card';
+    card.innerHTML=`<span class="blog-tag" style="background:${a.tagColor}22;color:${a.tagColor}">${a.tag}</span><h3>${a.title}</h3><p>${a.summary}</p><div class="blog-meta">${a.date} · ${a.readTime}</div>`;
+    card.addEventListener('click',()=>openArticle(a.id));
+    list.appendChild(card);
+  });
+}
+
+function openArticle(id){
+  const articles=BLOG_DATA[siteLang]||BLOG_DATA.en;
+  const a=articles.find(x=>x.id===id);if(!a)return;
+  document.getElementById('articleContent').innerHTML=`<span class="blog-tag" style="background:${a.tagColor}22;color:${a.tagColor};display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.75rem">${a.tag}</span><h1>${a.title}</h1><div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div><div class="article-body">${a.body}</div>`;
+  show('article');
+}
+
+const STXT={en:{statSessions:'Sessions today',statFocus:'Focus time',statStreak:'Day streak 🔥',statTotal:'All-time focus',byMode:'By mode',history:"Today's sessions",resetToday:'Reset today',histEmpty:'No sessions yet. Start focusing!',timerTab:'Timer',statsTab:'Stats',seqTab:'Sequence'},ko:{statSessions:'오늘 세션',statFocus:'집중 시간',statStreak:'연속 일수 🔥',statTotal:'전체 집중',byMode:'모드별',history:'오늘의 세션',resetToday:'오늘 초기화',histEmpty:'세션 없음. 시작해보세요!',timerTab:'타이머',statsTab:'통계',seqTab:'순서'}};
+const TXT={en:{gFocus:'Focus',gBreak:'Break',auto:'Auto start next',addtime:'Add time',hint:'double-click to rename',min:'Minutes',sec:'Seconds',sound:'Session sound',sOff:'Sequence off',sOn:'Sequence on',sStart:'Start',sStop:'Stop',sEmpty:'Add modes below',sClear:'Clear',sTrack:'Your sequence',sAdd:'Add to sequence',now:'Now playing'},ko:{gFocus:'집중',gBreak:'휴식',auto:'자동 시작',addtime:'시간 추가',hint:'더블클릭으로 이름 변경',min:'분',sec:'초',sound:'알림음',sOff:'순서 꺼짐',sOn:'순서 켜짐',sStart:'시작',sStop:'정지',sEmpty:'아래에서 모드 추가',sClear:'초기화',sTrack:'내 순서',sAdd:'순서에 추가',now:'현재 재생 중'}};
+
+function applySiteLang(l){
+  siteLang=l;
+  const t=TXT[l]||TXT.en;const st=STXT[l]||STXT.en;
+  document.getElementById('gl-focus').textContent=t.gFocus;
+  document.getElementById('gl-break').textContent=t.gBreak;
+  document.getElementById('lbl-auto').textContent=t.auto;
+  document.getElementById('lbl-at').textContent=t.addtime;
+  document.getElementById('lbl-min').textContent=t.min;
+  document.getElementById('lbl-sec').textContent=t.sec;
+  document.getElementById('lbl-sound').textContent=t.sound;
+  document.getElementById('lbl-now').textContent=t.now;
+  document.getElementById('lbl-track').textContent=t.sTrack;
+  document.getElementById('lbl-add').textContent=t.sAdd;
+  document.getElementById('sClear').textContent=t.sClear;
+  document.getElementById('tnav-timer').textContent=st.timerTab;
+  document.getElementById('tnav-stats').textContent=st.statsTab;
+  document.getElementById('tnav-seq').textContent=st.seqTab;
+  
+  // About Page Update
+  const ab = siteLang === 'ko' ? {
+    h: "Pomo. 서비스 소개", lead: "Pomo.는 시간 관리의 과학을 통해 깊은 몰입 상태에 도달하도록 돕는 도구입니다.",
+    h1: "우리의 비전", p1: "디지털 방해가 넘쳐나는 시대에 주의력을 보호하는 것은 가장 가치 있는 기술입니다.",
+    h2: "핵심 기능", li1: "시퀀스 모드: 자동 세션 전환", li2: "맞춤형 모드: 자유로운 이름 및 시간 설정", li3: "실시간 통계: 집중 시간 기록",
+    h3: "기술적 지향점", p3: "사용자의 작업에만 집중할 수 있도록 빠른 속도와 최소한의 리소스 사용을 지향합니다."
+  } : {
+    h: "About Pomo.", lead: "Pomo. is a specialized productivity tool designed to help you achieve a deep flow state.",
+    h1: "Our Vision", p1: "In an age of constant distraction, protecting your attention is the most valuable skill.",
+    h2: "Key Focus Features", li1: "Sequence Mode: Auto transitions", li2: "Customizable Modes: Rename and set times", li3: "Real-time Stats: Track streaks",
+    h3: "Technical Integrity", p3: "Built for speed and minimal resource usage so you can focus on work."
+  };
+  document.getElementById('about-h').textContent=ab.h; document.getElementById('about-lead').textContent=ab.lead;
+  document.getElementById('about-h1').textContent=ab.h1; document.getElementById('about-p1').textContent=ab.p1;
+  document.getElementById('about-li1').textContent=ab.li1; document.getElementById('about-li2').textContent=ab.li2;
+  document.getElementById('about-li3').textContent=ab.li3; document.getElementById('about-p3').textContent=ab.p3;
+  
+  renderBlog(); renderStats(); renderSeq();
+}
+document.getElementById('globalLangSel').addEventListener('change',function(){applySiteLang(this.value);});
+
+// --- TIMER LOGIC (기존 유지) ---
+const cNames={focus:'Pomodoro',quick:'Quick Task',study:'Study',deep:'Deep Work'};
+let view='focus',activeMode=null,iv=null,editing=false;
+let settings={focus:25,quick:15,study:30,deep:60,short:5,long:15};
+let sSecs={focus:0,quick:0,study:0,deep:0,short:0,long:0};
+let rem={focus:1500,quick:900,study:1800,deep:3600,short:300,long:900};
+let sessionStartTime=null,atVal=5,seq=[],seqIdx=0,seqOn=false;
+
+function pad(n){return n<10?'0'+n:''+n;}
+function mname(m){return FM.includes(m)?cNames[m]:document.getElementById('ti-'+m).textContent;}
+function tsec(k){return settings[k]*60+sSecs[k];}
+function render(){
+  const s=rem[view];
+  document.getElementById('tnum').textContent=pad(Math.floor(s/60))+':'+pad(s%60);
+  const fg=document.getElementById('ringFg');
+  fg.style.strokeDashoffset=CIRC*(s/Math.max(1,tsec(view)));fg.style.stroke=COL[view];
+  document.getElementById('tlbl').textContent=mname(view);
+  document.getElementById('playBtn').style.background=COL[view];
+  document.getElementById('curMin').value=settings[view];
+  document.getElementById('curSec').value=pad(sSecs[view]);
+  if(activeMode===view)pauseIcon();else playIcon();
+}
+function playIcon(){document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';}
+function pauseIcon(){document.getElementById('playIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';}
+
+function switchMode(m){
+  if(editing||m===view)return; view=m;
+  FM.forEach(k=>document.getElementById('ti-'+k).classList.toggle('active',k===m));
+  ['short','long'].forEach(k=>document.getElementById('ti-'+k).classList.toggle('active',k===m));
+  render();
+}
+
+FM.forEach(k=>{
+  const el=document.getElementById('ti-'+k);el.readOnly=true;
+  el.addEventListener('click',()=>switchMode(k));
+  el.addEventListener('dblclick',()=>{editing=true;el.readOnly=false;el.select();});
+  el.addEventListener('blur',()=>{el.readOnly=true;editing=false;const v=el.value.trim();if(v)cNames[k]=v;else el.value=cNames[k];renderSeq();render();});
+});
+document.getElementById('ti-short').addEventListener('click',()=>switchMode('short'));
+document.getElementById('ti-long').addEventListener('click',()=>switchMode('long'));
+
+document.getElementById('playBtn').addEventListener('click',()=>{
+  if(activeMode===view){clearInterval(iv);iv=null;activeMode=null;sessionStartTime=null;playIcon();}
+  else{if(activeMode!==null){clearInterval(iv);iv=null;}activeMode=view;sessionStartTime=Date.now();startIv();pauseIcon();}
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(activeMode===view){clearInterval(iv);iv=null;activeMode=null;}rem[view]=tsec(view);render();playIcon();});
+
+function startIv(){iv=setInterval(()=>{if(rem[activeMode]<=0){clearInterval(iv);iv=null;onEnd();return;}rem[activeMode]--;if(view===activeMode)render();},1000);}
+function onEnd(){
+  const done=activeMode;
+  const elapsed=sessionStartTime?Math.round((Date.now()-sessionStartTime)/1000):tsec(done);
+  sessionStartTime=null;recordSession(mname(done),done,elapsed);triggerSound();
+  activeMode=null;
+  if(seqOn&&seq.length>0){seqIdx=(seqIdx+1)%seq.length;const nx=seq[seqIdx];rem[nx]=tsec(nx);switchMode(nx);render();renderSeq();setTimeout(()=>{activeMode=view;sessionStartTime=Date.now();startIv();pauseIcon();},500);return;}
+  playIcon();
+}
+
+function renderStats(){
+  const{stats,today}=getTodayData(); const st=STXT[siteLang]||STXT.en;
+  document.getElementById('stats-date').textContent=new Date().toLocaleDateString([],{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('stat-sessions').textContent=today.sessions.filter(s=>FM.includes(s.modeKey)).length;
+  document.getElementById('stat-focus-time').textContent=fmtTime(today.totalFocusSecs||0);
+  document.getElementById('stat-streak').textContent=stats.streak||0;
+  document.getElementById('stat-total').textContent=fmtTime(stats.allTimeSecs||0);
+  const bars=document.getElementById('modeBars');bars.innerHTML='';
+  const maxS=Math.max(1,...FM.map(k=>(today.byMode||{})[k]||0));
+  FM.forEach(k=>{const sec=(today.byMode||{})[k]||0,pct=Math.round(sec/maxS*100);const row=document.createElement('div');row.className='bar-row';row.innerHTML=`<span class="bar-lbl" style="color:${COL[k]}">${cNames[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COL[k]}"></div></div><span class="bar-val">${fmtTime(sec)}</span>`;bars.appendChild(row);});
+}
+
+function renderSeq(){
+  const t=TXT[siteLang]||TXT.en;
+  document.getElementById('sDot').classList.toggle('on',seqOn);
+  document.getElementById('sTxt').textContent=seqOn?t.sOn:t.sOff;
+  document.getElementById('sOnBtn').textContent=seqOn?t.sStop:t.sStart;
+  const nb=document.getElementById('sNowBar');nb.classList.toggle('vis',seqOn&&seq.length>0);
+  if(seqOn&&seq.length>0){const chip=document.getElementById('sNowChip');chip.textContent=mname(seq[seqIdx]);chip.style.background=COL[seq[seqIdx]];document.getElementById('sNowStep').textContent=(seqIdx+1)+' / '+seq.length;}
+  const track=document.getElementById('sTrack');track.innerHTML='';
+  if(!seq.length){const e=document.createElement('span');e.className='sempty';e.textContent=t.sEmpty;track.appendChild(e);}
+  else{seq.forEach((m,i)=>{const chip=document.createElement('div');chip.className='schip'+(seqOn&&i===seqIdx?' cur':'');chip.style.background=COL[m];chip.innerHTML=`<span>${mname(m)}</span><button class="xbtn" onclick="removeFromSeq(${i})">✕</button>`;track.appendChild(chip);if(i<seq.length-1){const a=document.createElement('span');a.className='sarrow';a.textContent='→';track.appendChild(a);}});}
+  const grid=document.getElementById('sGrid');grid.innerHTML='';
+  AM.forEach(m=>{const b=document.createElement('button');b.className='sgbtn';b.style.background=COL[m];b.innerHTML=`<div class="sgbtn-left"><div class="sgbtn-dot"></div><span>${mname(m)}</span></div><span class="sgbtn-time">${fmtTime(tsec(m))}</span>`;b.onclick=()=>addToSeq(m);grid.appendChild(b);});
+}
+
+function addToSeq(m){seq.push(m);renderSeq();}
+function removeFromSeq(i){seq.splice(i,1);renderSeq();}
+
+document.getElementById('tnav-timer').onclick=()=>switchTimerTab('timer');
+document.getElementById('tnav-stats').onclick=()=>switchTimerTab('stats');
+document.getElementById('tnav-seq').onclick=()=>switchTimerTab('seq');
+function switchTimerTab(tab){['timer','stats','seq'].forEach(t=>{document.getElementById('tpg-'+t).classList.toggle('on',t===tab);document.getElementById('tnav-'+t).classList.toggle('active',t===tab);});if(tab==='stats')renderStats();if(tab==='seq')renderSeq();}
+
+document.getElementById('sOnBtn').onclick=()=>{
+  if(!seqOn&&seq.length===0)return; seqOn=!seqOn;
+  if(seqOn){seqIdx=0;const fx=seq[0];rem[fx]=tsec(fx);switchMode(fx);switchTimerTab('timer');setTimeout(()=>{activeMode=view;sessionStartTime=Date.now();startIv();pauseIcon();},300);}
+  else{if(activeMode){clearInterval(iv);iv=null;activeMode=null;playIcon();}} renderSeq();
+};
+document.getElementById('sClear').onclick=()=>{seq=[];seqOn=false;renderSeq();};
+
+// --- INIT ---
+buildThemeSwatches();
+render();
+renderStats();
+renderBlog();
+</script>
+</body>
+</html>
