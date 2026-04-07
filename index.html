@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4574877142558962">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574877142558962" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pomo. — Professional Pomodoro Timer & Productivity Guide</title>
 <meta name="description" content="Boost your focus with Pomo. Free online Pomodoro timer with sequence mode, science-based productivity guides, and multi-language support.">
 <style>
-/* --- 기존 스타일 유지 --- */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0f0f13;--sur:#1a1a22;--sur2:#22222e;
@@ -29,12 +30,1053 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,15,19,.95
 #navThemeSwatches{display:flex;gap:3px;align-items:center}
 .page{display:none;padding-top:58px}
 .page.on{display:block}
-
-/* --- 타이머 & UI 구성요소 --- */
 .timer-page{display:flex;flex-direction:column;align-items:center;padding-bottom:3rem}
 .t-nav-bar{display:flex;justify-content:center;padding:7px 1rem;margin-bottom:.5rem}
 .t-nav-tabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
 .t-nav-btn{padding:7px 18px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.t-nav-btn.active{background:var(--sur2);color:var(--tx)}
+.t-page{display:none;width:100%;max-width:420px;padding:.5rem 1rem 1rem}
+.t-page.on{display:block}
+.glabel{font-size:10px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;padding-left:2px}
+.tsec{margin-bottom:1rem}
+.mtabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
+.mbtn{flex:1;min-width:0;padding:7px 4px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbtn.active{color:#fff}
+.mbtn.active[data-m="short"]{background:var(--c-short)}
+.mbtn.active[data-m="long"]{background:var(--c-long)}
+.tew{position:relative;flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
+.tinp{width:100%;background:transparent;border:none;outline:none;color:var(--tx2);font-size:12px;font-weight:500;text-align:center;cursor:pointer;padding:7px 4px;border-radius:9px;transition:all .2s}
+.tinp.active{color:#fff}
+.tinp.active[data-m="focus"]{background:var(--c-focus)}
+.tinp.active[data-m="quick"]{background:var(--c-quick)}
+.tinp.active[data-m="study"]{background:var(--c-study)}
+.tinp.active[data-m="deep"]{background:var(--c-deep)}
+.tinp:focus{background:var(--sur2)!important;color:var(--tx)!important;cursor:text}
+.ehint{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--tx2);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.tew:hover .ehint{opacity:1}
+.twrap{display:flex;flex-direction:column;align-items:center;margin:1rem 0}
+.rwrap{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center}
+.rwrap svg{position:absolute;top:0;left:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{stroke:var(--sur2)}
+.ring-fg{transition:stroke-dashoffset 1s linear,stroke .4s;stroke-linecap:round}
+.tdisp{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.tnum{font-size:56px;font-weight:300;letter-spacing:-3px;line-height:1}
+.tlbl{font-size:11px;color:var(--tx2);letter-spacing:.14em;text-transform:uppercase}
+.tdots{display:flex;gap:8px;margin-top:1.25rem}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--sur2);border:.5px solid var(--bd);transition:background .3s}
+.tdot.done{background:var(--c-focus);border-color:var(--c-focus)}
+.abar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
+.pbtn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;color:#fff;flex-shrink:0}
+.pbtn:hover{transform:scale(1.06)}.pbtn:active{transform:scale(.96)}
+.ibtn{width:44px;height:44px;border-radius:50%;background:var(--sur2);border:.5px solid var(--bd);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx2);transition:color .2s,background .2s;flex-shrink:0}
+.ibtn:hover{color:var(--tx);background:var(--sur)}
+.atwrap{display:flex;align-items:center;gap:5px;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:7px 10px}
+.atlbl{font-size:11px;color:var(--tx2);white-space:nowrap}
+.addbtn{padding:4px 10px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:12px;font-weight:500;cursor:pointer;transition:background .15s}
+.addbtn:hover{background:rgba(255,255,255,.1)}
+.mnbtn{width:22px;height:22px;border-radius:6px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.mnbtn:hover{background:rgba(255,255,255,.1)}
+.atinp{width:36px;background:transparent;border:none;color:var(--tx);font-size:13px;font-weight:500;text-align:center;padding:2px 0;outline:none}
+.spanel{background:var(--sur);border:.5px solid var(--bd);border-radius:16px;padding:1rem 1.25rem;margin-bottom:1rem}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--bd)}
+.prow:last-child{border-bottom:none}
+.plbl{font-size:13px;color:var(--tx2)}
+.pval{display:flex;align-items:center;gap:6px}
+.snbtn{width:24px;height:24px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.snbtn:hover{background:rgba(255,255,255,.1)}
+.nval{font-size:13px;font-weight:500;width:40px;text-align:center;background:var(--sur2);border:.5px solid var(--bd);border-radius:6px;color:var(--tx);padding:3px 0;outline:none;cursor:text}
+.nval:focus{border-color:rgba(255,255,255,.3)}
+.ulbl{font-size:11px;color:var(--tx2)}
+.tog{position:relative;width:38px;height:20px}
+.tog input{opacity:0;width:0;height:0}
+.tslider{position:absolute;inset:0;background:var(--sur2);border-radius:20px;cursor:pointer;transition:background .3s;border:.5px solid var(--bd)}
+.tslider:before{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:var(--tx2);top:2px;left:2px;transition:transform .3s,background .3s}
+input:checked+.tslider{background:var(--c-focus);border-color:var(--c-focus)}
+input:checked+.tslider:before{transform:translateX(18px);background:#fff}
+.stats-wrap{width:100%;max-width:420px;padding:.5rem 1rem 2rem}
+.stats-date-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.stats-date{font-size:13px;font-weight:500}
+.stats-reset-btn{font-size:11px;color:var(--tx2);background:none;border:.5px solid var(--bd);border-radius:7px;padding:4px 10px;cursor:pointer;transition:color .2s}
+.stats-reset-btn:hover{color:var(--tx)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.stat-card{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1rem}
+.stat-val{font-size:28px;font-weight:300;letter-spacing:-.02em;margin-bottom:2px}
+.stat-lbl{font-size:11px;color:var(--tx2);letter-spacing:.05em}
+.history-section{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1rem}
+.history-title{font-size:11px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.history-list{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto}
+.history-item{display:flex;align-items:center;gap:10px;padding:7px 10px;background:var(--sur2);border-radius:9px}
+.hi-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.hi-name{font-size:13px;flex:1}
+.hi-dur{font-size:12px;color:var(--tx2)}
+.hi-time{font-size:11px;color:var(--tx2)}
+.history-empty{font-size:13px;color:var(--tx2);text-align:center;padding:1.5rem 0}
+.bar-section{margin-bottom:1.25rem}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-lbl{font-size:12px;color:var(--tx2);width:70px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--sur2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.bar-val{font-size:11px;color:var(--tx2);width:36px;flex-shrink:0}
+.spage{display:flex;flex-direction:column;gap:1rem}
+.scard{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:12px}
+.scard-title{font-size:10px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sstatus{display:flex;align-items:center;justify-content:space-between;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:10px 14px}
+.sstatus-l{display:flex;align-items:center;gap:8px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--tx2);transition:background .3s}
+.sdot.on{background:#1D9E75}
+.stxt{font-size:13px;color:var(--tx2)}.stxt.on{color:var(--tx)}
+.sonbtn{padding:5px 14px;border-radius:8px;border:.5px solid var(--bd);background:var(--sur2);color:var(--tx2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.sonbtn.on{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.snowbar{display:none;align-items:center;gap:8px;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:10px 14px}
+.snowbar.vis{display:flex}
+.snlbl{font-size:11px;color:var(--tx2)}
+.snchip{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;color:#fff}
+.snstep{font-size:11px;color:var(--tx2);margin-left:auto}
+.strack{display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-height:44px;padding:6px;background:var(--sur2);border-radius:10px;border:.5px solid var(--bd)}
+.schip{display:flex;align-items:center;gap:4px;padding:5px 9px;border-radius:7px;font-size:11px;font-weight:500;color:#fff;white-space:nowrap}
+.schip .xbtn{background:rgba(0,0,0,.25);border:none;border-radius:50%;width:15px;height:15px;color:#fff;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.schip.cur{outline:2px solid rgba(255,255,255,.8);outline-offset:1px}
+.sarrow{font-size:10px;color:var(--tx2);flex-shrink:0}
+.sempty{font-size:12px;color:var(--tx2);padding:4px 6px}
+.sgrid{display:flex;flex-direction:column;gap:6px}
+.sgbtn{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;border:none;font-size:13px;font-weight:500;cursor:pointer;color:#fff;opacity:.85;transition:opacity .15s,transform .1s;width:100%}
+.sgbtn:hover{opacity:1;transform:translateX(2px)}
+.sgbtn-left{display:flex;align-items:center;gap:8px}
+.sgbtn-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);flex-shrink:0}
+.sgbtn-time{font-size:11px;opacity:.8;font-weight:400}
+.sfooter{display:flex;align-items:center;justify-content:space-between}
+.sinfo{font-size:12px;color:var(--tx2)}
+.sclear{padding:6px 14px;border-radius:8px;border:.5px solid var(--bd);background:var(--sur2);color:var(--tx2);font-size:12px;cursor:pointer;transition:color .2s,background .2s}
+.sclear:hover{color:var(--tx);background:var(--sur)}
+.blog-wrap{max-width:800px;margin:0 auto;padding:3rem 1.5rem}
+.blog-wrap h2{font-size:1.5rem;font-weight:400;margin-bottom:.5rem}
+.blog-wrap .sub{color:var(--tx2);font-size:14px;margin-bottom:2rem}
+.blog-list{display:flex;flex-direction:column;gap:14px}
+.blog-card{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1.25rem 1.5rem;cursor:pointer;transition:border-color .2s}
+.blog-card:hover{border-color:rgba(255,255,255,.2)}
+.blog-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.6rem}
+.blog-card h3{font-size:15px;font-weight:500;margin-bottom:.4rem}
+.blog-card p{font-size:13px;color:var(--tx2);line-height:1.6}
+.blog-meta{font-size:11px;color:var(--tx2);margin-top:.6rem}
+.article-wrap{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+.article-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer;margin-bottom:2rem;background:none;border:none;transition:color .2s}
+.article-back:hover{color:var(--tx)}
+.article-wrap h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:400;margin-bottom:.75rem;line-height:1.3}
+.article-meta{font-size:12px;color:var(--tx2);margin-bottom:2rem;display:flex;gap:12px;flex-wrap:wrap}
+.article-body h2{font-size:1.1rem;font-weight:500;margin:2rem 0 .75rem}
+.article-body p{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:1rem}
+.article-body ul,.article-body ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-body li{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:.3rem}
+.article-body .highlight{background:var(--sur);border-left:3px solid var(--red);padding:.75rem 1rem;border-radius:0 8px 8px 0;margin:1.25rem 0}
+.article-body .highlight p{margin:0;font-size:13px}
+.static-wrap{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+.static-wrap h1{font-size:1.8rem;font-weight:400;margin-bottom:.5rem}
+.static-wrap .lead{color:var(--tx2);font-size:15px;line-height:1.7;margin-bottom:2rem}
+.static-wrap h2{font-size:1.1rem;font-weight:500;margin:1.75rem 0 .5rem}
+.static-wrap p,.static-wrap li{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:.6rem}
+.static-wrap ul{padding-left:1.4rem;margin-bottom:1rem}
+.static-wrap a{color:var(--blue);text-decoration:underline}
+footer{border-top:.5px solid var(--bd);padding:1.5rem;text-align:center;font-size:12px;color:var(--tx2);display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+footer span{cursor:pointer;transition:color .2s}footer span:hover{color:var(--tx)}
+.section-title{font-size:11px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.25rem}
+@media(max-width:600px){
+  .nav-links .nav-link.hide-mobile{display:none}
+  .rwrap{width:200px;height:200px}
+  .tnum{font-size:44px}
+  .pbtn{width:54px;height:54px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo" onclick="show('timer')">Pomo<span>.</span></div>
+    <div id="navThemeSwatches"></div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nl-timer" onclick="show('timer')" data-i18n="nav-timer">타이머</button>
+    <button class="nav-link" id="nl-blog" onclick="show('blog')" data-i18n="nav-blog">블로그</button>
+    <button class="nav-link" id="nl-about" onclick="show('about')" data-i18n="nav-about">소개 & 가이드</button>
+  </div>
+  <div class="nav-right">
+    <select id="globalLangSel" class="global-lang">
+      <option value="ko">🇰🇷 KO</option>
+      <option value="en">🌐 EN</option>
+    </select>
+  </div>
+</nav>
+
+<div class="page on" id="pg-timer">
+  <div class="timer-page">
+    <div class="t-nav-bar">
+      <div class="t-nav-tabs">
+        <button class="t-nav-btn active" id="tnav-timer" data-i18n="tab-timer">타이머</button>
+        <button class="t-nav-btn" id="tnav-stats" data-i18n="tab-stats">통계</button>
+        <button class="t-nav-btn" id="tnav-seq" data-i18n="tab-seq">시퀀스</button>
+      </div>
+    </div>
+    
+    <div class="t-page on" id="tpg-timer">
+      <div class="tsec">
+        <div class="glabel" id="gl-focus" data-i18n="gl-focus">집중</div>
+        <div class="mtabs">
+          <div class="tew"><input class="tinp active" data-m="focus" id="ti-focus" value="포모도로"><span class="ehint" data-i18n="ehint">더블클릭으로 이름 변경</span></div>
+          <div class="tew"><input class="tinp" data-m="quick" id="ti-quick" value="빠른 작업"><span class="ehint"></span></div>
+          <div class="tew"><input class="tinp" data-m="study" id="ti-study" value="공부"><span class="ehint"></span></div>
+          <div class="tew"><input class="tinp" data-m="deep" id="ti-deep" value="깊은 집중"><span class="ehint"></span></div>
+        </div>
+      </div>
+      <div class="tsec">
+        <div class="glabel" id="gl-break" data-i18n="gl-break">휴식</div>
+        <div class="mtabs">
+          <button class="mbtn" data-m="short" id="ti-short" data-i18n="short-break">짧은 휴식</button>
+          <button class="mbtn" data-m="long" id="ti-long" data-i18n="long-break">긴 휴식</button>
+        </div>
+      </div>
+      <div class="twrap">
+        <div class="rwrap">
+          <svg width="240" height="240" viewBox="0 0 240 240">
+            <circle class="ring-bg" cx="120" cy="120" r="108" fill="none" stroke-width="5"/>
+            <circle class="ring-fg" id="ringFg" cx="120" cy="120" r="108" fill="none" stroke-width="5" stroke="#E24B4A" stroke-dasharray="678.6" stroke-dashoffset="0"/>
+          </svg>
+          <div class="tdisp">
+            <div class="tnum" id="tnum">25:00</div>
+            <div class="tlbl" id="tlbl">포모도로</div>
+          </div>
+        </div>
+        <div class="tdots">
+          <div class="tdot done" id="d0"></div><div class="tdot" id="d1"></div>
+          <div class="tdot" id="d2"></div><div class="tdot" id="d3"></div>
+        </div>
+      </div>
+      <div class="abar">
+        <button class="ibtn" id="resetBtn"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></button>
+        <button class="pbtn" id="playBtn" style="background:var(--c-focus)"><svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24" id="playIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+        <div class="atwrap">
+          <span class="atlbl" id="lbl-at" data-i18n="add-time">시간 추가</span>
+          <button class="mnbtn" id="atMinus">−</button>
+          <input class="atinp" id="atVal" type="text" inputmode="numeric" value="5">
+          <button class="mnbtn" id="atPlus">+</button>
+          <button class="addbtn" id="atBtn">+<span id="atDisp">5</span>m</button>
+        </div>
+      </div>
+      <div class="spanel">
+        <div class="prow"><span class="plbl" id="lbl-min" data-i18n="lbl-min">분</span>
+          <div class="pval">
+            <button class="snbtn" id="minMinus">−</button>
+            <input class="nval" id="curMin" type="text" inputmode="numeric" value="25">
+            <span class="ulbl">m</span>
+            <button class="snbtn" id="minPlus">+</button>
+          </div>
+        </div>
+        <div class="prow"><span class="plbl" id="lbl-sec" data-i18n="lbl-sec">초</span>
+          <div class="pval">
+            <button class="snbtn" id="secMinus">−</button>
+            <input class="nval" id="curSec" type="text" inputmode="numeric" value="00">
+            <span class="ulbl">s</span>
+            <button class="snbtn" id="secPlus">+</button>
+          </div>
+        </div>
+        <div class="prow"><span class="plbl" id="lbl-auto" data-i18n="lbl-auto">다음 자동 시작</span>
+          <label class="tog"><input type="checkbox" id="autoChk"><span class="tslider"></span></label>
+        </div>
+        <div class="prow" style="border-bottom:none"><span class="plbl" id="lbl-sound" data-i18n="lbl-sound">세션 알림음</span>
+          <div class="pval" style="gap:8px">
+            <select id="soundSel" style="background:var(--sur2);border:.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:12px;padding:4px 8px;outline:none;cursor:pointer">
+              <option value="bell">🔔 Bell</option>
+              <option value="ding">✨ Ding</option>
+              <option value="soft">🌊 Soft</option>
+              <option value="none">🔇 Off</option>
+            </select>
+            <button id="soundTestBtn" style="padding:4px 10px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx2);font-size:12px;cursor:pointer" data-i18n="test">테스트</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-page" id="tpg-stats">
+      <div class="stats-wrap">
+        <div class="stats-date-bar">
+          <span class="stats-date" id="stats-date"></span>
+          <button class="stats-reset-btn" id="stats-reset-btn" data-i18n="reset-today">오늘 초기화</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val" id="stat-sessions">0</div><div class="stat-lbl" id="lbl-stat-sessions" data-i18n="stat-sessions">오늘 세션</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-focus-time">0m</div><div class="stat-lbl" id="lbl-stat-focus" data-i18n="stat-focus">집중 시간</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-streak">0</div><div class="stat-lbl" id="lbl-stat-streak" data-i18n="stat-streak">연속 일수 🔥</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-total">0m</div><div class="stat-lbl" id="lbl-stat-total" data-i18n="stat-total">전체 집중</div></div>
+        </div>
+        <div class="bar-section">
+          <div class="section-title" id="lbl-by-mode" data-i18n="by-mode" style="margin-bottom:.75rem">모드별</div>
+          <div id="modeBars"></div>
+        </div>
+        <div class="history-section">
+          <div class="history-title" id="lbl-history" data-i18n="today-sessions">오늘 세션</div>
+          <div class="history-list" id="historyList">
+            <div class="history-empty" id="lbl-hist-empty" data-i18n="no-sessions">아직 세션이 없습니다. 집중을 시작하세요!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-page" id="tpg-seq">
+      <div class="spage">
+        <div class="sstatus">
+          <div class="sstatus-l"><div class="sdot" id="sDot"></div><span class="stxt" id="sTxt" data-i18n="seq-off">시퀀스 꺼짐</span></div>
+          <button class="sonbtn" id="sOnBtn" data-i18n="start">시작</button>
+        </div>
+        <div class="snowbar" id="sNowBar">
+          <span class="snlbl" id="lbl-now" data-i18n="now-playing">현재 재생 중</span>
+          <span class="snchip" id="sNowChip"></span>
+          <span class="snstep" id="sNowStep"></span>
+        </div>
+        <div class="scard">
+          <div class="scard-title" id="lbl-track" data-i18n="your-seq">시퀀스</div>
+          <div class="strack" id="sTrack"><span class="sempty" id="sEmpty" data-i18n="add-below">아래에서 모드를 추가하세요</span></div>
+        </div>
+        <div class="scard">
+          <div class="scard-title" id="lbl-add" data-i18n="add-to-seq">시퀀스에 추가</div>
+          <div class="sgrid" id="sGrid"></div>
+        </div>
+        <div class="sfooter">
+          <span class="sinfo" id="sInfo"></span>
+          <button class="sclear" id="sClear" data-i18n="clear">초기화</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="pg-blog">
+  <div class="blog-wrap">
+    <h2 id="blog-h">집중력 마스터 블로그</h2>
+    <p class="sub" id="blog-sub">과학적 근거로 시간을 정복하세요.</p>
+    <div class="blog-list" id="blogList"></div>
+  </div>
+</div>
+<div class="page" id="pg-article">
+  <div class="article-wrap">
+    <button class="article-back" id="article-back-btn" onclick="show('blog')">← <span data-i18n="back-blog">블로그로 돌아가기</span></button>
+    <div id="articleContent"></div>
+  </div>
+</div>
+
+<div class="page" id="pg-about">
+  <div class="static-wrap">
+    <h1 id="about-h">Pomo. 소개</h1>
+    <p class="lead" id="about-lead">Pomo.는 현직 안경사가 설계한 전문 생산성 도구로, 시력 건강을 보호하면서 깊은 몰입 상태에 도달할 수 있도록 돕습니다.</p>
+    <div id="about-content"></div>
+  </div>
+</div>
+
+<div class="page" id="pg-privacy">
+  <div class="static-wrap">
+    <h1 id="priv-h">개인정보 처리방침</h1>
+    <p class="lead" id="priv-date">최종 업데이트: 2026년 4월</p>
+    <div class="article-body" id="priv-body">
+      <h2>1. 개요</h2>
+      <p>Pomo. (이하 "서비스")는 사용자의 개인정보를 소중히 여깁니다. 본 개인정보 처리방침은 서비스 이용 중 수집되는 정보의 종류, 사용 방식, 보호 방법을 설명합니다. 본 서비스를 이용함으로써 아래 정책에 동의하는 것으로 간주됩니다.</p>
+
+      <h2>2. 수집하는 정보</h2>
+      <p>Pomo.는 직접적으로 개인 식별 정보(이름, 이메일, 전화번호 등)를 수집하거나 저장하지 않습니다. 단, 아래와 같은 정보가 자동으로 처리될 수 있습니다.</p>
+      <ul>
+        <li><strong>사용 데이터:</strong> 타이머 설정, 세션 기록, 집중 통계 등 모든 생산성 데이터는 오직 사용자 본인의 브라우저 내 LocalStorage에만 저장되며, 외부 서버로 전송되지 않습니다.</li>
+        <li><strong>기술 정보:</strong> 광고 서비스 제공을 위해 제3자(Google)가 브라우저 유형, IP 주소, 방문 페이지, 방문 시간 등의 기술적 정보를 자동으로 수집할 수 있습니다.</li>
+        <li><strong>쿠키 및 유사 추적 기술:</strong> 아래 3항에서 상세히 설명합니다.</li>
+      </ul>
+
+      <h2>3. 쿠키 및 Google AdSense</h2>
+      <p>본 서비스는 <strong>Google AdSense</strong>를 통해 광고를 게재합니다. Google AdSense는 관련 광고를 표시하기 위해 쿠키(Cookie)를 사용합니다. 쿠키는 사용자의 브라우저에 저장되는 작은 텍스트 파일입니다.</p>
+
+      <p><strong>Google이 사용하는 쿠키의 목적:</strong></p>
+      <ul>
+        <li>사용자의 본 사이트 및 타 사이트 방문 기록을 바탕으로 관심사 기반 맞춤 광고 제공</li>
+        <li>광고 노출 횟수 및 클릭률 측정 (광고 성과 분석)</li>
+        <li>동일 광고가 과도하게 반복 노출되는 것을 방지</li>
+        <li>사기성 클릭 탐지 및 광고 서비스 품질 개선</li>
+      </ul>
+
+      <p><strong>Google이 사용하는 주요 쿠키:</strong></p>
+      <ul>
+        <li><strong>IDE</strong> (doubleclick.net): 맞춤 광고 제공 및 광고 성과 측정. 만료 기간: 약 13개월.</li>
+        <li><strong>DSID</strong> (doubleclick.net): 로그인한 Google 계정과 광고 연동. 만료 기간: 약 2주.</li>
+        <li><strong>test_cookie</strong> (doubleclick.net): 브라우저가 쿠키를 지원하는지 확인. 만료 기간: 세션 종료 시.</li>
+        <li><strong>__gads / __gpi</strong> (본 사이트 도메인): Google AdSense 광고 서비스와 관련된 기본 광고 쿠키. 만료 기간: 약 13개월.</li>
+        <li><strong>AID, TAID</strong>: Google 계정으로 로그인된 기기 간 광고 활동 연동.</li>
+      </ul>
+
+      <p>Google의 쿠키 사용 정책에 대한 자세한 내용은 <a href="https://policies.google.com/technologies/ads" target="_blank">Google 광고 정책</a>에서 확인하실 수 있습니다.</p>
+
+      <h2>4. 제3자 광고 및 개인화 광고 거부 방법</h2>
+      <p>Google을 포함한 제3자 광고 제공업체는 쿠키를 사용하여 사용자의 이전 방문 기록을 기반으로 광고를 게재합니다. 개인화 광고를 원하지 않으시는 경우 아래 방법으로 거부하실 수 있습니다.</p>
+      <ul>
+        <li><a href="https://www.google.com/settings/ads" target="_blank">Google 광고 설정</a>에서 개인화 광고 비활성화</li>
+        <li><a href="https://optout.aboutads.info/" target="_blank">aboutads.info</a>에서 참여 업체 전체 광고 맞춤화 거부</li>
+        <li><a href="https://optout.networkadvertising.org/" target="_blank">NAI(Network Advertising Initiative)</a> 옵트아웃 도구 사용</li>
+        <li>브라우저 설정에서 쿠키를 직접 차단하거나 삭제 (단, 일부 사이트 기능이 제한될 수 있음)</li>
+      </ul>
+      <p>개인화 광고를 거부하더라도 광고 자체는 계속 표시될 수 있습니다. 다만 사용자의 관심사와 무관한 일반 광고가 표시됩니다.</p>
+
+      <h2>5. 로컬 데이터 저장 (LocalStorage)</h2>
+      <p>Pomo.의 모든 타이머 설정, 집중 통계, 세션 기록은 오직 사용자의 기기 내 브라우저 LocalStorage에만 저장됩니다. 이 데이터는:</p>
+      <ul>
+        <li>외부 서버나 데이터베이스에 전송되지 않습니다.</li>
+        <li>운영자가 접근하거나 열람할 수 없습니다.</li>
+        <li>브라우저의 사이트 데이터를 삭제하면 즉시 제거됩니다.</li>
+        <li>다른 기기나 브라우저와 동기화되지 않습니다.</li>
+      </ul>
+
+      <h2>6. 외부 링크</h2>
+      <p>본 서비스는 외부 웹사이트로 연결되는 링크를 포함할 수 있습니다. 외부 사이트의 개인정보 처리 방침은 해당 사이트의 정책을 따르며, 본 방침의 적용 범위에 해당하지 않습니다. 외부 링크 접속 시 해당 사이트의 개인정보 처리방침을 확인하시기 바랍니다.</p>
+
+      <h2>8. 방침 변경</h2>
+      <p>본 개인정보 처리방침은 법령 변경, 서비스 변경, Google 정책 업데이트 등에 따라 수정될 수 있습니다. 변경 시 본 페이지 상단의 "최종 업데이트" 날짜가 갱신됩니다. 중요한 변경사항이 있는 경우 서비스 내 공지를 통해 알릴 수 있습니다. 지속적인 서비스 이용은 변경된 방침에 대한 동의로 간주됩니다.</p>
+
+      <h2>9. 문의</h2>
+      <p>본 개인정보 처리방침에 관한 문의사항이 있으시면 서비스 내 About 페이지를 통해 연락하시기 바랍니다.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span onclick="show('about')">© 2026 Pomo. Project · 안경사가 만든 타이머</span>
+  <span style="color:var(--bd)">·</span>
+  <span id="footer-blog" onclick="show('blog')" data-i18n="nav-blog">블로그</span>
+  <span style="color:var(--bd)">·</span>
+  <span id="footer-privacy" onclick="show('privacy')" data-i18n="footer-privacy">개인정보 처리방침</span>
+</footer>
+
+<script>
+// --- I18N ---
+const I18N = {
+  ko: {
+    'nav-timer':'타이머','nav-blog':'블로그','nav-about':'소개 & 가이드',
+    'tab-timer':'타이머','tab-stats':'통계','tab-seq':'시퀀스',
+    'gl-focus':'집중','gl-break':'휴식',
+    'short-break':'짧은 휴식','long-break':'긴 휴식',
+    'add-time':'시간 추가','lbl-min':'분','lbl-sec':'초',
+    'lbl-auto':'다음 자동 시작','lbl-sound':'세션 알림음','test':'테스트',
+    'reset-today':'오늘 초기화',
+    'stat-sessions':'오늘 세션','stat-focus':'집중 시간','stat-streak':'연속 일수 🔥','stat-total':'전체 집중',
+    'by-mode':'모드별','today-sessions':'오늘 세션','no-sessions':'아직 세션이 없습니다. 집중을 시작하세요!',
+    'seq-off':'시퀀스 꺼짐','start':'시작','now-playing':'현재 재생 중',
+    'your-seq':'시퀀스','add-below':'아래에서 모드를 추가하세요','add-to-seq':'시퀀스에 추가','clear':'초기화',
+    'back-blog':'블로그로 돌아가기',
+    'blog-h':'집중력 마스터 블로그','blog-sub':'과학적 근거로 시간을 정복하세요.',
+    'footer-privacy':'개인정보 처리방침','ehint':'더블클릭으로 이름 변경',
+    'modes':{'focus':'포모도로','quick':'빠른 작업','study':'공부','deep':'깊은 집중','short':'짧은 휴식','long':'긴 휴식'}
+  },
+  en: {
+    'nav-timer':'Timer','nav-blog':'Blog','nav-about':'About & Guide',
+    'tab-timer':'Timer','tab-stats':'Stats','tab-seq':'Sequence',
+    'gl-focus':'Focus','gl-break':'Break',
+    'short-break':'Short Break','long-break':'Long Break',
+    'add-time':'Add time','lbl-min':'Minutes','lbl-sec':'Seconds',
+    'lbl-auto':'Auto start next','lbl-sound':'Session sound','test':'Test',
+    'reset-today':'Reset today',
+    'stat-sessions':'Sessions today','stat-focus':'Focus time','stat-streak':'Day streak 🔥','stat-total':'All-time focus',
+    'by-mode':'By mode','today-sessions':'Today\'s sessions','no-sessions':'No sessions yet. Start focusing!',
+    'seq-off':'Sequence off','start':'Start','now-playing':'Now playing',
+    'your-seq':'Your sequence','add-below':'Add modes below','add-to-seq':'Add to sequence','clear':'Clear',
+    'back-blog':'Back to Blog',
+    'blog-h':'Focus Mastery Blog','blog-sub':'Master your time with science-backed insights.',
+    'footer-privacy':'Privacy Policy','ehint':'double-click to rename',
+    'modes':{'focus':'Pomodoro','quick':'Quick Task','study':'Study','deep':'Deep Work','short':'Short Break','long':'Long Break'}
+  }
+};
+
+const BLOG_DATA = {
+  en: [
+    {
+      id:'sci', tag:'Science', tagColor:'#E24B4A',
+      title:"Why 25 Minutes? The Neuroscience of Focus Cycles",
+      summary:"Short, structured work intervals aren't arbitrary — they're rooted in how your brain actually manages attention and cognitive resources.",
+      date:'Apr 2026', readTime:'8 min',
+      body:`<h2>The Brain Can't Work Like a Machine</h2>
+<p>Most people approach their workday as if the brain were a computer — always on, always at full capacity. But neuroscience tells a very different story. Human attention is a fluctuating biological resource, not a constant one. A well-known phenomenon called "vigilance decrement" describes how our ability to sustain focus on a single task degrades significantly after around 25–30 minutes of uninterrupted work.</p>
+<p>This is where structured time management — like the Pomodoro Technique — finds its scientific footing. By working in short, bounded intervals, you work with your brain's natural limitations rather than against them.</p>
+<h2>The Ultradian Rhythm: Your Brain's Internal Clock</h2>
+<p>First discovered by sleep researcher Nathaniel Kleitman in the 1950s, ultradian rhythms are biological cycles that repeat multiple times throughout the day, roughly every 90–120 minutes. These cycles govern alertness, hormone secretion, and cognitive performance. They explain why you often feel a dip in energy and focus at predictable times during the day — it's not laziness, it's biology.</p>
+<p>Within each 90-minute cycle, your brain has an initial warm-up period of about 20–30 minutes, a peak performance zone lasting around 45 minutes, and a final 15-minute wind-down where attention naturally begins to drift. The 25-minute Pomodoro interval slots neatly into this high-performance window, allowing multiple focused bursts within a single ultradian cycle.</p>
+<h2>What the Research Says</h2>
+<p>A 2023 study published in the British Journal of Educational Psychology (Biwer et al.) compared students using systematic break-taking (similar to Pomodoro) against those using self-regulated breaks. Students in the systematic break group reported higher concentration and motivation, and perceived their tasks as less difficult — despite completing similar amounts of work in shorter overall time. Importantly, the self-regulating group showed higher fatigue and more distraction.</p>
+<p>A broader scoping review of 32 studies covering over 5,270 participants found positive correlations between Pomodoro Technique use and key learning outcomes: student performance (r = 0.65), focus and concentration (r = 0.72), time management (r = 0.60), and reduced fatigue (r = −0.55). These are strong signals that structured intervals consistently outperform unstructured work sessions.</p>
+<h2>The Cognitive Load Connection</h2>
+<p>Cognitive Load Theory, developed by educational psychologist John Sweller, posits that our working memory has a strict capacity limit. When that limit is exceeded — through multitasking, excessive information, or prolonged focus without rest — performance and retention plummet. Structured breaks act as a "reset," allowing working memory to clear and restore its capacity for the next interval.</p>
+<p>This is why the brief break between Pomodoros isn't wasted time. It's when your brain consolidates the information just processed, a stage facilitated by the Default Mode Network (DMN) — the brain's internal housekeeping system that activates during rest periods.</p>
+<h2>The Takeaway</h2>
+<p>The 25-minute focus interval isn't arbitrary. It aligns with the natural rhythm of human attention, respects working memory limits, and is supported by a growing body of peer-reviewed research. Whether you're a student, a programmer, or a knowledge worker, building your day around structured focus intervals is one of the highest-leverage changes you can make to your productivity.</p>`
+    },
+    {
+      id:'opt', tag:'Eye Health', tagColor:'#378ADD',
+      title:"Optician's Complete Guide to Digital Eye Strain",
+      summary:"As digital screen time surges globally, understanding and preventing Computer Vision Syndrome is no longer optional — it's essential.",
+      date:'Apr 2026', readTime:'10 min',
+      body:`<h2>The Silent Epidemic of Our Age</h2>
+<p>Digital Eye Strain (DES), also called Computer Vision Syndrome (CVS), has become one of the most prevalent occupational health issues of the 21st century. A 2023 report by the American Optometric Association estimated that over 104 million working-age Americans spend more than seven hours daily in front of digital screens — a figure that has increased sharply since the COVID-19 pandemic normalized remote work and online learning.</p>
+<p>The same report found that unmanaged DES cost an estimated $151 billion in lost productivity and healthcare expenses in 2023 alone. As a practicing optician, I see the consequences of this trend every single day in my clinic.</p>
+<h2>What Happens to Your Eyes During Screen Use</h2>
+<p>The core problem is one of muscle fatigue. When you read a screen, the ciliary muscle inside your eye — which controls the shape of the crystalline lens — contracts continuously to maintain sharp focus at near distances. Unlike the lens of a camera, this is an active, energy-consuming process. After hours of this sustained contraction, the ciliary muscle fatigues, resulting in blurred vision, eye strain, and headaches.</p>
+<p>Compounding this, research shows that our blink rate drops dramatically during screen use — from a healthy 15 blinks per minute to as few as 5 blinks per minute. Each blink refreshes the tear film that lubricates and nourishes the ocular surface. Reduced blinking leads directly to dry eye symptoms: burning, grittiness, and redness.</p>
+<h2>The Myopia Connection: A Growing Crisis</h2>
+<p>Beyond day-to-day discomfort, prolonged screen exposure carries longer-term risks. A landmark meta-analysis published in JAMA Network Open (2025), covering 45 studies and 335,524 individuals, confirmed a significant dose-response relationship between screen time and myopia risk. Myopia risk increased substantially between 1 and 4 hours of daily screen use, with a more gradual increase thereafter.</p>
+<p>A separate meta-analysis in BMC Public Health (2024) analyzed 19 epidemiological studies and confirmed a statistically significant correlation between high screen time exposure and myopia in children and adolescents. This is a critical finding: the habits children develop today with digital devices will shape their ocular health for decades.</p>
+<h2>The 20-20-20 Rule: What It Is and What It Isn't</h2>
+<p>The 20-20-20 Rule — look at something 20 feet away for 20 seconds every 20 minutes — was developed by optometrist Dr. Jeffrey Anshel around 1991. The numbers are grounded in optics: 20 feet (6 meters) corresponds to "optical infinity," the distance at which incoming light is essentially parallel, allowing the ciliary muscle to fully relax. Twenty seconds is considered sufficient time for this relaxation to occur.</p>
+<p>However, it's important to be honest about the scientific evidence: the rule itself has limited peer-reviewed support. A 2023 study (Johnson & Rosenfield) found that 20-second breaks at various intervals did not significantly reduce DES symptoms in a controlled reading task. That said, a separate two-week study by Talens-Estarelles et al. found improvements in dry eye and DES symptoms when computer software reminded users to take breaks according to the rule — though symptoms returned after reminders stopped.</p>
+<p>The consensus among eye care professionals: the specific numbers may not be magic, but the underlying principle — taking regular, deliberate breaks from near work — is genuinely beneficial. Think of the 20-20-20 Rule as a minimum floor, not a ceiling.</p>
+<h2>Practical Recommendations from the Clinic</h2>
+<p>Beyond the 20-20-20 Rule, here are the evidence-based strategies I recommend to every screen-heavy patient. Optimize your screen distance: your monitor should be at arm's length (roughly 50–70 cm away) and slightly below eye level. Use artificial tears if you experience dry eye, particularly preservative-free drops for frequent use. Adjust screen brightness and contrast to match your ambient lighting — excessive contrast increases visual fatigue. Consider blue-light filtering lenses if you work in the evening, as short-wavelength blue light can suppress melatonin and affect sleep quality. And most importantly, schedule annual comprehensive eye examinations. Many DES symptoms are exacerbated by uncorrected refractive errors that a simple pair of glasses could resolve.</p>
+<h2>The Bottom Line</h2>
+<p>Digital eye strain is a genuine, measurable health burden — not hypochondria. The science is clear that prolonged, unmanaged screen use takes a real toll on ocular health and long-term vision. By understanding the physiology, taking structured breaks, and following professional guidance, you can protect your vision while thriving in a screen-dependent world.</p>`
+    },
+    {
+      id:'flow', tag:'Productivity', tagColor:'#7F77DD',
+      title:"Flow State vs. Pomodoro: Can You Have Both?",
+      summary:"The Pomodoro Technique's rigid intervals are often criticized for disrupting deep focus. Here's what the science actually says — and how to find your balance.",
+      date:'Apr 2026', readTime:'7 min',
+      body:`<h2>The Core Tension</h2>
+<p>Mihaly Csikszentmihalyi's concept of "flow" — the state of effortless, deeply absorbed concentration — is the holy grail of cognitive performance. In flow, time seems to stop, output quality peaks, and the work feels intrinsically rewarding. The problem? A kitchen timer ringing every 25 minutes is perhaps the most effective flow-killer imaginable.</p>
+<p>This tension is a genuine criticism of the Pomodoro Technique, and it's worth addressing honestly rather than dismissing.</p>
+<h2>What Research Shows</h2>
+<p>A 2024 study from a Dutch university (reviewed under ERCPN-274) directly compared three break-taking strategies: self-regulated breaks, the Pomodoro Technique, and the Flowtime Technique (which allows uninterrupted work until a natural focus dip). The results were nuanced: Pomodoro users reported higher concentration and motivation than self-regulators, but also reported that mandatory breaks sometimes felt disruptive when they were in a focused state.</p>
+<p>The key insight: flow disruption is more likely to be a problem for experienced practitioners on creative or complex tasks. For beginners, or for routine cognitive tasks, the Pomodoro structure provides enough scaffolding to actually prevent the mind-wandering that would otherwise interrupt flow anyway.</p>
+<h2>A Practical Synthesis</h2>
+<p>The most effective approach, supported by both the literature and practitioner experience, is to treat Pomodoro as a flexible framework rather than a rigid law. Use 25-minute intervals as a default and a fallback — particularly when starting a new task, when motivation is low, or when you're prone to procrastination. But if you genuinely enter a deep flow state and the timer rings, it's perfectly rational to extend the interval by 10–15 minutes to allow natural completion of the thought or task segment.</p>
+<p>Tools like Pomo. support this flexibility through the adjustable timer and the "Add time" feature, which lets you extend your session without breaking your psychological commitment to the work interval. The goal is not obedience to a technique, but optimal cognitive performance — and that requires listening to your own brain.</p>`
+    },
+    {
+      id:'myopia', tag:'Eye Health', tagColor:'#378ADD',
+      title:"The Myopia Pandemic: Why Your Child's Screen Time Matters Now",
+      summary:"Global rates of nearsightedness have surged in the past two decades. Here's what parents and educators need to know, backed by the latest research.",
+      date:'Apr 2026', readTime:'9 min',
+      body:`<h2>A Global Vision Crisis</h2>
+<p>Myopia — nearsightedness, the inability to see distant objects clearly — has reached pandemic proportions. Rates that were relatively stable for generations have accelerated dramatically in recent decades, particularly in East Asian countries where academic pressure and indoor lifestyles converge. Research projects that by 2050, roughly half of the world's population may be myopic.</p>
+<p>The COVID-19 pandemic made this crisis measurably worse. A study published in JAMA Ophthalmology (2023) found that the rate of myopia progression in school-aged children more than doubled during the pandemic period of home confinement and increased online learning, compared to pre-pandemic rates.</p>
+<h2>The Screen Time Link</h2>
+<p>The relationship between digital screen use and myopia is now better understood than ever. A comprehensive dose-response meta-analysis published in JAMA Network Open (2025), covering 45 studies and over 335,000 participants, found a significant sigmoidal curve: myopia risk increased most sharply between 1 and 4 hours of daily screen time, with a more gradual increase beyond that threshold.</p>
+<p>A separate meta-analysis in BMC Public Health (2024), reviewing 19 epidemiological studies of children and adolescents, confirmed a statistically significant correlation between high screen time and myopia prevalence. Smartphone use showed particularly strong associations, possibly due to the shorter viewing distance typically used with handheld devices compared to desktop computers.</p>
+<h2>Why Near Work Causes Myopia</h2>
+<p>The leading hypothesis involves defocus signals. When the eye is constantly focused at near distances, the retinal image of distant objects falls slightly behind the retina. This "hyperopic defocus" is believed to trigger axial elongation — a physical lengthening of the eyeball — as the eye attempts to bring that defocused image onto the retina. Once the eyeball has elongated, the process is largely irreversible. This is why prevention, particularly in childhood, is so critical.</p>
+<h2>The Protective Role of Outdoor Time</h2>
+<p>One of the most robust findings in myopia research is the protective effect of outdoor time. Studies suggest that children who spend at least 90 minutes per day outdoors have significantly lower myopia rates. The mechanism is thought to involve both reduced near-work exposure and the stimulation of retinal dopamine release by high-intensity daylight. Bright outdoor light levels (typically 10,000–100,000 lux) vastly exceed indoor light levels (typically 300–500 lux), creating a fundamentally different visual environment for the developing eye.</p>
+<h2>Practical Steps for Parents</h2>
+<p>Based on current evidence, limiting children's recreational screen time to under 4 hours per day is a reasonable target. Encourage at least 90 minutes of outdoor activity daily. Enforce minimum reading distances — screens should be held no closer than 30 cm. Build in regular breaks from near work, especially for homework and online learning. And schedule annual eye examinations to catch myopia progression early, when interventions like orthokeratology or myopia control contact lenses can slow the process.</p>`
+    },
+    {
+      id:'deepwork', tag:'Productivity', tagColor:'#D4537E',
+      title:"Deep Work in the Age of Distraction: A Practical Guide",
+      summary:"Cal Newport's concept of 'Deep Work' has become a cornerstone of modern productivity thinking. Here's how to actually achieve it.",
+      date:'Apr 2026', readTime:'8 min',
+      body:`<h2>What Is Deep Work?</h2>
+<p>Coined by computer science professor and author Cal Newport, "Deep Work" refers to professional activities performed in a state of distraction-free concentration that push cognitive capabilities to their limit. These efforts create new value, improve skills, and are hard to replicate. In contrast, "Shallow Work" — email, administrative tasks, routine meetings — is logistical but not cognitively demanding.</p>
+<p>Newport's argument, backed by decades of research in cognitive science and expert performance, is that the ability to perform deep work is becoming increasingly rare and increasingly valuable in the knowledge economy. Yet most work environments and personal habits are actively hostile to it.</p>
+<h2>The Neuroscience of Deep Focus</h2>
+<p>When you enter a state of deep focus, your brain undergoes measurable changes. Prefrontal cortex activity increases, supporting working memory, decision-making, and executive control. Simultaneously, the brain suppresses activity in the default mode network — the "mind-wandering" system — allowing sustained, goal-directed thought. Building the capacity to achieve and maintain this state requires deliberate practice, just like physical fitness.</p>
+<p>Research on expert performance consistently finds that top performers across domains — from chess grandmasters to elite musicians to world-class programmers — typically engage in no more than 4 hours of true deep work per day. This isn't a limitation to be overcome; it reflects the genuine energetic cost of high-intensity cognitive work.</p>
+<h2>Building a Deep Work Practice</h2>
+<p>The most effective deep work practitioners treat their focus time as a non-negotiable appointment. Choose a consistent time and location for your deep work sessions — consistency reduces the mental overhead of deciding when and where to work. Start with sessions as short as 25–30 minutes (a single Pomodoro) and gradually build to 90-minute blocks as your focus "stamina" develops.</p>
+<p>Eliminate digital distractions ruthlessly during these sessions. Research on interruption recovery shows that after an email notification — even if you don't read it — it takes an average of 23 minutes to return to the original task at full focus depth. A single notification can effectively destroy a 25-minute Pomodoro. Use website blockers, phone silencing, and physical signaling (a closed door, headphones) to protect your focused time.</p>
+<h2>The Role of Routine and Ritual</h2>
+<p>The most productive deep workers develop pre-work rituals that signal to the brain that it's time to focus. This leverages the brain's predictive processing — by consistently pairing a ritual (making a specific drink, setting up a particular workspace, starting a timer) with focused work, the ritual itself begins to trigger the focused state. Over weeks and months, the activation threshold for deep focus lowers, making it easier and faster to enter the state.</p>
+<p>Pomo. is designed to support exactly this kind of ritualization. The act of choosing your mode, setting your interval, and pressing play is a micro-ritual that signals intentional cognitive engagement. Small as it seems, consistency with this ritual compounds significantly over time.</p>`
+    },
+    {
+      id:'sleep', tag:'Science', tagColor:'#E24B4A',
+      title:"Why Sleep Is Your Most Powerful Productivity Tool",
+      summary:"No amount of technique, caffeine, or motivation can compensate for sleep deprivation. Here's what the science says about sleep and cognitive performance.",
+      date:'Apr 2026', readTime:'8 min',
+      body:`<h2>The Myth of the Productive Night Owl</h2>
+<p>Modern work culture often valorizes the ability to function on minimal sleep — an attitude that is not only wrong but actively dangerous for cognitive performance. Sleep is not a passive state of inactivity. It is a highly active biological process during which the brain performs essential maintenance, consolidates memories, processes emotions, and clears metabolic waste products through the glymphatic system.</p>
+<p>Decades of sleep research, led by scientists like Matthew Walker, have established beyond reasonable doubt that chronic sleep deprivation (defined as regularly sleeping less than 7 hours per night for adults) produces measurable impairments in virtually every domain of cognitive function: attention, working memory, decision-making, emotional regulation, and creative problem-solving.</p>
+<h2>Sleep and Memory Consolidation</h2>
+<p>One of the most important functions of sleep for knowledge workers and students is memory consolidation. During the slow-wave and REM stages of sleep, the brain replays and strengthens the neural connections formed during learning that day — a process called synaptic homeostasis. Information learned before sleep is retained significantly better than information learned at equivalent time intervals without sleep.</p>
+<p>This has direct implications for study strategies. Pulling an all-nighter before an exam is not just ineffective — it is counterproductive. The sleep deprivation impairs the very consolidation process that makes studied information accessible under test conditions. A consistent sleep schedule with adequate slow-wave and REM sleep is among the most evidence-based study strategies available.</p>
+<h2>Sleep and Focused Work</h2>
+<p>For anyone using structured focus techniques like Pomodoro, sleep quality is the foundation on which everything else rests. Even a single night of 6 hours of sleep (vs. 8 hours) produces measurable reductions in sustained attention performance equivalent to 24 hours of total sleep deprivation. The troubling aspect of chronic sleep restriction is that it impairs your ability to accurately perceive your own impairment — subjectively, you feel "fine," while objective performance measures show significant degradation.</p>
+<h2>Practical Sleep Optimization</h2>
+<p>Maintain a consistent sleep and wake time, even on weekends — this is the single most impactful sleep hygiene practice. Keep your bedroom cool (roughly 18–19°C is physiologically optimal for sleep onset), dark, and quiet. Avoid screens for at least 60 minutes before bed, as the blue light wavelengths emitted by modern displays suppress melatonin secretion. Limit caffeine after 2 PM — caffeine's half-life is approximately 5–7 hours, meaning a 3 PM coffee still has half its stimulant effect at 8–10 PM. And treat any excessive daytime sleepiness as a clinical signal worth discussing with a physician, as it may indicate an underlying sleep disorder.</p>`
+    },
+    {
+      id:'breath', tag:'Science', tagColor:'#EF9F27',
+      title:"Physiological Sighs and Box Breathing: The Fastest Ways to Reset Your Focus",
+      summary:"You don't need a meditation retreat to manage stress and restore focus. Two breathing techniques, backed by neuroscience, can shift your mental state in under two minutes.",
+      date:'Apr 2026', readTime:'6 min',
+      body:`<h2>Why Breathing Controls Your Brain</h2>
+<p>The connection between breathing and mental state is not metaphorical — it is mechanistic. The breath is the only autonomic bodily function that can be voluntarily controlled, making it a direct access point to the autonomic nervous system. By deliberately manipulating the rhythm, depth, and pattern of breathing, you can measurably shift your physiological state between sympathetic arousal (the stress response) and parasympathetic activation (the rest-and-digest state).</p>
+<p>This is particularly relevant for knowledge workers who use structured focus techniques. The transition between a Pomodoro work interval and a break, or the experience of mid-session stress when stuck on a difficult problem, creates spikes in cortisol and sympathetic activation that can derail concentration. Deliberate breathing protocols offer a fast, evidence-based solution.</p>
+<h2>The Physiological Sigh</h2>
+<p>Identified and researched extensively by Stanford neuroscientist Dr. Andrew Huberman, the physiological sigh is the fastest known method for reducing physiological stress. It consists of a double inhale through the nose — a normal inhale followed immediately by a short, sharp second inhale — followed by a long, slow exhale through the mouth.</p>
+<p>The mechanism is elegant: the double inhale reinflates the small air sacs in the lungs (alveoli) that collapse during periods of shallow, stress-related breathing, maximizing the surface area for gas exchange. The extended exhale then triggers the parasympathetic nervous system via the vagus nerve. The result is a measurable drop in heart rate and cortisol within 1–2 breath cycles — faster than any other known technique for acute stress reduction.</p>
+<h2>Box Breathing</h2>
+<p>Used by Navy SEALs, emergency responders, and elite athletes, box breathing is a structured breathing pattern designed to maintain calm under high-pressure conditions. The protocol is straightforward: inhale for 4 counts, hold for 4 counts, exhale for 4 counts, hold for 4 counts. Repeat for 4–6 cycles.</p>
+<p>Box breathing works by equalizing the ratio of inhalation to exhalation, which balances sympathetic and parasympathetic tone. The breath-hold phases build CO2 tolerance, which is associated with improved stress resilience and reduced anxiety sensitivity. Many practitioners report that 2 minutes of box breathing at the start of a Pomodoro session significantly improves the depth and quality of focus during the subsequent work interval.</p>
+<h2>Practical Integration</h2>
+<p>Use the physiological sigh reactively — whenever you notice a spike of stress or frustration during a work session. Use box breathing proactively — as a pre-work ritual at the start of a demanding Pomodoro. The break intervals between Pomodoros are an ideal time to practice either technique, combining physical rest with active nervous system regulation. This approach transforms breaks from passive waiting time into genuine physiological recovery.</p>`
+    },
+    {
+      id:'bluelight', tag:'Eye Health', tagColor:'#378ADD',
+      title:"Blue Light, Sleep, and Your Eyes: Separating Fact from Fiction",
+      summary:"Blue light has become a major talking point in eye care. But what does the evidence actually show — and do you really need those $200 blue-light-filtering glasses?",
+      date:'Apr 2026', readTime:'7 min',
+      body:`<h2>What Is Blue Light?</h2>
+<p>Blue light refers to the portion of the visible light spectrum with wavelengths roughly between 380 and 500 nanometers. It is emitted by the sun, but also by LED lights, fluorescent lights, and the displays of modern digital devices — smartphones, tablets, computer monitors, and televisions. The intensity of blue light from digital screens is far lower than from sunlight, a fact that is often lost in media coverage of the topic.</p>
+<h2>Blue Light and Sleep: The Solid Science</h2>
+<p>The strongest and most well-established effect of blue light on health is its impact on the circadian rhythm. The retina contains specialized photoreceptors called intrinsically photosensitive retinal ganglion cells (ipRGCs), which are maximally sensitive to short-wavelength blue light (approximately 480 nm). These cells directly regulate the suprachiasmatic nucleus — the brain's "master clock" — and suppress the production of melatonin, the hormone that signals the onset of nighttime and facilitates sleep.</p>
+<p>Exposure to blue-light-emitting screens in the 1–2 hours before bedtime can delay melatonin onset by up to 1.5 hours and reduce melatonin levels by approximately 50%. This is not trivial: it can meaningfully delay sleep onset, reduce total sleep duration, and impair sleep quality — with all the downstream cognitive consequences discussed in our sleep article.</p>
+<h2>Blue Light and Eye Damage: A More Complicated Story</h2>
+<p>Claims that blue light from screens causes direct eye damage or accelerates macular degeneration are not supported by current clinical evidence at normal screen exposure levels. The American Academy of Ophthalmology has explicitly stated that it does not recommend blue-light-blocking glasses for screen users, citing a lack of evidence for their effectiveness in reducing eye strain or preventing eye disease.</p>
+<p>The eye strain many people attribute to blue light is more accurately explained by digital eye strain mechanisms: reduced blink rate, sustained ciliary muscle contraction, and screen glare — none of which are specifically related to the wavelength of light emitted.</p>
+<h2>Should You Use Blue Light Filtering?</h2>
+<p>The evidence-based position is nuanced. Blue-light filtering is likely genuinely beneficial in the 1–2 hours before bed, primarily for its sleep-protective effects. Most smartphones and computers now offer built-in "night mode" features (True Tone, Night Shift, Night Light) that shift the display toward warmer wavelengths in the evening — these are worth using consistently. Dedicated blue-light-blocking glasses offer the same effect and may be convenient for evening screen use.</p>
+<p>However, wearing blue-light-filtering lenses all day — including during daylight hours — is unnecessary and may actually be counterproductive. Daytime blue light exposure is important for mood regulation, cognitive alertness, and healthy circadian rhythm calibration. Blocking it indiscriminately can interfere with these benefits.</p>
+<h2>The Bottom Line</h2>
+<p>Use night mode on your devices after sunset. Take regular breaks from screens using the 20-20-20 principle. Address glare with matte screen protectors or anti-reflective coatings. And save the blue-light glasses for the evening if you want to use them. This evidence-based approach costs almost nothing and delivers real benefits — without the hype.</p>`
+    },
+    {
+      id:'nutrition', tag:'Productivity', tagColor:'#EF9F27',
+      title:"Brain Food: How Nutrition Directly Impacts Focus and Cognitive Performance",
+      summary:"What you eat before a Pomodoro session matters more than most productivity guides acknowledge. Here's the nutritional science behind sustained cognitive performance.",
+      date:'Apr 2026', readTime:'7 min',
+      body:`<h2>Your Brain Is a Metabolically Expensive Organ</h2>
+<p>The human brain represents roughly 2% of body weight but consumes approximately 20% of the body's total energy expenditure at rest. This metabolic intensity means that the brain is exquisitely sensitive to the quality and timing of nutritional input. Unlike muscles, which can operate on both glucose and fatty acids, the brain runs almost exclusively on glucose under normal conditions — making blood sugar stability a direct determinant of cognitive performance.</p>
+<h2>The Blood Sugar Roller Coaster</h2>
+<p>The standard modern diet — high in refined carbohydrates, processed foods, and added sugar — produces large, rapid spikes in blood glucose followed by corresponding crashes. During the post-meal glucose crash, cognitive performance deteriorates measurably: attention narrows, working memory capacity drops, and decision-making quality declines. This is the biological basis for the post-lunch "afternoon slump" that devastates productivity in most offices around the world.</p>
+<p>For someone using structured focus techniques like Pomodoro, this blood sugar volatility is a significant threat to the quality of focus intervals. A 90-minute work block that falls during a glucose crash will produce systematically worse output than the same block undertaken with stable blood glucose.</p>
+<h2>Nutritional Strategies for Sustained Focus</h2>
+<p>Prioritize low-glycemic foods that release glucose slowly and steadily: whole grains, legumes, nuts, seeds, and most vegetables. Pair carbohydrates with protein and healthy fats to further blunt the glycemic response. Avoid eating large meals immediately before demanding focus sessions — digestion competes with cognitive work for metabolic resources and blood flow.</p>
+<p>Omega-3 fatty acids, particularly DHA (docosahexaenoic acid), are structural components of neuronal membranes and play a critical role in synaptic transmission and neuroplasticity. Multiple studies link higher DHA intake (from fatty fish, flaxseed, walnuts, or supplements) with improved sustained attention and working memory performance. This is not a marginal effect — it is a foundational nutritional requirement for optimal brain function.</p>
+<h2>Caffeine: The World's Most Popular Nootropic</h2>
+<p>Caffeine is the most widely consumed psychoactive substance in the world, and it is genuinely effective as a cognitive enhancer within appropriate parameters. It works primarily by blocking adenosine receptors in the brain — adenosine is the compound that accumulates during waking hours and progressively increases the sensation of sleepiness. By blocking these receptors, caffeine delays fatigue onset and improves sustained attention, reaction time, and vigilance.</p>
+<p>The key to effective caffeine use is timing and moderation. As discussed in our sleep article, caffeine consumed after approximately 2 PM can meaningfully impair sleep quality due to its 5–7 hour half-life. Strategic morning and early-afternoon use, in doses of 100–200 mg (1–2 cups of coffee), delivers genuine cognitive benefits without undermining the sleep that makes tomorrow's focus possible. Avoid using caffeine to compensate for sleep deprivation on a chronic basis — this produces tolerance rapidly and eventually makes the caffeine merely necessary to function at baseline rather than genuinely enhancing performance.</p>`
+    },
+    {
+      id:'exercise', tag:'Science', tagColor:'#1D9E75',
+      title:"Exercise and the Brain: Why 20 Minutes of Movement Changes Everything",
+      summary:"The cognitive benefits of physical exercise are among the most robust findings in neuroscience. And the dose required is smaller than most people think.",
+      date:'Apr 2026', readTime:'7 min',
+      body:`<h2>Exercise Is Cognitive Enhancement</h2>
+<p>The relationship between physical exercise and cognitive performance is one of the most replicated and robust findings in neuroscience. Regular aerobic exercise — walking, cycling, running, swimming — produces measurable structural changes in the brain, including increased volume in the hippocampus (the primary site of memory formation and spatial navigation), enhanced prefrontal cortex function (supporting working memory and executive control), and elevated levels of brain-derived neurotrophic factor (BDNF), sometimes described as "miracle-gro for the brain."</p>
+<p>These are not subtle effects. Studies consistently show that regular exercisers outperform sedentary individuals on tests of attention, working memory, processing speed, and cognitive flexibility — across all age groups, including children, young adults, and the elderly.</p>
+<h2>The Acute Effect: Immediate Post-Exercise Cognitive Boost</h2>
+<p>Beyond the long-term structural benefits of regular exercise, even a single bout of moderate aerobic exercise produces an immediate, measurable improvement in cognitive performance that lasts for 1–3 hours post-exercise. This effect is mediated by several mechanisms: increased cerebral blood flow delivering more oxygen and glucose to neural tissue; elevated catecholamine levels (dopamine, norepinephrine) that enhance attention and motivation circuits; and upregulation of BDNF that temporarily enhances synaptic plasticity.</p>
+<p>For Pomodoro practitioners, this finding has a highly practical implication: scheduling a 20-minute brisk walk or exercise session before a demanding work block — or during a longer break — can measurably improve the quality and depth of focus in the subsequent session.</p>
+<h2>The Minimum Effective Dose</h2>
+<p>The good news is that the cognitive benefits of exercise do not require marathon training. Research suggests that as little as 20 minutes of moderate-intensity aerobic exercise (brisk walking at a pace that elevates heart rate to approximately 50–60% of maximum) is sufficient to produce significant acute cognitive benefits. The exercise doesn't need to be continuous — three 10-minute sessions distributed throughout the day may produce similar benefits to a single 30-minute session, with the added advantage of reducing sedentary time.</p>
+<h2>Eye Health Benefits of Exercise</h2>
+<p>As an optician, I want to highlight a less commonly discussed benefit of exercise relevant to screen-heavy workers: physical activity appears to have a protective effect against myopia progression. Multiple studies suggest that outdoor physical activity — not just near-work breaks, but genuine exercise in natural light — is one of the strongest modifiable protective factors against the development and progression of myopia in children and young adults.</p>
+<p>The mechanisms likely involve both the retinal dopamine stimulation from bright outdoor light (discussed in our myopia article) and the direct ocular blood flow benefits of cardiovascular exercise. Building regular physical activity into your workday — even brief walks outside during Pomodoro breaks — is simultaneously an investment in your cognitive performance and your long-term visual health.</p>`
+    }
+  ],
+  ko: [
+    {
+      id:'sci', tag:'과학', tagColor:'#E24B4A',
+      title:"왜 25분인가? 집중력 주기의 신경과학",
+      summary:"짧은 구조적 작업 간격은 임의적인 것이 아닙니다 — 뇌가 실제로 주의력과 인지 자원을 관리하는 방식에 근거하고 있습니다.",
+      date:'2026.04', readTime:'8분',
+      body:`<h2>뇌는 기계처럼 작동할 수 없다</h2>
+<p>대부분의 사람들은 뇌를 컴퓨터처럼 취급합니다 — 항상 켜져 있고, 항상 최대 성능을 발휘한다고 생각하죠. 그러나 신경과학은 전혀 다른 이야기를 합니다. 인간의 주의력은 고정된 자원이 아니라 끊임없이 변동하는 생물학적 자원입니다. '주의력 감퇴(vigilance decrement)'라 불리는 현상은 단일 작업에 방해 없이 집중한 지 약 25~30분 후부터 주의 유지 능력이 크게 떨어진다는 것을 보여줍니다.</p>
+<p>바로 이 지점에서 포모도로 기법과 같은 구조적 시간 관리법이 과학적 근거를 찾습니다. 짧고 경계가 있는 간격으로 작업함으로써, 뇌의 자연적 한계에 맞서는 것이 아니라 함께 작동하는 것이죠.</p>
+<h2>울트라디안 리듬: 뇌의 내부 시계</h2>
+<p>1950년대 수면 연구자 나다니엘 클라이트만이 처음 발견한 울트라디안 리듬은 하루에 여러 번, 약 90~120분마다 반복되는 생물학적 주기입니다. 이 주기는 각성도, 호르몬 분비, 인지 성능을 조절합니다. 하루 중 예측 가능한 시점에 에너지와 집중력이 떨어지는 것을 느껴본 적 있으신가요? 게으름이 아닙니다 — 생물학입니다.</p>
+<p>각 90분 주기 안에서, 뇌는 약 20~30분의 초기 워밍업 시간, 약 45분의 최고 성능 구간, 그리고 자연스럽게 주의가 흐트러지기 시작하는 마지막 15분으로 구성됩니다. 25분 포모도로 간격은 이 고성능 구간에 정확히 맞아 들어가며, 하나의 울트라디안 주기 안에서 여러 번의 집중 폭발을 가능하게 합니다.</p>
+<h2>연구가 말하는 것</h2>
+<p>2023년 영국 교육심리학 저널(Biwer et al.)에 발표된 연구는 체계적 휴식(포모도로와 유사)을 사용하는 학생들과 자율적 휴식을 취하는 학생들을 비교했습니다. 체계적 휴식 그룹의 학생들은 더 높은 집중도와 동기를 보고했고, 과제를 덜 어렵게 느꼈습니다 — 전반적으로 더 짧은 시간 안에 비슷한 양의 작업을 완료했음에도 불구하고. 자율 규제 그룹은 더 높은 피로도와 더 많은 산만함을 보였습니다.</p>
+<p>5,270명 이상의 참가자를 포함하는 32개 연구의 광범위한 검토에서는 포모도로 기법 사용과 핵심 학습 결과 사이의 긍정적 상관관계가 발견되었습니다: 학생 성과(r = 0.65), 집중력(r = 0.72), 시간 관리(r = 0.60), 피로 감소(r = −0.55). 이는 구조적 간격이 비구조적 작업 세션을 일관되게 능가한다는 강력한 신호입니다.</p>
+<h2>인지 부하 이론과의 연결</h2>
+<p>교육 심리학자 존 스웰러가 개발한 인지 부하 이론은 우리의 작업 기억이 엄격한 용량 한계를 가진다고 설명합니다. 이 한계가 초과될 때 — 멀티태스킹, 과도한 정보, 또는 휴식 없는 장시간 집중을 통해 — 성능과 기억력이 급격히 저하됩니다. 구조적 휴식은 '리셋' 역할을 하여 작업 기억이 다음 간격을 위한 용량을 지우고 회복할 수 있게 합니다.</p>
+<p>이것이 포모도로 사이의 짧은 휴식이 낭비된 시간이 아닌 이유입니다. 뇌가 방금 처리한 정보를 통합하는 시간이며, 이는 휴식 중에 활성화되는 뇌의 내부 정리 시스템인 기본 모드 네트워크(DMN)에 의해 촉진됩니다.</p>
+<h2>핵심 정리</h2>
+<p>25분 집중 간격은 임의적이지 않습니다. 인간 주의력의 자연적 리듬과 일치하고, 작업 기억 한계를 존중하며, 점점 늘어나는 동료 심사 연구들의 지지를 받고 있습니다. 학생이든, 프로그래머든, 지식 노동자든 — 하루를 구조적 집중 간격으로 구성하는 것은 생산성에 가장 높은 레버리지를 제공하는 변화 중 하나입니다.</p>`
+    },
+    {
+      id:'opt', tag:'눈 건강', tagColor:'#378ADD',
+      title:"안경사의 디지털 눈 피로 완전 가이드",
+      summary:"디지털 화면 사용이 전 세계적으로 급증하면서, 컴퓨터 시력 증후군을 이해하고 예방하는 것은 이제 선택이 아닌 필수입니다.",
+      date:'2026.04', readTime:'10분',
+      body:`<h2>우리 시대의 조용한 유행병</h2>
+<p>디지털 눈 피로(DES), 일명 컴퓨터 시력 증후군(CVS)은 21세기 가장 만연한 직업 건강 문제 중 하나가 되었습니다. 미국 안과학회의 2023년 보고서에 따르면, 1억 400만 명 이상의 미국 근로 연령층이 하루에 7시간 이상 디지털 화면 앞에서 시간을 보냅니다. 이는 코로나19 팬데믹 이후 재택근무와 온라인 학습이 일상화되면서 급격히 증가한 수치입니다.</p>
+<p>같은 보고서는 관리되지 않는 DES가 2023년에만 생산성 손실 및 의료 비용으로 약 1,510억 달러를 유발했다고 추산했습니다. 현직 안경사로서 저는 이 추세의 결과를 매일 진료실에서 직접 목격하고 있습니다.</p>
+<h2>화면 사용 중 눈에 무슨 일이 일어나는가</h2>
+<p>핵심 문제는 근육 피로입니다. 화면을 읽을 때, 눈 안의 수정체 모양을 조절하는 모양체 근육은 가까운 거리에서 선명한 초점을 유지하기 위해 지속적으로 수축합니다. 카메라 렌즈와 달리, 이는 에너지를 소모하는 능동적 과정입니다. 이러한 지속적 수축이 수 시간 동안 계속되면 모양체 근육이 피로해져 흐릿한 시야, 눈 피로, 두통이 발생합니다.</p>
+<p>이를 더욱 악화시키는 것은 화면 사용 중 눈 깜빡임 횟수가 극적으로 줄어든다는 것입니다 — 건강한 분당 15회에서 분당 5회까지 떨어질 수 있습니다. 눈 깜빡임은 안구 표면을 윤활하고 영양을 공급하는 눈물막을 새로 고칩니다. 깜빡임 감소는 건성안 증상으로 직결됩니다: 타는 느낌, 이물감, 충혈.</p>
+<h2>근시 관련성: 성장하는 위기</h2>
+<p>일상적인 불편함 외에도, 장시간 화면 노출은 장기적인 위험을 수반합니다. 45개 연구와 335,524명을 포함한 JAMA 네트워크 오픈(2025)에 발표된 메타 분석은 화면 시간과 근시 위험 사이의 유의미한 용량-반응 관계를 확인했습니다. 근시 위험은 하루 1~4시간의 화면 사용 사이에 가장 크게 증가했으며, 이후에는 더 완만하게 상승했습니다.</p>
+<p>BMC 공중보건(2024)의 별도 메타 분석은 19개의 역학 연구를 분석하여 아동과 청소년의 높은 화면 시간 노출과 근시 사이의 통계적으로 유의미한 상관관계를 확인했습니다. 이는 중요한 발견입니다: 아이들이 오늘 디지털 기기와 형성하는 습관이 수십 년간의 안구 건강을 결정짓습니다.</p>
+<h2>20-20-20 법칙: 실제와 한계</h2>
+<p>20-20-20 법칙 — 20분마다 6미터(20피트) 거리의 물체를 20초간 바라보기 — 은 1991년경 안경사 Jeffrey Anshel 박사에 의해 개발되었습니다. 숫자들은 광학에 근거합니다: 6미터는 들어오는 빛이 본질적으로 평행한 '광학적 무한대'에 해당하며, 이때 모양체 근육이 완전히 이완될 수 있습니다. 20초는 이 이완이 일어나기에 충분한 시간으로 여겨집니다.</p>
+<p>그러나 과학적 증거에 대해 솔직할 필요가 있습니다: 이 법칙 자체는 동료 심사 지지가 제한적입니다. 한편 Talens-Estarelles 등의 2주 연구에서는 컴퓨터 소프트웨어가 법칙에 따라 휴식을 상기시켜줄 때 건성안과 DES 증상이 개선되었습니다 — 다만 상기가 중단된 후에는 증상이 돌아왔습니다. 안과 전문가들 사이의 합의: 특정 숫자가 마법적이지 않더라도, 근거리 작업에서 정기적이고 의도적인 휴식을 취하는 기본 원칙은 진정으로 유익합니다.</p>
+<h2>진료실에서 드리는 실용적 권고사항</h2>
+<p>20-20-20 법칙 외에도, 저는 화면 집중 환자 모두에게 다음과 같은 근거 기반 전략을 권장합니다. 화면 거리 최적화: 모니터는 팔 길이(약 50~70cm) 거리에, 눈높이보다 약간 아래에 위치해야 합니다. 건성안이 있다면 인공 눈물을 사용하세요 — 자주 사용할 경우 방부제 없는 제품을 선택하십시오. 주변 조명과 일치하도록 화면 밝기와 대비를 조절하세요. 저녁 시간대 화면 사용에는 청색광 차단 기능을 고려하세요. 그리고 가장 중요하게, 연 1회 종합 안과 검진을 예약하세요. 많은 DES 증상은 간단한 안경으로 해결 가능한 교정되지 않은 굴절 이상에 의해 악화됩니다.</p>`
+    },
+    {
+      id:'flow', tag:'생산성', tagColor:'#7F77DD',
+      title:"플로우 상태 vs. 포모도로: 둘 다 가질 수 있을까?",
+      summary:"포모도로의 엄격한 간격이 깊은 집중을 방해한다는 비판이 있습니다. 과학이 실제로 말하는 것, 그리고 균형을 찾는 방법을 알아봅니다.",
+      date:'2026.04', readTime:'7분',
+      body:`<h2>핵심 긴장</h2>
+<p>미하이 칙센트미하이의 '플로우' 개념 — 노력 없이 깊이 흡수된 집중 상태 — 은 인지 성능의 성배입니다. 플로우 상태에서는 시간이 멈추는 것 같고, 결과물 질이 최고조에 달하며, 작업이 내재적으로 보람 있습니다. 문제는? 25분마다 울리는 부엌 타이머는 아마도 가장 효과적인 플로우 방해 요소일 것입니다.</p>
+<p>이 긴장감은 포모도로 기법에 대한 진지한 비판이며, 무시하기보다 정직하게 다룰 가치가 있습니다.</p>
+<h2>연구 결과</h2>
+<p>네덜란드의 2024년 연구는 세 가지 휴식 전략을 직접 비교했습니다: 자율 규제 휴식, 포모도로 기법, 그리고 자연스러운 집중 하락까지 방해 없이 작업하는 플로우타임 기법. 결과는 미묘했습니다: 포모도로 사용자는 자율 규제자보다 높은 집중도와 동기를 보고했지만, 집중 상태에 있을 때 의무적 휴식이 때로는 방해가 된다고도 보고했습니다.</p>
+<p>핵심 통찰: 플로우 방해는 창의적이거나 복잡한 작업을 하는 숙련된 실천가에게 더 문제가 될 가능성이 높습니다. 초보자나 일상적인 인지 작업에서는, 포모도로 구조가 플로우를 방해할 마음 방황을 실제로 예방하는 충분한 비계를 제공합니다.</p>
+<h2>실용적인 통합</h2>
+<p>문헌과 실천가 경험 모두에서 지지되는 가장 효과적인 접근법은 포모도로를 엄격한 법칙이 아닌 유연한 틀로 취급하는 것입니다. 25분 간격을 기본값이자 대비책으로 사용하세요 — 특히 새로운 작업을 시작할 때, 동기가 낮을 때, 또는 미루는 경향이 있을 때. 그러나 진정한 깊은 플로우 상태에 들어갔는데 타이머가 울린다면, 생각이나 작업 단위를 자연스럽게 마칠 수 있도록 10~15분 더 연장하는 것은 완전히 합리적입니다.</p>
+<p>Pomo.는 조정 가능한 타이머와 '시간 추가' 기능을 통해 이러한 유연성을 지원합니다. 목표는 기법에 대한 복종이 아니라 최적의 인지 성능 — 그리고 그것은 자신의 뇌에 귀 기울이는 것을 요구합니다.</p>`
+    },
+    {
+      id:'myopia', tag:'눈 건강', tagColor:'#378ADD',
+      title:"근시 팬데믹: 아이의 화면 시간이 지금 중요한 이유",
+      summary:"지난 20년 동안 근시 비율이 급증했습니다. 최신 연구를 바탕으로 부모와 교육자가 알아야 할 것들을 알아봅니다.",
+      date:'2026.04', readTime:'9분',
+      body:`<h2>전 세계적 시력 위기</h2>
+<p>근시 — 멀리 있는 물체를 선명하게 볼 수 없는 근시안 — 는 팬데믹 수준에 이르렀습니다. 수 세대에 걸쳐 비교적 안정적이었던 비율이 최근 수십 년간, 특히 학업 압박과 실내 생활 방식이 결합된 동아시아 국가에서 극적으로 가속화되었습니다. 연구에 따르면 2050년까지 전 세계 인구의 약 절반이 근시일 수 있습니다.</p>
+<p>코로나19 팬데믹은 이 위기를 측정 가능하게 악화시켰습니다. JAMA 안과학(2023)에 발표된 연구에 따르면, 집에서의 격리와 온라인 학습 증가로 인해 학령기 아동의 근시 진행 속도가 팬데믹 이전 대비 두 배 이상 빨라졌습니다.</p>
+<h2>화면 시간과의 연관성</h2>
+<p>디지털 화면 사용과 근시의 관계는 이제 그 어느 때보다 잘 이해되고 있습니다. JAMA 네트워크 오픈(2025)에 발표된 45개 연구, 335,000명 이상을 포함한 포괄적 용량-반응 메타 분석은 유의미한 S자 곡선을 발견했습니다: 근시 위험은 하루 화면 시간 1~4시간 사이에 가장 급격히 증가하고, 그 이후에는 더 완만하게 증가합니다.</p>
+<p>BMC 공중보건(2024)의 별도 메타 분석은 아동과 청소년을 대상으로 한 19개 역학 연구를 검토하여, 높은 화면 시간 노출과 근시 유병률 사이의 통계적으로 유의미한 상관관계를 확인했습니다. 스마트폰은 데스크탑 컴퓨터보다 더 짧은 시청 거리에서 사용되는 경향이 있어 특히 강한 연관성을 보였습니다.</p>
+<h2>근거리 작업이 근시를 유발하는 이유</h2>
+<p>주요 가설은 초점 이탈 신호와 관련됩니다. 눈이 지속적으로 가까운 거리에 초점을 맞출 때, 먼 물체의 망막 이미지가 망막 뒤에 살짝 맺힙니다. 이 '원시성 초점이탈'이 눈이 그 흐릿한 이미지를 망막 위로 가져오려는 시도로 안구의 축방향 신장 — 안구의 물리적 길어짐 — 을 유발한다고 여겨집니다. 안구가 한 번 길어지면 과정은 대부분 되돌릴 수 없습니다. 이것이 예방, 특히 아동기에 예방이 매우 중요한 이유입니다.</p>
+<h2>야외 활동의 보호 효과</h2>
+<p>근시 연구에서 가장 강력한 발견 중 하나는 야외 활동의 보호 효과입니다. 연구에 따르면 매일 최소 90분을 야외에서 보내는 아이들은 근시 비율이 유의미하게 낮습니다. 메커니즘은 근거리 작업 노출 감소와 고강도 낮빛에 의한 망막 도파민 방출 자극 두 가지가 관여하는 것으로 생각됩니다. 밝은 야외 빛(일반적으로 10,000~100,000럭스)은 실내 빛(일반적으로 300~500럭스)을 훨씬 초과하며, 발달 중인 눈에 근본적으로 다른 시각 환경을 만들어냅니다.</p>
+<h2>부모를 위한 실용적 조치</h2>
+<p>현재 증거를 바탕으로, 아이들의 여가 화면 시간을 하루 4시간 이하로 제한하는 것이 합리적인 목표입니다. 매일 최소 90분의 야외 활동을 권장하세요. 최소 독서 거리를 지키도록 하세요 — 화면은 30cm보다 가까이 들지 않도록. 특히 숙제와 온라인 학습 시 근거리 작업에서 정기적인 휴식을 취하도록 하세요. 그리고 근시 진행을 조기에 발견하기 위해 연 1회 안과 검진을 예약하세요 — 조기 발견 시 각막굴절교정 렌즈나 근시 조절 콘택트렌즈로 진행을 늦출 수 있습니다.</p>`
+    },
+    {
+      id:'deepwork', tag:'생산성', tagColor:'#D4537E',
+      title:"산만함의 시대에서 깊은 집중: 실용 가이드",
+      summary:"칼 뉴포트의 '딥 워크' 개념은 현대 생산성 사고의 초석이 되었습니다. 실제로 어떻게 달성하는지 알아봅니다.",
+      date:'2026.04', readTime:'8분',
+      body:`<h2>딥 워크란 무엇인가</h2>
+<p>컴퓨터 과학 교수이자 작가인 칼 뉴포트가 만든 '딥 워크'는 인지 능력의 한계까지 밀어붙이는 방해 없는 집중 상태에서 수행되는 전문적 활동을 말합니다. 이러한 노력은 새로운 가치를 창출하고, 기술을 향상시키며, 복제하기 어렵습니다. 반면 '얕은 작업' — 이메일, 행정 업무, 일상적 회의 — 은 물류적이지만 인지적으로 까다롭지 않습니다.</p>
+<p>인지과학과 전문가 성과에 관한 수십 년의 연구에 의해 뒷받침되는 뉴포트의 주장은: 딥 워크를 수행하는 능력이 점점 드물어지고, 동시에 지식 경제에서 점점 가치 있어지고 있다는 것입니다. 그러나 대부분의 업무 환경과 개인 습관은 이에 적극적으로 적대적입니다.</p>
+<h2>깊은 집중의 신경과학</h2>
+<p>깊은 집중 상태에 들어가면 뇌에 측정 가능한 변화가 일어납니다. 전전두엽 피질 활동이 증가하여 작업 기억, 의사결정, 실행 제어를 지원합니다. 동시에 뇌는 기본 모드 네트워크 — '마음 방황' 시스템 — 의 활동을 억제하여, 지속적인 목표 지향적 사고를 가능하게 합니다. 이 상태에 도달하고 유지하는 능력을 키우는 것은 체력과 마찬가지로 의도적인 연습이 필요합니다.</p>
+<p>전문가 성과에 관한 연구는 체스 그랜드마스터부터 엘리트 음악가, 세계 수준의 프로그래머까지 모든 분야의 최고 성과자들이 하루에 최대 4시간 정도의 진정한 딥 워크에 참여한다는 것을 일관되게 발견합니다. 이것은 극복해야 할 한계가 아닙니다; 고강도 인지 작업의 진정한 에너지 비용을 반영합니다.</p>
+<h2>딥 워크 습관 구축</h2>
+<p>가장 효과적인 딥 워크 실천가들은 집중 시간을 타협 불가능한 약속으로 취급합니다. 딥 워크 세션을 위한 일관된 시간과 장소를 선택하세요 — 일관성은 언제 어디서 작업할지 결정하는 정신적 부담을 줄입니다. 25~30분 세션(단일 포모도로)으로 시작하여 집중 '스태미나'가 쌓이면 90분 블록으로 점차 늘려가세요.</p>
+<p>이러한 세션 동안 디지털 산만함을 철저히 제거하세요. 인터럽션 회복에 관한 연구에 따르면 이메일 알림 후 — 읽지 않더라도 — 원래 작업으로 완전한 집중 깊이로 돌아오는 데 평균 23분이 걸립니다. 알림 하나가 25분 포모도로를 효과적으로 망칠 수 있습니다. 집중 시간을 보호하기 위해 웹사이트 차단기, 전화기 무음, 물리적 신호(닫힌 문, 헤드폰)를 사용하세요.</p>
+<h2>루틴과 의식의 역할</h2>
+<p>가장 생산적인 딥 워크 실천가들은 뇌에 집중할 시간이라는 신호를 보내는 작업 전 의식을 개발합니다. 이는 뇌의 예측 처리를 활용합니다 — 의식(특정 음료 만들기, 특정 작업 공간 설정, 타이머 시작)을 집중 작업과 일관되게 연결함으로써, 의식 자체가 집중 상태를 유발하기 시작합니다. 몇 주, 몇 달에 걸쳐 딥 포커스의 활성화 임계값이 낮아지며, 더 쉽고 빠르게 상태에 진입할 수 있게 됩니다.</p>`
+    },
+    {
+      id:'sleep', tag:'과학', tagColor:'#E24B4A',
+      title:"수면이 최강의 생산성 도구인 이유",
+      summary:"어떤 기법, 카페인, 동기도 수면 부족을 보상할 수 없습니다. 수면과 인지 성능에 관해 과학이 말하는 것을 알아봅니다.",
+      date:'2026.04', readTime:'8분',
+      body:`<h2>생산적인 야행성 신화</h2>
+<p>현대 업무 문화는 최소한의 수면으로 기능하는 능력을 종종 미화합니다 — 인지 성능에 있어 단순히 틀릴 뿐 아니라 적극적으로 위험한 태도입니다. 수면은 수동적인 비활동 상태가 아닙니다. 뇌가 필수 유지 관리를 수행하고, 기억을 통합하고, 감정을 처리하고, 글림프 시스템을 통해 대사 폐기물을 청소하는 매우 능동적인 생물학적 과정입니다.</p>
+<p>매튜 워커와 같은 과학자들이 이끄는 수십 년의 수면 연구는, 만성 수면 부족(성인의 경우 정기적으로 7시간 미만 수면)이 주의력, 작업 기억, 의사결정, 감정 조절, 창의적 문제 해결 등 인지 기능의 거의 모든 영역에서 측정 가능한 손상을 초래한다는 것을 합리적 의심의 여지 없이 확립했습니다.</p>
+<h2>수면과 기억 통합</h2>
+<p>지식 노동자와 학생에게 수면의 가장 중요한 기능 중 하나는 기억 통합입니다. 서파 수면과 REM 수면 단계에서, 뇌는 그날 학습하며 형성된 신경 연결을 재생하고 강화합니다 — 시냅스 항상성이라 불리는 과정. 수면 전에 학습된 정보는 수면 없이 동등한 시간 간격이 지난 후보다 유의미하게 더 잘 유지됩니다.</p>
+<p>이는 학습 전략에 직접적인 함의를 가집니다. 시험 전날 밤샘 공부는 비효율적일 뿐 아니라 역효과를 낳습니다. 수면 부족은 공부한 정보를 시험 조건에서 접근 가능하게 만드는 바로 그 통합 과정을 방해합니다. 충분한 서파 수면과 REM 수면을 갖춘 일관된 수면 스케줄은 가장 근거 기반이 강한 학습 전략 중 하나입니다.</p>
+<h2>수면과 집중 작업</h2>
+<p>포모도로 같은 구조적 집중 기법을 사용하는 사람이라면, 수면의 질이 모든 것의 기반입니다. 단 하루 밤 6시간 수면(8시간 대비)만으로도 24시간 완전한 수면 박탈에 상당하는 지속적 주의력 성능의 측정 가능한 감소가 발생합니다. 만성 수면 제한의 우려스러운 측면은 자신의 손상을 정확하게 인식하는 능력도 손상시킨다는 것입니다 — 주관적으로는 "괜찮다"고 느끼는 동안, 객관적 성과 측정치는 상당한 저하를 보입니다.</p>
+<h2>실용적인 수면 최적화</h2>
+<p>주말에도 일관된 취침 및 기상 시간을 유지하세요 — 이것이 가장 임팩트 있는 수면 위생 실천법입니다. 침실을 시원하게(수면 시작에 생리적으로 최적인 약 18~19°C), 어둡고, 조용하게 유지하세요. 현대 디스플레이에서 방출되는 청색광 파장이 멜라토닌 분비를 억제하기 때문에, 잠자리 들기 최소 60분 전부터 화면을 피하세요. 오후 2시 이후 카페인을 제한하세요 — 카페인의 반감기는 약 5~7시간으로, 오후 3시 커피가 오후 8~10시에도 자극 효과의 절반을 유지합니다.</p>`
+    },
+    {
+      id:'breath', tag:'과학', tagColor:'#EF9F27',
+      title:"생리적 한숨과 박스 호흡: 집중력을 가장 빠르게 리셋하는 방법",
+      summary:"명상 수련이 없어도 됩니다. 신경과학이 뒷받침하는 두 가지 호흡 기법이 2분 이내에 정신 상태를 바꿀 수 있습니다.",
+      date:'2026.04', readTime:'6분',
+      body:`<h2>왜 호흡이 뇌를 제어하는가</h2>
+<p>호흡과 정신 상태의 연결은 은유적이 아닙니다 — 기계적입니다. 호흡은 자의적으로 제어할 수 있는 유일한 자율 신체 기능이며, 이는 자율 신경계에 대한 직접적인 접근 경로가 됩니다. 호흡의 리듬, 깊이, 패턴을 의도적으로 조작함으로써, 교감신경 각성(스트레스 반응)과 부교감신경 활성화(휴식 상태) 사이에서 생리적 상태를 측정 가능하게 전환할 수 있습니다.</p>
+<p>이는 구조적 집중 기법을 사용하는 지식 노동자에게 특히 관련이 있습니다. 포모도로 작업 간격과 휴식 사이의 전환, 또는 어려운 문제에 막혔을 때의 중간 세션 스트레스 경험은 집중을 방해할 수 있는 코르티솔과 교감신경 활성화 스파이크를 만들어냅니다. 의도적인 호흡 프로토콜은 빠르고 근거 기반의 해결책을 제공합니다.</p>
+<h2>생리적 한숨</h2>
+<p>스탠퍼드 신경과학자 앤드루 휴버만 박사가 광범위하게 연구한 생리적 한숨은 생리적 스트레스를 줄이는 가장 빠른 방법으로 알려져 있습니다. 코를 통한 이중 흡입 — 정상적인 흡입에 이어 즉시 짧고 날카로운 두 번째 흡입 — 과 입을 통한 길고 느린 날숨으로 구성됩니다.</p>
+<p>메커니즘은 우아합니다: 이중 흡입은 스트레스로 인한 얕은 호흡 기간 동안 수축한 폐의 작은 기낭(폐포)을 재팽창시켜, 가스 교환을 위한 표면적을 최대화합니다. 이어지는 연장된 날숨은 미주 신경을 통해 부교감 신경계를 활성화합니다. 결과는 1~2번의 호흡 주기 내에 심박수와 코르티솔의 측정 가능한 저하 — 급성 스트레스 감소를 위한 다른 어떤 알려진 기법보다 빠릅니다.</p>
+<h2>박스 호흡</h2>
+<p>해군 특수부대, 응급 대응 요원, 엘리트 운동 선수들이 사용하는 박스 호흡은 고압 상황에서 침착함을 유지하도록 설계된 구조적 호흡 패턴입니다. 프로토콜은 간단합니다: 4박자 흡입, 4박자 유지, 4박자 날숨, 4박자 유지. 4~6회 반복합니다.</p>
+<p>박스 호흡은 흡입과 날숨의 비율을 균등화하여 교감신경과 부교감신경 톤을 균형 잡습니다. 숨 유지 단계는 스트레스 회복력 향상 및 불안 민감성 감소와 관련된 이산화탄소 내성을 키웁니다. 많은 실천가들이 포모도로 세션 시작 시 2분간의 박스 호흡이 이후 작업 간격의 집중 깊이와 질을 유의미하게 향상시킨다고 보고합니다.</p>
+<h2>실용적 통합</h2>
+<p>작업 세션 중 스트레스나 좌절 스파이크를 느낄 때마다 생리적 한숨을 반응적으로 사용하세요. 까다로운 포모도로 시작 전에는 박스 호흡을 예방적으로 사용하세요. 포모도로 사이의 휴식 간격은 두 기법 모두를 연습하기 이상적인 시간으로, 신체 휴식과 능동적 신경계 조절을 결합합니다. 이 접근법은 휴식을 수동적 대기 시간에서 진정한 생리적 회복으로 전환합니다.</p>`
+    },
+    {
+      id:'bluelight', tag:'눈 건강', tagColor:'#378ADD',
+      title:"청색광, 수면, 눈: 사실과 허구 구분하기",
+      summary:"청색광은 눈 건강 분야의 주요 화제가 되었습니다. 그런데 실제 증거는 무엇을 보여주나요 — 그리고 비싼 청색광 차단 안경이 정말 필요할까요?",
+      date:'2026.04', readTime:'7분',
+      body:`<h2>청색광이란 무엇인가</h2>
+<p>청색광은 대략 380~500나노미터 사이의 파장을 가진 가시광선 스펙트럼의 일부를 말합니다. 태양에서 방출되지만, LED 조명, 형광등, 스마트폰, 태블릿, 컴퓨터 모니터, 텔레비전과 같은 현대 디지털 기기 디스플레이에서도 방출됩니다. 디지털 화면에서 나오는 청색광의 강도는 햇빛보다 훨씬 낮으며, 이 사실은 미디어 보도에서 종종 잊혀집니다.</p>
+<h2>청색광과 수면: 확실한 과학</h2>
+<p>건강에 대한 청색광의 가장 강력하고 잘 확립된 영향은 일주기 리듬에 대한 것입니다. 망막에는 단파장 청색광(약 480nm)에 최대 반응하는 특수 광수용체인 내인성 감광성 망막 신경절 세포(ipRGC)가 있습니다. 이 세포들은 뇌의 '마스터 시계'인 시교차상핵을 직접 조절하고, 야간 시작을 신호하고 수면을 촉진하는 호르몬인 멜라토닌 생산을 억제합니다.</p>
+<p>취침 1~2시간 전 청색광 방출 화면에 노출되면 멜라토닌 시작이 최대 1.5시간 지연되고 멜라토닌 수준이 약 50% 감소할 수 있습니다. 이는 사소하지 않습니다: 수면 시작을 의미 있게 지연시키고, 총 수면 시간을 줄이며, 수면의 질을 손상시킬 수 있습니다 — 그리고 모든 후속 인지적 결과를 초래합니다.</p>
+<h2>청색광과 눈 손상: 더 복잡한 이야기</h2>
+<p>화면의 청색광이 직접 눈 손상을 유발하거나 황반변성을 가속화한다는 주장은 정상적인 화면 노출 수준에서 현재 임상 증거에 의해 뒷받침되지 않습니다. 미국 안과학회는 청색광 차단 안경이 눈 피로 감소나 눈 질환 예방에 효과적이라는 증거 부족을 인용하며 화면 사용자에게 이를 권장하지 않는다고 명시했습니다.</p>
+<p>많은 사람들이 청색광 탓으로 돌리는 눈 피로는 디지털 눈 피로 메커니즘으로 더 정확하게 설명됩니다: 감소된 깜빡임 속도, 지속적 모양체 근육 수축, 화면 눈부심 — 이 중 어느 것도 방출되는 빛의 파장과 특별히 관련이 없습니다.</p>
+<h2>청색광 차단을 사용해야 하는가</h2>
+<p>근거 기반 입장은 미묘합니다. 청색광 차단은 취침 전 1~2시간에 진정으로 유익할 가능성이 높으며, 주로 수면 보호 효과를 위해서입니다. 대부분의 스마트폰과 컴퓨터는 이제 저녁에 디스플레이를 따뜻한 파장으로 전환하는 내장 '야간 모드' 기능을 제공합니다 — 일관되게 사용할 가치가 있습니다. 전용 청색광 차단 안경은 같은 효과를 제공하며 저녁 화면 사용에 편리할 수 있습니다.</p>
+<p>그러나 낮 시간 — 낮 시간 동안 포함 — 내내 청색광 차단 렌즈를 착용하는 것은 불필요하며 실제로 역효과를 낼 수 있습니다. 낮 시간 청색광 노출은 기분 조절, 인지적 각성도, 건강한 일주기 리듬 교정에 중요합니다. 무분별하게 차단하면 이러한 이점을 방해할 수 있습니다.</p>`
+    },
+    {
+      id:'nutrition', tag:'생산성', tagColor:'#EF9F27',
+      title:"뇌 음식: 영양이 집중력과 인지 성능에 직접 미치는 영향",
+      summary:"포모도로 세션 전에 무엇을 먹는지는 대부분의 생산성 가이드가 인정하는 것보다 훨씬 중요합니다. 지속적인 인지 성능 뒤에 있는 영양 과학을 알아봅니다.",
+      date:'2026.04', readTime:'7분',
+      body:`<h2>뇌는 대사적으로 비싼 기관이다</h2>
+<p>인간의 뇌는 체중의 약 2%를 차지하지만 휴식 상태에서 신체 총 에너지 소비량의 약 20%를 소비합니다. 이 대사적 강도는 뇌가 영양 입력의 질과 타이밍에 매우 민감하다는 것을 의미합니다. 근육과 달리 포도당과 지방산 모두에서 작동할 수 있는 것과 달리, 뇌는 정상 조건에서 거의 전적으로 포도당에 의존합니다 — 혈당 안정성이 인지 성능의 직접적인 결정 요인입니다.</p>
+<h2>혈당 롤러코스터</h2>
+<p>정제 탄수화물, 가공식품, 첨가 당분이 많은 현대 표준 식단은 혈당의 크고 빠른 스파이크와 그에 상응하는 급락을 만들어냅니다. 식후 포도당 급락 동안 인지 성능이 측정 가능하게 저하됩니다: 주의력이 좁아지고, 작업 기억 용량이 떨어지고, 의사결정 품질이 저하됩니다. 이것이 전 세계 대부분의 사무실에서 생산성을 황폐화시키는 점심 후 '오후 슬럼프'의 생물학적 기반입니다.</p>
+<h2>지속적인 집중을 위한 영양 전략</h2>
+<p>포도당을 천천히 꾸준히 방출하는 저혈당지수 식품을 우선시하세요: 통곡물, 콩류, 견과류, 씨앗류, 대부분의 채소. 혈당 반응을 더 완화시키기 위해 탄수화물을 단백질과 건강한 지방과 함께 섭취하세요. 까다로운 집중 세션 직전에 많은 식사를 피하세요 — 소화는 대사 자원과 혈류를 위해 인지 작업과 경쟁합니다.</p>
+<p>오메가-3 지방산, 특히 DHA(도코사헥사엔산)는 신경 세포막의 구조적 구성 요소이며 시냅스 전달과 신경가소성에 중요한 역할을 합니다. 여러 연구에서 더 높은 DHA 섭취(지방이 많은 생선, 아마씨, 호두, 또는 보충제)와 향상된 지속 주의력 및 작업 기억 성능 사이의 연관성이 확인되었습니다. 이것은 미묘한 효과가 아닙니다 — 최적의 뇌 기능을 위한 기초 영양 요건입니다.</p>
+<h2>카페인: 세계에서 가장 인기 있는 인지 향상제</h2>
+<p>카페인은 세계에서 가장 널리 소비되는 향정신성 물질이며, 적절한 매개변수 내에서 진정한 인지 향상제로서 효과가 있습니다. 주로 뇌의 아데노신 수용체를 차단하여 작동합니다 — 아데노신은 깨어 있는 시간 동안 축적되어 점진적으로 졸음 감각을 증가시키는 화합물입니다. 이 수용체를 차단함으로써 카페인은 피로 시작을 지연시키고 지속 주의력, 반응 시간, 경계심을 향상시킵니다.</p>
+<p>효과적인 카페인 사용의 핵심은 타이밍과 절제입니다. 수면 기사에서 논의했듯이, 5~7시간의 반감기로 인해 오후 2시경 이후 소비된 카페인은 수면의 질을 의미 있게 손상시킬 수 있습니다. 전략적인 오전 및 이른 오후 사용(100~200mg, 커피 1~2잔)은 내일의 집중을 가능하게 하는 수면을 훼손하지 않으면서 진정한 인지적 이점을 제공합니다.</p>`
+    },
+    {
+      id:'exercise', tag:'과학', tagColor:'#1D9E75',
+      title:"운동과 뇌: 20분의 움직임이 모든 것을 바꾸는 이유",
+      summary:"신체 운동의 인지적 이점은 신경과학에서 가장 강력한 연구 결과 중 하나입니다. 그리고 필요한 용량은 대부분의 사람들이 생각하는 것보다 훨씬 적습니다.",
+      date:'2026.04', readTime:'7분',
+      body:`<h2>운동은 인지 향상이다</h2>
+<p>신체 운동과 인지 성능의 관계는 신경과학에서 가장 재현 가능하고 강력한 연구 결과 중 하나입니다. 규칙적인 유산소 운동 — 걷기, 자전거 타기, 달리기, 수영 — 은 뇌에 측정 가능한 구조적 변화를 만들어냅니다: 기억 형성과 공간 탐색의 주요 장소인 해마의 부피 증가, 작업 기억과 실행 제어를 지원하는 전전두엽 피질 기능 향상, '뇌를 위한 기적의 성장제'로 묘사되는 뇌유래 신경영양인자(BDNF) 수준 상승.</p>
+<p>이것은 미묘한 효과가 아닙니다. 연구들은 일관되게 규칙적인 운동자가 비활동적인 사람들보다 주의력, 작업 기억, 처리 속도, 인지 유연성 테스트에서 더 좋은 성과를 낸다는 것을 보여줍니다 — 아동, 청년, 노인 등 모든 연령대에서.</p>
+<h2>급성 효과: 운동 직후 즉각적인 인지 향상</h2>
+<p>규칙적인 운동의 장기적 구조적 이점 외에도, 단 한 번의 적당한 유산소 운동만으로도 운동 후 1~3시간 동안 지속되는 즉각적이고 측정 가능한 인지 성능 향상이 나타납니다. 이 효과는 여러 메커니즘에 의해 매개됩니다: 신경 조직에 더 많은 산소와 포도당을 공급하는 뇌 혈류 증가; 주의력과 동기 회로를 향상시키는 카테콜아민(도파민, 노르에피네프린) 수준 상승; 일시적으로 시냅스 가소성을 향상시키는 BDNF 상향 조절.</p>
+<p>포모도로 실천가들에게 이 발견은 매우 실용적인 함의를 가집니다: 까다로운 작업 블록 전에 — 또는 긴 휴식 동안 — 20분 빠른 걷기나 운동 세션을 예약하면 이후 세션의 집중 질과 깊이를 측정 가능하게 향상시킬 수 있습니다.</p>
+<h2>최소 유효 용량</h2>
+<p>좋은 소식은 운동의 인지적 이점이 마라톤 훈련을 필요로 하지 않는다는 것입니다. 연구에 따르면 불과 20분의 중등도 강도 유산소 운동(최대 심박수의 약 50~60%까지 심박수를 높이는 빠른 걷기)만으로도 상당한 급성 인지적 이점을 만들어내기에 충분합니다. 운동이 연속적일 필요도 없습니다 — 하루 동안 분산된 세 번의 10분 세션이 단일 30분 세션과 유사한 이점을 만들어낼 수 있으며, 앉아 있는 시간을 줄이는 추가적인 이점도 있습니다.</p>
+<h2>운동의 눈 건강 이점</h2>
+<p>안경사로서, 저는 화면 집중 작업자에게 관련 있는 덜 일반적으로 논의되는 운동의 이점을 강조하고 싶습니다: 신체 활동은 근시 진행에 대한 보호 효과가 있는 것으로 보입니다. 여러 연구에서 야외 신체 활동 — 단순한 근거리 작업 휴식이 아닌, 자연광 속에서의 진정한 운동 — 이 아동과 청소년의 근시 발생 및 진행에 대한 가장 강력한 수정 가능한 보호 인자 중 하나임을 시사합니다. 포모도로 휴식 중 짧은 야외 산책을 일상에 통합하는 것은 인지 성능과 장기 시력 건강에 동시에 투자하는 것입니다.</p>`
+    }
+  ]
+};
+
+const ABOUT_DATA = {
+  ko: `<h2>1. 집중력의 과학 (공부 가이드)</h2><p>인간의 집중력은 한정된 자원입니다. 뇌과학적으로 25-30분 후에 인지 능력이 저하되는 '주의력 감퇴'가 발생합니다. Pomo.는 이 주기를 체계적으로 관리합니다.</p><p><strong>단계 1: 작업 원자화.</strong> 타이머를 시작하기 전에 목표를 정확히 25분 안에 완료할 수 있는 단위로 나누세요.</p><p><strong>단계 2: 깊은 집중 환경 구축.</strong> Pomo.의 미니멀한 디자인은 UI 방해 요소를 제거하여 최고의 집중 상태에 도달할 수 있도록 돕습니다.</p><h2>2. 안경사의 시각: 20-20-20 법칙</h2><p>현직 안경사로서 디지털 시력 피로 증가를 직접 목격해왔습니다. 근거리 작업은 안구 근육을 지속적으로 수축시킵니다. 매 20분마다 6미터 밖을 20초간 바라보는 <strong>20-20-20 법칙</strong>을 실천하세요.</p><h2>3. FAQ</h2><ul><li><strong>Q: 25분이 필수인가요?</strong> A: 아닙니다. 초보자는 25/5로 시작하고 집중력이 쌓이면 50/10 '깊은 집중' 주기로 전환하세요.</li><li><strong>Q: 휴식 중 스마트폰을 써도 되나요?</strong> A: 아닙니다. 진정한 휴식은 몸을 움직이거나 멍하니 시선을 두는 것입니다.</li><li><strong>Q: 데이터는 어디에 저장되나요?</strong> A: Pomo.는 개인정보를 소중히 여깁니다. 모든 데이터는 브라우저 LocalStorage에만 저장됩니다.</li></ul>`,
+  en: `<h2>1. The Science of Focus (Ultimate Guide)</h2><p>Human concentration is not a constant resource; it's a fluctuating biological state. Neurological research suggests that 'vigilance decrement' typically sets in after about 25-30 minutes of a singular task.</p><p><strong>Phase 1: Task Atomization.</strong> Before clicking play, break your objective into 'atomic units' that can be finished in exactly one 25-minute cycle.</p><p><strong>Phase 2: Deep Work Environment.</strong> Pomo.'s minimalist design removes UI friction, allowing you to enter a state of 'hyper-focus'.</p><h2>2. An Optician's Perspective: The 20-20-20 Rule</h2><p>As a professional optician, I've observed a sharp rise in digital eye strain. Pomo. is built with the <strong>20-20-20 Rule</strong> in mind: Every 20 minutes, look at something 20 feet away for 20 seconds.</p><h2>3. FAQ</h2><ul><li><strong>Q: Is 25 minutes mandatory?</strong> A: No. For beginners, 25/5 is best. Build 'focus stamina' and move to 50/10.</li><li><strong>Q: Can I use my phone during breaks?</strong> A: No. True rest involves physical movement or staring into space.</li><li><strong>Q: Where is my data stored?</strong> A: All statistics are stored strictly in your browser's LocalStorage.</li></ul>`
+};
+
+// --- GLOBAL STATE ---
+const COL={focus:'#E24B4A',short:'#1D9E75',long:'#378ADD',quick:'#EF9F27',study:'#7F77DD',deep:'#D4537E'};
+const FM=['focus','quick','study','deep'];
+const CIRC=2*Math.PI*108;
+let siteLang='ko';
+let view='focus',activeMode=null,iv=null;
+let settings={focus:25,quick:15,study:30,deep:60,short:5,long:15};
+let sSecs={focus:0,quick:0,study:0,deep:0,short:0,long:0};
+let rem={focus:1500,quick:900,study:1800,deep:3600,short:300,long:900};
+
+const minInput=document.getElementById('curMin');
+const secInput=document.getElementById('curSec');
+const atValInp=document.getElementById('atVal');
+
+function pad(n){return n<10?'0'+n:''+n;}
+function tsec(k){return settings[k]*60+sSecs[k];}
+
+function t(key){return (I18N[siteLang]||I18N.ko)[key]||key;}
+function tMode(key){return ((I18N[siteLang]||I18N.ko).modes||{})[key]||key;}
+
+// --- APPLY LANGUAGE ---
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    const val=t(k); if(val)el.textContent=val;
+  });
+  // Update mode input placeholders/values only if not customized
+  document.getElementById('ti-focus').value=tMode('focus');
+  document.getElementById('ti-quick').value=tMode('quick');
+  document.getElementById('ti-study').value=tMode('study');
+  document.getElementById('ti-deep').value=tMode('deep');
+  document.getElementById('ti-short').textContent=tMode('short');
+  document.getElementById('ti-long').textContent=tMode('long');
+  // Blog page
+  document.getElementById('blog-h').textContent=t('blog-h');
+  document.getElementById('blog-sub').textContent=t('blog-sub');
+  // About page
+  document.getElementById('about-content').innerHTML=ABOUT_DATA[siteLang]||ABOUT_DATA.ko;
+  renderBlog();
+  render();
+}
+
+function applySiteLang(l){
+  siteLang=l;
+  applyI18n();
+}
+
+// --- RENDER TIMER ---
+function render(){
+  const s=rem[view];
+  document.getElementById('tnum').textContent=pad(Math.floor(s/60))+':'+pad(s%60);
+  const fg=document.getElementById('ringFg');
+  fg.style.strokeDashoffset=CIRC*(1-(s/Math.max(1,tsec(view))));
+  fg.style.stroke=COL[view]||'#E24B4A';
+  document.getElementById('tlbl').textContent=tMode(view);
+  document.getElementById('playBtn').style.background=COL[view]||'#E24B4A';
+  minInput.value=settings[view];
+  secInput.value=pad(sSecs[view]);
+  document.getElementById('atDisp').textContent=atValInp.value||5;
+}
+
+// --- TIME ADJUSTMENT (수정됨) ---
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
+
+function applyTimeChange(){
+  let m=parseInt(minInput.value)||0;
+  let s=parseInt(secInput.value)||0;
+  m=clamp(m,0,180); s=clamp(s,0,59);
+  settings[view]=m; sSecs[view]=s;
+  if(activeMode!==view){ rem[view]=tsec(view); }
+  render();
+}
+
+// +/- 분 버튼
+document.getElementById('minPlus').onclick=()=>{
+  settings[view]=clamp(settings[view]+1,0,180);
+  if(activeMode!==view) rem[view]=tsec(view);
+  render();
+};
+document.getElementById('minMinus').onclick=()=>{
+  settings[view]=clamp(settings[view]-1,0,180);
+  if(activeMode!==view) rem[view]=tsec(view);
+  render();
+};
+
+// +/- 초 버튼
+document.getElementById('secPlus').onclick=()=>{
+  sSecs[view]=clamp(sSecs[view]+5,0,55);
+  if(activeMode!==view) rem[view]=tsec(view);
+  render();
+};
+document.getElementById('secMinus').onclick=()=>{
+  sSecs[view]=clamp(sSecs[view]-5,0,55);
+  if(activeMode!==view) rem[view]=tsec(view);
+  render();
+};
+
+// 직접 입력
+[minInput,secInput].forEach(el=>{
+  el.onblur=applyTimeChange;
+  el.onkeydown=(e)=>{if(e.key==='Enter'){applyTimeChange();el.blur();}};
+});
+
+// Add time +/- 버튼 (수정됨)
+document.getElementById('atPlus').onclick=()=>{
+  atValInp.value=Math.min(60,(parseInt(atValInp.value)||0)+1);
+  document.getElementById('atDisp').textContent=atValInp.value;
+};
+document.getElementById('atMinus').onclick=()=>{
+  atValInp.value=Math.max(1,(parseInt(atValInp.value)||0)-1);
+  document.getElementById('atDisp').textContent=atValInp.value;
+};
+atValInp.oninput=()=>{document.getElementById('atDisp').textContent=atValInp.value||5;};
+document.getElementById('atBtn').onclick=()=>{
+  rem[view]+=((parseInt(atValInp.value)||0)*60);
+  render();
+};
+
+// --- PLAY / RESET ---
+document.getElementById('playBtn').onclick=()=>{
+  if(activeMode===view){
+    clearInterval(iv); activeMode=null;
+    document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';
+  } else {
+    activeMode=view;
+    document.getElementById('playIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    iv=setInterval(()=>{
+      if(rem[activeMode]<=0){clearInterval(iv);activeMode=null;
+        document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';
+        return;
+      }
+      rem[activeMode]--; render();
+    },1000);
+  }
+};
+document.getElementById('resetBtn').onclick=()=>{
+  if(activeMode===view){clearInterval(iv);activeMode=null;document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';}
+  rem[view]=tsec(view); render();
+};
+
+// --- MODE SWITCHING ---
+function switchView(k){
+  view=k;
+  document.querySelectorAll('.tinp').forEach(b=>{b.classList.toggle('active',b.dataset.m===k);});
+  document.querySelectorAll('.mbtn').forEach(b=>{b.classList.toggle('active',b.dataset.m===k);});
+  render();
+}
+document.querySelectorAll('.tinp').forEach(b=>{b.onclick=()=>switchView(b.dataset.m);});
+document.querySelectorAll('.mbtn').forEach(b=>{b.onclick=()=>switchView(b.dataset.m);});
+
+// --- TIMER INNER TABS ---
+document.getElementById('tnav-timer').onclick=()=>{switchTPage('timer');};
+document.getElementById('tnav-stats').onclick=()=>{switchTPage('stats');};
+document.getElementById('tnav-seq').onclick=()=>{switchTPage('seq');};
+function switchTPage(p){
+  ['timer','stats','seq'].forEach(k=>{
+    document.getElementById('tpg-'+k).classList.toggle('on',k===p);
+    document.getElementById('tnav-'+k).classList.toggle('active',k===p);
+  });
+}
+
+// --- STATS ---
+function todayKey(){return new Date().toISOString().slice(0,10);}
+function loadStats(){return JSON.parse(localStorage.getItem('pomo_stats')||'{}');}
+function saveStats(s){localStorage.setItem('pomo_stats',JSON.stringify(s));}
+function fmtTime(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h>0?h+'h '+m+'m':m+'m';}
+
+document.getElementById('stats-reset-btn').onclick=()=>{
+  const s=loadStats(),k=todayKey(); delete s[k]; saveStats(s);
+};
+
+// --- NAV & PAGES ---
+const PAGES=['timer','blog','article','about','privacy'];
+function show(p){
+  PAGES.forEach(k=>document.getElementById('pg-'+k).classList.toggle('on',k===p));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const nl=document.getElementById('nl-'+p); if(nl)nl.classList.add('active');
+  window.scrollTo(0,0);
+  if(p==='blog')renderBlog();
+}
+
+function renderBlog(){
+  const list=document.getElementById('blogList'); list.innerHTML='';
+  (BLOG_DATA[siteLang]||BLOG_DATA.ko).forEach(a=>{
+    const card=document.createElement('div'); card.className='blog-card';
+    card.innerHTML=`<span class="blog-tag" style="background:${a.tagColor}22;color:${a.tagColor}">${a.tag}</span><h3>${a.title}</h3><p>${a.summary}</p><div class="blog-meta">${a.date} · ${a.readTime}</div>`;
+    card.onclick=()=>openArticle(a.id);
+    list.appendChild(card);
+  });
+}
+function openArticle(id){
+  const a=(BLOG_DATA[siteLang]||BLOG_DATA.ko).find(x=>x.id===id); if(!a)return;
+  document.getElementById('articleContent').innerHTML=`<span class="blog-tag" style="background:${a.tagColor}22;color:${a.tagColor};display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.75rem">${a.tag}</span><h1>${a.title}</h1><div class="article-meta"><span>${a.date}</span></div><div class="article-body">${a.body}</div>`;
+  show('article');
+}
+
+// --- SOUNDS ---
+let audioCtx=null;
+function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playSound(type){
+  if(type==='none')return;
+  const ctx=getCtx();
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);
+  if(type==='bell'){o.frequency.value=880;g.gain.setValueAtTime(.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+1);}
+  else if(type==='ding'){o.frequency.value=1200;g.gain.setValueAtTime(.2,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.5);}
+  else{o.frequency.value=440;o.type='sine';g.gain.setValueAtTime(.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.8);}
+  o.start();o.stop(ctx.currentTime+1.2);
+}
+document.getElementById('soundTestBtn').onclick=()=>playSound(document.getElementById('soundSel').value);
+
+// --- THEME ---
+function buildThemeSwatches(){
+  document.documentElement.style.setProperty('--bg','#0f0f13');
+  document.documentElement.style.setProperty('--sur','#1a1a22');
+  document.documentElement.style.setProperty('--sur2','#22222e');
+}
+
+// --- INIT ---
+buildThemeSwatches();
+document.getElementById('globalLangSel').value='ko';
+document.getElementById('globalLangSel').onchange=function(){applySiteLang(this.value);};
+applyI18n(); // 페이지 로드 시 한국어 적용
+render();
+</script>
+</body>
+</html>.t-nav-btn{padding:7px 18px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .t-nav-btn.active{background:var(--sur2);color:var(--tx)}
 .t-page{display:none;width:100%;max-width:420px;padding:.5rem 1rem 1rem}
 .t-page.on{display:block}
