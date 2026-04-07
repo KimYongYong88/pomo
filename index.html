@@ -1,40 +1,218 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="google-adsense-account" content="ca-pub-4574877142558962">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574877142558962" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4574877142558962">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574877142558962" crossorigin="anonymous"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomo. — 전문 안경사가 설계한 몰입 타이머 & 생산성 가이드</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dark: '#0f0f13',
-                        surface: '#1a1a22',
-                        pomo: '#E24B4A',
-                        short: '#1D9E75',
-                        long: '#378ADD',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .ring-fg { transition: stroke-dashoffset 1s linear, stroke 0.4s; }
-        .page { display: none; }
-        .page.active { display: block; }
-        .prose h2 { color: white; font-size: 1.25rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
-        .prose p { color: #9ca3af; line-height: 1.8; margin-bottom: 1.25rem; }
-        .prose ul { list-style-type: disc; padding-left: 1.5rem; color: #9ca3af; margin-bottom: 1.5rem; }
-        .prose li { margin-bottom: 0.5rem; }
-    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomo. — Professional Pomodoro Timer & Guide</title>
+<style>
+/* --- 기존 스타일 그대로 유지 --- */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f13;--sur:#1a1a22;--sur2:#22222e;
+  --tx:#f0f0f5;--tx2:#9090a8;--bd:rgba(255,255,255,0.08);
+  --red:#E24B4A;--green:#1D9E75;--blue:#378ADD;
+  --c-focus:#E24B4A;--c-short:#1D9E75;--c-long:#378ADD;
+}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,15,19,.95);backdrop-filter:blur(12px);border-bottom:.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem}
+.nav-logo{font-size:16px;font-weight:600;cursor:pointer}.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:4px}.nav-link{padding:6px 12px;border-radius:8px;font-size:13px;color:var(--tx2);cursor:pointer;background:transparent;border:none}
+.nav-link.active{background:var(--sur2);color:var(--tx)}
+.page{display:none;padding-top:58px}.page.on{display:block}
+.timer-page{display:flex;flex-direction:column;align-items:center;padding-bottom:3rem}
+.t-nav-tabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;margin:1rem 0}
+.t-nav-btn{padding:7px 18px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:13px;cursor:pointer}
+.t-nav-btn.active{background:var(--sur2);color:var(--tx)}
+.t-page{display:none;width:100%;max-width:420px;padding:1rem}.t-page.on{display:block}
+.glabel{font-size:10px;color:var(--tx2);text-transform:uppercase;margin-bottom:5px}
+.mtabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
+.tinp{width:100%;background:transparent;border:none;color:var(--tx2);font-size:12px;text-align:center;padding:7px 4px;cursor:pointer}
+.tinp.active[data-m="focus"]{background:var(--c-focus);color:#fff;border-radius:9px}
+.twrap{display:flex;flex-direction:column;align-items:center;margin:2rem 0}
+.rwrap{position:relative;width:240px;height:240px;display:flex;items:center;justify-content:center}
+.rwrap svg{position:absolute;top:0;left:0;transform:rotate(-90deg)}
+.ring-bg{stroke:var(--sur2)}.ring-fg{transition:stroke-dashoffset 1s linear,stroke .4s;stroke-linecap:round}
+.tdisp{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tnum{font-size:56px;font-weight:300;letter-spacing:-2px}
+.abar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.5rem}
+.pbtn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:var(--red);color:#fff}
+.spanel{background:var(--sur);border-radius:16px;padding:1.25rem;width:100%}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--bd)}
+.nval{font-size:14px;width:50px;text-align:center;background:var(--sur2);border:none;color:var(--tx);padding:4px;border-radius:6px}
+/* 추가 콘텐츠용 스타일 */
+.static-wrap{max-width:700px;margin:0 auto;padding:2rem 1.5rem;line-height:1.7}
+.static-wrap h1{margin-bottom:1rem;font-size:1.8rem}
+.static-wrap h2{margin:2rem 0 0.5rem;font-size:1.2rem;color:var(--red)}
+.static-wrap p{margin-bottom:1rem;color:var(--tx2);font-size:14px}
+.faq-item{background:var(--sur);padding:1rem;border-radius:12px;margin-bottom:1rem}
+.faq-q{font-weight:bold;margin-bottom:0.5rem;color:var(--tx)}
+footer{padding:2rem;text-align:center;font-size:11px;color:var(--tx2);border-top:.5px solid var(--bd)}
+</style>
 </head>
+<body>
+
+<nav>
+  <div class="nav-left"><div class="nav-logo" onclick="show('timer')">Pomo<span>.</span></div></div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nl-timer" onclick="show('timer')">Timer</button>
+    <button class="nav-link" id="nl-about" onclick="show('about')">Guide & About</button>
+  </div>
+  <div class="nav-right">
+    <select id="globalLangSel" class="global-lang" style="background:var(--sur2);color:var(--tx);border:none;padding:4px;border-radius:4px">
+      <option value="ko">🇰🇷 KO</option><option value="en">🌐 EN</option>
+    </select>
+  </div>
+</nav>
+
+<div class="page on" id="pg-timer">
+  <div class="timer-page">
+    <div class="t-nav-tabs">
+      <button class="t-nav-btn active" onclick="switchTab('timer')">Timer</button>
+      <button class="t-nav-btn" onclick="switchTab('stats')">Stats</button>
+    </div>
+
+    <div class="t-page on" id="tpg-timer">
+      <div class="tsec">
+        <div class="glabel">Focus Mode</div>
+        <div class="mtabs">
+          <input class="tinp active" data-m="focus" id="ti-focus" value="Pomodoro" readonly>
+        </div>
+      </div>
+      
+      <div class="twrap">
+        <div class="rwrap">
+          <svg width="240" height="240"><circle class="ring-bg" cx="120" cy="120" r="108" fill="none" stroke-width="5"/><circle class="ring-fg" id="ringFg" cx="120" cy="120" r="108" fill="none" stroke-width="5" stroke="#E24B4A" stroke-dasharray="678.6" stroke-dashoffset="0"/></svg>
+          <div class="tdisp"><div class="tnum" id="tnum">25:00</div><div style="font-size:10px;color:var(--tx2)" id="tlbl">FOCUS</div></div>
+        </div>
+      </div>
+
+      <div class="abar">
+        <button class="pbtn" id="playBtn" style="font-size:24px">▶</button>
+        <button onclick="resetTimer()" style="background:none;border:none;color:var(--tx2);cursor:pointer">Reset</button>
+      </div>
+
+      <div class="spanel">
+        <div class="prow"><span>Minutes Setting</span><input type="number" class="nval" id="curMin" value="25"></div>
+        <p style="font-size:10px;color:var(--tx2);margin-top:8px text-align:center">* 입력 후 엔터를 치면 시간이 즉시 변경됩니다.</p>
+      </div>
+    </div>
+    
+    <div class="t-page" id="tpg-stats">
+        <div class="static-wrap" style="text-align:center"><h2>준비 중인 기능입니다.</h2><p>오늘의 집중 세션을 기록하는 기능이 곧 추가됩니다.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="pg-about">
+  <div class="static-wrap">
+    <h1>사용 가이드: Pomo. 완벽 활용법</h1>
+    <p>공부의 효율은 단순히 책상에 앉아 있는 시간에 비례하지 않습니다. 뇌과학 연구에 따르면 인간의 집중력은 약 25분 주기로 감퇴하며, 이를 억지로 이어가려 할 때 인지적 과부하가 발생합니다. Pomo. 타이머는 이러한 생체 리듬을 활용하여 가장 효율적인 학습 전략을 제시합니다.</p>
+    
+    <h2>1단계: 딥 워크(Deep Work) 환경 조성</h2>
+    <p>타이머를 시작하는 순간, 외부 세계와 단절되세요. 스마트폰은 보이지 않는 곳에 두고, Pomo.의 미니멀한 디자인에만 시야를 고정하십시오. 25분이라는 시간 제한은 뇌에 '심리적 마감 효과'를 주어 집중력을 극대화합니다.</p>
+
+    <h2>2단계: 안경사가 권장하는 능동적 휴식</h2>
+    <p>본 서비스 제작자는 현직 안경사입니다. 타이머가 울리면 반드시 5분간 휴식하며 6미터 이상의 먼 곳을 바라보세요(20-20-20 법칙). 이는 가짜 근시와 안구 건조증을 예방하는 핵심 습관입니다.</p>
+
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <div class="faq-item">
+        <div class="faq-q">Q. 25분이 너무 짧은 것 같아요.</div>
+        <div class="faq-a">A. 처음에는 25분으로 집중 근력을 키우는 것이 중요합니다. 숙련되시면 상단 입력창을 통해 50분으로 늘려 사용해 보세요.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-q">Q. 데이터가 서버에 저장되나요?</div>
+        <div class="faq-a">A. 아니요. 모든 설정은 브라우저에만 저장되며 개인정보를 수집하지 않습니다.</div>
+    </div>
+
+    <h2 style="color:var(--tx2)">Privacy Policy (필수 고지)</h2>
+    <p style="font-size:12px">본 사이트는 Google AdSense를 사용하여 광고를 게재합니다. Google은 쿠키를 사용하여 사용자의 방문 기록을 바탕으로 광고를 게재합니다. 사용자는 구글 광고 설정에서 이를 해제할 수 있습니다.</p>
+  </div>
+</div>
+
+<footer>© 2026 Pomo. Project · 안경사가 만든 전문 타이머</footer>
+
+<script>
+let settings = { focus: 25 };
+let timeLeft = 25 * 60;
+let isRunning = false;
+let timer = null;
+const CIRC = 678.6;
+
+// --- [핵심] 시간 조정 기능 수정 ---
+const minInput = document.getElementById('curMin');
+minInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        let val = parseInt(minInput.value);
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > 180) val = 180;
+        
+        settings.focus = val;
+        if (!isRunning) {
+            timeLeft = val * 60;
+            updateDisplay();
+        }
+        minInput.blur();
+    }
+});
+
+function updateDisplay() {
+    const min = Math.floor(timeLeft / 60);
+    const sec = timeLeft % 60;
+    document.getElementById('tnum').textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    const offset = CIRC - (CIRC * timeLeft / (settings.focus * 60));
+    document.getElementById('ringFg').style.strokeDashoffset = offset;
+}
+
+function toggleTimer() {
+    const btn = document.getElementById('playBtn');
+    if (isRunning) {
+        clearInterval(timer);
+        btn.textContent = '▶';
+    } else {
+        btn.textContent = '⏸';
+        timer = setInterval(() => {
+            timeLeft--;
+            updateDisplay();
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert('Time is up!');
+                resetTimer();
+            }
+        }, 1000);
+    }
+    isRunning = !isRunning;
+}
+document.getElementById('playBtn').onclick = toggleTimer;
+
+function resetTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    timeLeft = settings.focus * 60;
+    document.getElementById('playBtn').textContent = '▶';
+    updateDisplay();
+}
+
+function show(p) {
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('on'));
+    document.getElementById('pg-' + p).classList.add('on');
+    document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+    document.getElementById('nl-' + p).classList.add('active');
+}
+
+function switchTab(t) {
+    document.querySelectorAll('.t-page').forEach(el => el.classList.remove('on'));
+    document.getElementById('tpg-' + t).classList.add('on');
+    document.querySelectorAll('.t-nav-btn').forEach(el => el.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+updateDisplay();
+</script>
+</body>
+</html></head>
 <body class="bg-dark text-gray-200 font-sans min-h-screen">
 
     <nav class="fixed top-0 left-0 right-0 z-50 bg-dark/90 backdrop-blur-md border-b border-white/10 px-6 py-3 flex justify-between items-center">
