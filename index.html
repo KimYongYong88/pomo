@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4574877142558962">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574877142558962" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomo. — Professional Pomodoro Timer & Productivity Guide</title>
+<meta name="description" content="Boost your focus with Pomo. Free online Pomodoro timer with sequence mode, science-based productivity guides, and multi-language support.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f13;--sur:#1a1a22;--sur2:#22222e;
+  --tx:#f0f0f5;--tx2:#9090a8;--bd:rgba(255,255,255,0.08);
+  --red:#E24B4A;--green:#1D9E75;--blue:#378ADD;
+  --c-focus:#E24B4A;--c-short:#1D9E75;--c-long:#378ADD;
+  --c-quick:#EF9F27;--c-study:#7F77DD;--c-deep:#D4537E
+}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;transition:background .3s,color .3s}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,15,19,.95);backdrop-filter:blur(12px);border-bottom:.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;gap:8px;transition:background .3s,border-color .3s}
+.nav-left{display:flex;align-items:center;gap:8px}
+.nav-logo{font-size:16px;font-weight:600;letter-spacing:.04em;cursor:pointer;flex-shrink:0}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:4px}
+.nav-link{padding:6px 12px;border-radius:8px;font-size:13px;color:var(--tx2);cursor:pointer;transition:all .2s;border:none;background:transparent;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:var(--sur2);color:var(--tx)}
+.nav-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.theme-btn{background:var(--sur2);border:.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:14px;padding:5px 8px;cursor:pointer;line-height:1;transition:background .2s}
+.global-lang{background:var(--sur2);border:.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:12px;padding:5px 7px;cursor:pointer;outline:none}
+.page{display:none;padding-top:58px}
+.page.on{display:block}
+.timer-page{display:flex;flex-direction:column;align-items:center;padding-bottom:3rem}
+.t-nav-bar{display:flex;justify-content:center;padding:7px 1rem;margin-bottom:.5rem}
+.t-nav-tabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
+.t-nav-btn{padding:7px 18px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.t-nav-btn.active{background:var(--sur2);color:var(--tx)}
+.t-page{display:none;width:100%;max-width:420px;padding:.5rem 1rem 1rem}
+.t-page.on{display:block}
+.glabel{font-size:10px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;padding-left:2px}
+.tsec{margin-bottom:1rem}
+.mtabs{display:flex;gap:4px;background:var(--sur);border-radius:12px;padding:4px;border:.5px solid var(--bd)}
+.mbtn{flex:1;min-width:0;padding:7px 4px;border:none;border-radius:9px;background:transparent;color:var(--tx2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbtn.active{color:#fff}
+.mbtn.active[data-m="short"]{background:var(--c-short)}
+.mbtn.active[data-m="long"]{background:var(--c-long)}
+.tew{position:relative;flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
+.tinp{width:100%;background:transparent;border:none;outline:none;color:var(--tx2);font-size:12px;font-weight:500;text-align:center;cursor:pointer;padding:7px 4px;border-radius:9px;transition:all .2s}
+.tinp.active{color:#fff}
+.tinp.active[data-m="focus"]{background:var(--c-focus)}
+.tinp.active[data-m="quick"]{background:var(--c-quick)}
+.tinp.active[data-m="study"]{background:var(--c-study)}
+.tinp.active[data-m="deep"]{background:var(--c-deep)}
+.tinp:focus{background:var(--sur2)!important;color:var(--tx)!important;cursor:text}
+.ehint{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--tx2);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.tew:hover .ehint{opacity:1}
+.twrap{display:flex;flex-direction:column;align-items:center;margin:1rem 0}
+.rwrap{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center}
+.rwrap svg{position:absolute;top:0;left:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{stroke:var(--sur2)}
+.ring-fg{transition:stroke-dashoffset 1s linear,stroke .4s;stroke-linecap:round}
+.tdisp{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.tnum{font-size:56px;font-weight:300;letter-spacing:-3px;line-height:1}
+.tlbl{font-size:11px;color:var(--tx2);letter-spacing:.14em;text-transform:uppercase}
+.tdots{display:flex;gap:8px;margin-top:1.25rem}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--sur2);border:.5px solid var(--bd);transition:background .3s}
+.tdot.done{background:var(--c-focus);border-color:var(--c-focus)}
+.abar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
+.pbtn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;color:#fff;flex-shrink:0}
+.pbtn:hover{transform:scale(1.06)}.pbtn:active{transform:scale(.96)}
+.ibtn{width:44px;height:44px;border-radius:50%;background:var(--sur2);border:.5px solid var(--bd);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx2);transition:color .2s,background .2s;flex-shrink:0}
+.ibtn:hover{color:var(--tx);background:var(--sur)}
+.atwrap{display:flex;align-items:center;gap:5px;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:7px 10px}
+.atlbl{font-size:11px;color:var(--tx2);white-space:nowrap}
+.addbtn{padding:4px 10px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:12px;font-weight:500;cursor:pointer;transition:background .15s}
+.addbtn:hover{background:rgba(255,255,255,.1)}
+.mnbtn{width:22px;height:22px;border-radius:6px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.mnbtn:hover{background:rgba(255,255,255,.1)}
+.atinp{width:36px;background:transparent;border:none;color:var(--tx);font-size:13px;font-weight:500;text-align:center;padding:2px 0;outline:none}
+.spanel{background:var(--sur);border:.5px solid var(--bd);border-radius:16px;padding:1rem 1.25rem;margin-bottom:1rem}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--bd)}
+.prow:last-child{border-bottom:none}
+.plbl{font-size:13px;color:var(--tx2)}
+.pval{display:flex;align-items:center;gap:6px}
+.snbtn{width:24px;height:24px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.snbtn:hover{background:rgba(255,255,255,.1)}
+.nval{font-size:13px;font-weight:500;width:40px;text-align:center;background:var(--sur2);border:.5px solid var(--bd);border-radius:6px;color:var(--tx);padding:3px 0;outline:none;cursor:text}
+.nval:focus{border-color:rgba(255,255,255,.3)}
+.ulbl{font-size:11px;color:var(--tx2)}
+.tog{position:relative;width:38px;height:20px}
+.tog input{opacity:0;width:0;height:0}
+.tslider{position:absolute;inset:0;background:var(--sur2);border-radius:20px;cursor:pointer;transition:background .3s;border:.5px solid var(--bd)}
+.tslider:before{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:var(--tx2);top:2px;left:2px;transition:transform .3s,background .3s}
+input:checked+.tslider{background:var(--c-focus);border-color:var(--c-focus)}
+input:checked+.tslider:before{transform:translateX(18px);background:#fff}
+.stats-wrap{width:100%;max-width:420px;padding:.5rem 1rem 2rem}
+.stats-date-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.stats-date{font-size:13px;font-weight:500}
+.stats-reset-btn{font-size:11px;color:var(--tx2);background:none;border:.5px solid var(--bd);border-radius:7px;padding:4px 10px;cursor:pointer;transition:color .2s}
+.stats-reset-btn:hover{color:var(--tx)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.stat-card{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1rem}
+.stat-val{font-size:28px;font-weight:300;letter-spacing:-.02em;margin-bottom:2px}
+.stat-lbl{font-size:11px;color:var(--tx2);letter-spacing:.05em}
+.history-section{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1rem}
+.history-title{font-size:11px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.history-list{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto}
+.history-item{display:flex;align-items:center;gap:10px;padding:7px 10px;background:var(--sur2);border-radius:9px}
+.hi-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.hi-name{font-size:13px;flex:1}
+.hi-dur{font-size:12px;color:var(--tx2)}
+.hi-time{font-size:11px;color:var(--tx2)}
+.history-empty{font-size:13px;color:var(--tx2);text-align:center;padding:1.5rem 0}
+.bar-section{margin-bottom:1.25rem}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-lbl{font-size:12px;color:var(--tx2);width:70px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--sur2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.bar-val{font-size:11px;color:var(--tx2);width:36px;flex-shrink:0}
+.spage{display:flex;flex-direction:column;gap:1rem}
+.scard{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:12px}
+.scard-title{font-size:10px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sstatus{display:flex;align-items:center;justify-content:space-between;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:10px 14px}
+.sstatus-l{display:flex;align-items:center;gap:8px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--tx2);transition:background .3s}
+.sdot.on{background:#1D9E75}
+.stxt{font-size:13px;color:var(--tx2)}.stxt.on{color:var(--tx)}
+.sonbtn{padding:5px 14px;border-radius:8px;border:.5px solid var(--bd);background:var(--sur2);color:var(--tx2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.sonbtn.on{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.snowbar{display:none;align-items:center;gap:8px;background:var(--sur);border:.5px solid var(--bd);border-radius:12px;padding:10px 14px}
+.snowbar.vis{display:flex}
+.snlbl{font-size:11px;color:var(--tx2)}
+.snchip{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;color:#fff}
+.snstep{font-size:11px;color:var(--tx2);margin-left:auto}
+.strack{display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-height:44px;padding:6px;background:var(--sur2);border-radius:10px;border:.5px solid var(--bd)}
+.schip{display:flex;align-items:center;gap:4px;padding:5px 9px;border-radius:7px;font-size:11px;font-weight:500;color:#fff;white-space:nowrap}
+.schip .xbtn{background:rgba(0,0,0,.25);border:none;border-radius:50%;width:15px;height:15px;color:#fff;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.schip.cur{outline:2px solid rgba(255,255,255,.8);outline-offset:1px}
+.sarrow{font-size:10px;color:var(--tx2);flex-shrink:0}
+.sempty{font-size:12px;color:var(--tx2);padding:4px 6px}
+.sgrid{display:flex;flex-direction:column;gap:6px}
+.sgbtn{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;border:none;font-size:13px;font-weight:500;cursor:pointer;color:#fff;opacity:.85;transition:opacity .15s,transform .1s;width:100%}
+.sgbtn:hover{opacity:1;transform:translateX(2px)}
+.sgbtn-left{display:flex;align-items:center;gap:8px}
+.sgbtn-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);flex-shrink:0}
+.sgbtn-time{font-size:11px;opacity:.8;font-weight:400}
+.sfooter{display:flex;align-items:center;justify-content:space-between}
+.sinfo{font-size:12px;color:var(--tx2)}
+.sclear{padding:6px 14px;border-radius:8px;border:.5px solid var(--bd);background:var(--sur2);color:var(--tx2);font-size:12px;cursor:pointer;transition:color .2s,background .2s}
+.sclear:hover{color:var(--tx);background:var(--sur)}
+.blog-wrap{max-width:800px;margin:0 auto;padding:3rem 1.5rem}
+.blog-wrap h2{font-size:1.5rem;font-weight:400;margin-bottom:.5rem}
+.blog-wrap .sub{color:var(--tx2);font-size:14px;margin-bottom:2rem}
+.blog-list{display:flex;flex-direction:column;gap:14px}
+.blog-card{background:var(--sur);border:.5px solid var(--bd);border-radius:14px;padding:1.25rem 1.5rem;cursor:pointer;transition:border-color .2s}
+.blog-card:hover{border-color:rgba(255,255,255,.2)}
+.blog-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.6rem}
+.blog-card h3{font-size:15px;font-weight:500;margin-bottom:.4rem}
+.blog-card p{font-size:13px;color:var(--tx2);line-height:1.6}
+.blog-meta{font-size:11px;color:var(--tx2);margin-top:.6rem}
+.article-wrap{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+.article-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer;margin-bottom:2rem;background:none;border:none;transition:color .2s}
+.article-back:hover{color:var(--tx)}
+.article-wrap h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:400;margin-bottom:.75rem;line-height:1.3}
+.article-meta{font-size:12px;color:var(--tx2);margin-bottom:2rem;display:flex;gap:12px;flex-wrap:wrap}
+.article-body h2{font-size:1.1rem;font-weight:500;margin:2rem 0 .75rem}
+.article-body p{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:1rem}
+.article-body ul,.article-body ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-body li{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:.3rem}
+.article-body .highlight{background:var(--sur);border-left:3px solid var(--red);padding:.75rem 1rem;border-radius:0 8px 8px 0;margin:1.25rem 0}
+.article-body .highlight p{margin:0;font-size:13px}
+.static-wrap{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+.static-wrap h1{font-size:1.8rem;font-weight:400;margin-bottom:.5rem}
+.static-wrap .lead{color:var(--tx2);font-size:15px;line-height:1.7;margin-bottom:2rem}
+.static-wrap h2{font-size:1.1rem;font-weight:500;margin:1.75rem 0 .5rem}
+.static-wrap p,.static-wrap li{font-size:14px;color:var(--tx2);line-height:1.8;margin-bottom:.6rem}
+.static-wrap ul{padding-left:1.4rem;margin-bottom:1rem}
+.static-wrap a{color:var(--blue);text-decoration:underline}
+footer{border-top:.5px solid var(--bd);padding:1.5rem;text-align:center;font-size:12px;color:var(--tx2);display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+footer span{cursor:pointer;transition:color .2s}footer span:hover{color:var(--tx)}
+.section-title{font-size:11px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.25rem}
+@media(max-width:600px){
+  .nav-links .nav-link.hide-mobile{display:none}
+  .rwrap{width:200px;height:200px}
+  .tnum{font-size:44px}
+  .pbtn{width:54px;height:54px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo" onclick="show('timer')">Pomo<span>.</span></div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nl-timer" onclick="show('timer')" data-i18n="nav-timer">타이머</button>
+    <button class="nav-link" id="nl-blog" onclick="show('blog')" data-i18n="nav-blog">블로그</button>
+    <button class="nav-link" id="nl-about" onclick="show('about')" data-i18n="nav-about">소개 & 가이드</button>
+  </div>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeToggleBtn">🌙</button>
+    <select id="globalLangSel" class="global-lang">
+      <option value="ko">🇰🇷 KO</option>
+      <option value="en">🌐 EN</option>
+    </select>
+  </div>
+</nav>
+
+<div class="page on" id="pg-timer">
+  <div class="timer-page">
+    <div class="t-nav-bar">
+      <div class="t-nav-tabs">
+        <button class="t-nav-btn active" id="tnav-timer" data-i18n="tab-timer">타이머</button>
+        <button class="t-nav-btn" id="tnav-stats" data-i18n="tab-stats">통계</button>
+        <button class="t-nav-btn" id="tnav-seq" data-i18n="tab-seq">시퀀스</button>
+      </div>
+    </div>
+    <div class="t-page on" id="tpg-timer">
+      <div class="tsec">
+        <div class="glabel" id="gl-focus" data-i18n="gl-focus">집중</div>
+        <div class="mtabs">
+          <div class="tew"><input class="tinp active" data-m="focus" id="ti-focus" value="포모도로"><span class="ehint" data-i18n="ehint">더블클릭으로 이름 변경</span></div>
+          <div class="tew"><input class="tinp" data-m="quick" id="ti-quick" value="빠른 작업"><span class="ehint"></span></div>
+          <div class="tew"><input class="tinp" data-m="study" id="ti-study" value="공부"><span class="ehint"></span></div>
+          <div class="tew"><input class="tinp" data-m="deep" id="ti-deep" value="깊은 집중"><span class="ehint"></span></div>
+        </div>
+      </div>
+      <div class="tsec">
+        <div class="glabel" id="gl-break" data-i18n="gl-break">휴식</div>
+        <div class="mtabs">
+          <button class="mbtn" data-m="short" id="ti-short" data-i18n="short-break">짧은 휴식</button>
+          <button class="mbtn" data-m="long" id="ti-long" data-i18n="long-break">긴 휴식</button>
+        </div>
+      </div>
+      <div class="twrap">
+        <div class="rwrap">
+          <svg width="240" height="240" viewBox="0 0 240 240">
+            <circle class="ring-bg" cx="120" cy="120" r="108" fill="none" stroke-width="5"/>
+            <circle class="ring-fg" id="ringFg" cx="120" cy="120" r="108" fill="none" stroke-width="5" stroke="#E24B4A" stroke-dasharray="678.6" stroke-dashoffset="0"/>
+          </svg>
+          <div class="tdisp">
+            <div class="tnum" id="tnum">25:00</div>
+            <div class="tlbl" id="tlbl">포모도로</div>
+          </div>
+        </div>
+        <div class="tdots">
+          <div class="tdot done" id="d0"></div><div class="tdot" id="d1"></div>
+          <div class="tdot" id="d2"></div><div class="tdot" id="d3"></div>
+        </div>
+      </div>
+      <div class="abar">
+        <button class="ibtn" id="resetBtn"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></button>
+        <button class="pbtn" id="playBtn" style="background:var(--c-focus)"><svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24" id="playIcon"><polygon points="5,3 19,12 5,21"/></svg></button>
+        <div class="atwrap">
+          <span class="atlbl" id="lbl-at" data-i18n="add-time">시간 추가</span>
+          <button class="mnbtn" id="atMinus">−</button>
+          <input class="atinp" id="atVal" type="text" inputmode="numeric" value="5">
+          <button class="mnbtn" id="atPlus">+</button>
+          <button class="addbtn" id="atBtn">+<span id="atDisp">5</span>m</button>
+        </div>
+      </div>
+      <div class="spanel">
+        <div class="prow"><span class="plbl" id="lbl-min" data-i18n="lbl-min">분</span>
+          <div class="pval">
+            <button class="snbtn" id="minMinus">−</button>
+            <input class="nval" id="curMin" type="text" inputmode="numeric" value="25">
+            <span class="ulbl">m</span>
+            <button class="snbtn" id="minPlus">+</button>
+          </div>
+        </div>
+        <div class="prow"><span class="plbl" id="lbl-sec" data-i18n="lbl-sec">초</span>
+          <div class="pval">
+            <button class="snbtn" id="secMinus">−</button>
+            <input class="nval" id="curSec" type="text" inputmode="numeric" value="00">
+            <span class="ulbl">s</span>
+            <button class="snbtn" id="secPlus">+</button>
+          </div>
+        </div>
+        <div class="prow"><span class="plbl" id="lbl-auto" data-i18n="lbl-auto">다음 자동 시작</span>
+          <label class="tog"><input type="checkbox" id="autoChk"><span class="tslider"></span></label>
+        </div>
+        <div class="prow" style="border-bottom:none"><span class="plbl" id="lbl-sound" data-i18n="lbl-sound">세션 알림음</span>
+          <div class="pval" style="gap:8px">
+            <select id="soundSel" style="background:var(--sur2);border:.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:12px;padding:4px 8px;outline:none;cursor:pointer">
+              <option value="bell">🔔 Bell</option>
+              <option value="ding">✨ Ding</option>
+              <option value="soft">🌊 Soft</option>
+              <option value="none">🔇 Off</option>
+            </select>
+            <button id="soundTestBtn" style="padding:4px 10px;border-radius:7px;background:var(--sur2);border:.5px solid var(--bd);color:var(--tx2);font-size:12px;cursor:pointer" data-i18n="test">테스트</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-page" id="tpg-stats">
+      <div class="stats-wrap">
+        <div class="stats-date-bar">
+          <span class="stats-date" id="stats-date"></span>
+          <button class="stats-reset-btn" id="stats-reset-btn" data-i18n="reset-today">오늘 초기화</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val" id="stat-sessions">0</div><div class="stat-lbl" id="lbl-stat-sessions" data-i18n="stat-sessions">오늘 세션</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-focus-time">0m</div><div class="stat-lbl" id="lbl-stat-focus" data-i18n="stat-focus">집중 시간</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-streak">0</div><div class="stat-lbl" id="lbl-stat-streak" data-i18n="stat-streak">연속 일수 🔥</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-total">0m</div><div class="stat-lbl" id="lbl-stat-total" data-i18n="stat-total">전체 집중</div></div>
+        </div>
+        <div class="bar-section">
+          <div class="section-title" id="lbl-by-mode" data-i18n="by-mode" style="margin-bottom:.75rem">모드별</div>
+          <div id="modeBars"></div>
+        </div>
+        <div class="history-section">
+          <div class="history-title" id="lbl-history" data-i18n="today-sessions">오늘 세션</div>
+          <div class="history-list" id="historyList">
+            <div class="history-empty" id="lbl-hist-empty" data-i18n="no-sessions">아직 세션이 없습니다. 집중을 시작하세요!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-page" id="tpg-seq">
+      <div class="spage">
+        <div class="sstatus">
+          <div class="sstatus-l"><div class="sdot" id="sDot"></div><span class="stxt" id="sTxt" data-i18n="seq-off">시퀀스 꺼짐</span></div>
+          <button class="sonbtn" id="sOnBtn" data-i18n="start">시작</button>
+        </div>
+        <div class="snowbar" id="sNowBar">
+          <span class="snlbl" id="lbl-now" data-i18n="now-playing">현재 재생 중</span>
+          <span class="snchip" id="sNowChip"></span>
+          <span class="snstep" id="sNowStep"></span>
+        </div>
+        <div class="scard">
+          <div class="scard-title" id="lbl-track" data-i18n="your-seq">시퀀스</div>
+          <div class="strack" id="sTrack"><span class="sempty" id="sEmpty" data-i18n="add-below">아래에서 모드를 추가하세요</span></div>
+        </div>
+        <div class="scard">
+          <div class="scard-title" id="lbl-add" data-i18n="add-to-seq">시퀀스에 추가</div>
+          <div class="sgrid" id="sGrid"></div>
+        </div>
+        <div class="sfooter">
+          <span class="sinfo" id="sInfo"></span>
+          <button class="sclear" id="sClear" data-i18n="clear">초기화</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="pg-blog">
+  <div class="blog-wrap">
+    <h2 id="blog-h">집중력 마스터 블로그</h2>
+    <p class="sub" id="blog-sub">과학적 근거로 시간을 정복하세요.</p>
+    <div class="blog-list" id="blogList"></div>
+  </div>
+</div>
+<div class="page" id="pg-article">
+  <div class="article-wrap">
+    <button class="article-back" id="article-back-btn" onclick="show('blog')">← <span data-i18n="back-blog">블로그로 돌아가기</span></button>
+    <div id="articleContent"></div>
+  </div>
+</div>
+
+<div class="page" id="pg-about">
+  <div class="static-wrap">
+    <h1 id="about-h">Pomo. 소개</h1>
+    <p class="lead" id="about-lead">Pomo.는 현직 안경사가 설계한 전문 생산성 도구로, 시력 건강을 보호하면서 깊은 몰입 상태에 도달할 수 있도록 돕습니다.</p>
+    <div id="about-content"></div>
+  </div>
+</div>
+
+<div class="page" id="pg-privacy">
+  <div class="static-wrap">
+    <h1 id="priv-h">개인정보 처리방침</h1>
+    <p class="lead" id="priv-date">최종 업데이트: 2026년 4월</p>
+    <div class="article-body" id="priv-body">
+      <h2>1. 개요</h2>
+      <p>Pomo. (이하 "서비스")는 사용자의 개인정보를 소중히 여깁니다. 본 개인정보 처리방침은 서비스 이용 중 수집되는 정보의 종류, 사용 방식, 보호 방법을 설명합니다. 본 서비스를 이용함으로써 아래 정책에 동의하는 것으로 간주됩니다.</p>
+      <h2>2. 수집하는 정보</h2>
+      <p>Pomo.는 직접적으로 개인 식별 정보(이름, 이메일, 전화번호 등)를 수집하거나 저장하지 않습니다. 단, 아래와 같은 정보가 자동으로 처리될 수 있습니다.</p>
+      <ul>
+        <li><strong>사용 데이터:</strong> 타이머 설정, 세션 기록, 집중 통계 등 모든 생산성 데이터는 오직 사용자 본인의 브라우저 내 LocalStorage에만 저장되며, 외부 서버로 전송되지 않습니다.</li>
+        <li><strong>기술 정보:</strong> 광고 서비스 제공을 위해 제3자(Google)가 브라우저 유형, IP 주소, 방문 페이지, 방문 시간 등의 기술적 정보를 자동으로 수집할 수 있습니다.</li>
+        <li><strong>쿠키 및 유사 추적 기술:</strong> 아래 3항에서 상세히 설명합니다.</li>
+      </ul>
+      <h2>3. 쿠키 및 Google AdSense</h2>
+      <p>본 서비스는 <strong>Google AdSense</strong>를 통해 광고를 게재합니다. Google AdSense는 관련 광고를 표시하기 위해 쿠키(Cookie)를 사용합니다.</p>
+      <p><strong>Google이 사용하는 쿠키의 목적:</strong></p>
+      <ul>
+        <li>사용자의 본 사이트 및 타 사이트 방문 기록을 바탕으로 관심사 기반 맞춤 광고 제공</li>
+        <li>광고 노출 횟수 및 클릭률 측정 (광고 성과 분석)</li>
+        <li>동일 광고가 과도하게 반복 노출되는 것을 방지</li>
+        <li>사기성 클릭 탐지 및 광고 서비스 품질 개선</li>
+      </ul>
+      <p><strong>Google이 사용하는 주요 쿠키:</strong></p>
+      <ul>
+        <li><strong>IDE</strong> (doubleclick.net): 맞춤 광고 제공 및 광고 성과 측정. 만료 기간: 약 13개월.</li>
+        <li><strong>DSID</strong> (doubleclick.net): 로그인한 Google 계정과 광고 연동. 만료 기간: 약 2주.</li>
+        <li><strong>test_cookie</strong> (doubleclick.net): 브라우저가 쿠키를 지원하는지 확인. 만료 기간: 세션 종료 시.</li>
+        <li><strong>__gads / __gpi</strong> (본 사이트 도메인): Google AdSense 광고 서비스와 관련된 기본 광고 쿠키. 만료 기간: 약 13개월.</li>
+        <li><strong>AID, TAID</strong>: Google 계정으로 로그인된 기기 간 광고 활동 연동.</li>
+      </ul>
+      <p>Google의 쿠키 사용 정책에 대한 자세한 내용은 <a href="https://policies.google.com/technologies/ads" target="_blank">Google 광고 정책</a>에서 확인하실 수 있습니다.</p>
+      <h2>4. 제3자 광고 및 개인화 광고 거부 방법</h2>
+      <p>개인화 광고를 원하지 않으시는 경우 아래 방법으로 거부하실 수 있습니다.</p>
+      <ul>
+        <li><a href="https://www.google.com/settings/ads" target="_blank">Google 광고 설정</a>에서 개인화 광고 비활성화</li>
+        <li><a href="https://optout.aboutads.info/" target="_blank">aboutads.info</a>에서 참여 업체 전체 광고 맞춤화 거부</li>
+        <li><a href="https://optout.networkadvertising.org/" target="_blank">NAI(Network Advertising Initiative)</a> 옵트아웃 도구 사용</li>
+        <li>브라우저 설정에서 쿠키를 직접 차단하거나 삭제</li>
+      </ul>
+      <h2>5. 로컬 데이터 저장 (LocalStorage)</h2>
+      <p>Pomo.의 모든 타이머 설정, 집중 통계, 세션 기록은 오직 사용자의 기기 내 브라우저 LocalStorage에만 저장됩니다. 이 데이터는 외부 서버나 데이터베이스에 전송되지 않으며, 운영자가 접근하거나 열람할 수 없습니다.</p>
+      <h2>6. 외부 링크</h2>
+      <p>본 서비스는 외부 웹사이트로 연결되는 링크를 포함할 수 있습니다. 외부 사이트의 개인정보 처리 방침은 해당 사이트의 정책을 따르며, 본 방침의 적용 범위에 해당하지 않습니다.</p>
+      <h2>7. 방침 변경</h2>
+      <p>본 개인정보 처리방침은 법령 변경, 서비스 변경, Google 정책 업데이트 등에 따라 수정될 수 있습니다. 변경 시 본 페이지 상단의 "최종 업데이트" 날짜가 갱신됩니다.</p>
+      <h2>8. 문의</h2>
+      <p>본 개인정보 처리방침에 관한 문의사항이 있으시면 서비스 내 About 페이지를 통해 연락하시기 바랍니다.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span onclick="show('about')">© 2026 Pomo. Project · 안경사가 만든 타이머</span>
+  <span style="color:var(--bd)">·</span>
+  <span id="footer-blog" onclick="show('blog')" data-i18n="nav-blog">블로그</span>
+  <span style="color:var(--bd)">·</span>
+  <span id="footer-privacy" onclick="show('privacy')" data-i18n="footer-privacy">개인정보 처리방침</span>
+</footer>
+
+<script>
+// =============================================
+// 1. 테마 (가장 먼저 선언 — 다른 곳에서 호출됨)
+// =============================================
+const THEMES={
+  dark:{'--bg':'#0f0f13','--sur':'#1a1a22','--sur2':'#22222e','--tx':'#f0f0f5','--tx2':'#9090a8','--bd':'rgba(255,255,255,0.08)'},
+  light:{'--bg':'#f5f5f7','--sur':'#ffffff','--sur2':'#ebebef','--tx':'#1a1a22','--tx2':'#6e6e85','--bd':'rgba(0,0,0,0.08)'}
+};
+let currentTheme='dark';
+
+function applyTheme(name){
+  currentTheme=name;
+  Object.entries(THEMES[name]).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+  localStorage.setItem('pomo_theme',name);
+  const btn=document.getElementById('themeToggleBtn');
+  if(btn) btn.textContent=name==='dark'?'☀️':'🌙';
+}
+
+// =============================================
+// 2. I18N
+// =============================================
+const I18N = {
+  ko: {
+    'nav-timer':'타이머','nav-blog':'블로그','nav-about':'소개 & 가이드',
+    'tab-timer':'타이머','tab-stats':'통계','tab-seq':'시퀀스',
+    'gl-focus':'집중','gl-break':'휴식',
+    'short-break':'짧은 휴식','long-break':'긴 휴식',
+    'add-time':'시간 추가','lbl-min':'분','lbl-sec':'초',
+    'lbl-auto':'다음 자동 시작','lbl-sound':'세션 알림음','test':'테스트',
+    'reset-today':'오늘 초기화',
+    'stat-sessions':'오늘 세션','stat-focus':'집중 시간','stat-streak':'연속 일수 🔥','stat-total':'전체 집중',
+    'by-mode':'모드별','today-sessions':'오늘 세션','no-sessions':'아직 세션이 없습니다. 집중을 시작하세요!',
+    'seq-off':'시퀀스 꺼짐','start':'시작','now-playing':'현재 재생 중',
+    'your-seq':'시퀀스','add-below':'아래에서 모드를 추가하세요','add-to-seq':'시퀀스에 추가','clear':'초기화',
+    'back-blog':'블로그로 돌아가기',
+    'blog-h':'집중력 마스터 블로그','blog-sub':'과학적 근거로 시간을 정복하세요.',
+    'footer-privacy':'개인정보 처리방침','ehint':'더블클릭으로 이름 변경',
+    'modes':{'focus':'포모도로','quick':'빠른 작업','study':'공부','deep':'깊은 집중','short':'짧은 휴식','long':'긴 휴식'}
+  },
+  en: {
+    'nav-timer':'Timer','nav-blog':'Blog','nav-about':'About & Guide',
+    'tab-timer':'Timer','tab-stats':'Stats','tab-seq':'Sequence',
+    'gl-focus':'Focus','gl-break':'Break',
+    'short-break':'Short Break','long-break':'Long Break',
+    'add-time':'Add time','lbl-min':'Minutes','lbl-sec':'Seconds',
+    'lbl-auto':'Auto start next','lbl-sound':'Session sound','test':'Test',
+    'reset-today':'Reset today',
+    'stat-sessions':'Sessions today','stat-focus':'Focus time','stat-streak':'Day streak 🔥','stat-total':'All-time focus',
+    'by-mode':'By mode','today-sessions':'Today\'s sessions','no-sessions':'No sessions yet. Start focusing!',
+    'seq-off':'Sequence off','start':'Start','now-playing':'Now playing',
+    'your-seq':'Your sequence','add-below':'Add modes below','add-to-seq':'Add to sequence','clear':'Clear',
+    'back-blog':'Back to Blog',
+    'blog-h':'Focus Mastery Blog','blog-sub':'Master your time with science-backed insights.',
+    'footer-privacy':'Privacy Policy','ehint':'double-click to rename',
+    'modes':{'focus':'Pomodoro','quick':'Quick Task','study':'Study','deep':'Deep Work','short':'Short Break','long':'Long Break'}
+  }
+};
+
+// =============================================
+// 3. BLOG DATA
+// =============================================
+const BLOG_DATA = {
+  en: [
+    {id:'sci',tag:'Science',tagColor:'#E24B4A',title:"Why 25 Minutes? The Neuroscience of Focus Cycles",summary:"Short, structured work intervals aren't arbitrary — they're rooted in how your brain actually manages attention.",date:'Apr 2026',readTime:'8 min',body:`<h2>The Brain Can't Work Like a Machine</h2><p>Most people approach their workday as if the brain were a computer — always on, always at full capacity. But neuroscience tells a very different story. A well-known phenomenon called "vigilance decrement" describes how our ability to sustain focus degrades significantly after around 25–30 minutes of uninterrupted work.</p><h2>The Ultradian Rhythm</h2><p>First discovered by sleep researcher Nathaniel Kleitman in the 1950s, ultradian rhythms are biological cycles that repeat roughly every 90–120 minutes. These cycles govern alertness, hormone secretion, and cognitive performance. The 25-minute Pomodoro interval slots neatly into the high-performance window of each cycle.</p><h2>What the Research Says</h2><p>A 2023 study published in the British Journal of Educational Psychology (Biwer et al.) found that students using systematic break-taking reported higher concentration and motivation, and perceived their tasks as less difficult — completing similar work in shorter time. A broader review of 32 studies covering 5,270+ participants found positive correlations between Pomodoro use and focus (r = 0.72), performance (r = 0.65), and reduced fatigue (r = −0.55).</p><h2>The Takeaway</h2><p>The 25-minute interval aligns with the natural rhythm of human attention, respects working memory limits, and is supported by a growing body of peer-reviewed research.</p>`},
+    {id:'opt',tag:'Eye Health',tagColor:'#378ADD',title:"Optician's Complete Guide to Digital Eye Strain",summary:"As digital screen time surges globally, understanding and preventing Computer Vision Syndrome is essential.",date:'Apr 2026',readTime:'10 min',body:`<h2>The Silent Epidemic</h2><p>Digital Eye Strain (DES) has become one of the most prevalent occupational health issues of the 21st century. A 2023 AOA report estimated that over 104 million working-age Americans spend more than seven hours daily in front of digital screens, costing an estimated $151 billion in lost productivity annually.</p><h2>What Happens to Your Eyes</h2><p>The ciliary muscle contracts continuously to maintain near focus, fatiguing over hours of use. Blink rate drops from 15 to as few as 5 times per minute, leading directly to dry eye symptoms.</p><h2>The Myopia Connection</h2><p>A landmark meta-analysis in JAMA Network Open (2025), covering 45 studies and 335,524 individuals, confirmed a significant dose-response relationship between screen time and myopia risk — risk increases most sharply between 1 and 4 hours of daily use.</p><h2>The 20-20-20 Rule</h2><p>Every 20 minutes, look at something 20 feet (6m) away for 20 seconds. The principle — taking regular breaks from near work — is genuinely beneficial, even if the specific numbers have limited peer-reviewed support.</p>`},
+    {id:'flow',tag:'Productivity',tagColor:'#7F77DD',title:"Flow State vs. Pomodoro: Can You Have Both?",summary:"The Pomodoro Technique's rigid intervals are criticized for disrupting deep focus. Here's what the science actually says.",date:'Apr 2026',readTime:'7 min',body:`<h2>The Core Tension</h2><p>Csikszentmihalyi's "flow" — the state of effortless, deeply absorbed concentration — is the holy grail of cognitive performance. A kitchen timer ringing every 25 minutes is perhaps the most effective flow-killer imaginable.</p><h2>What Research Shows</h2><p>A 2024 Dutch university study directly compared self-regulated breaks, Pomodoro, and Flowtime. Pomodoro users reported higher concentration than self-regulators, but also noted that mandatory breaks sometimes felt disruptive during focused states.</p><h2>A Practical Synthesis</h2><p>Treat Pomodoro as a flexible framework, not a rigid law. Use 25-minute intervals as a default for low-motivation periods. When you genuinely enter deep flow, extending by 10–15 minutes is perfectly rational. Pomo.'s "Add time" feature supports exactly this flexibility.</p>`},
+    {id:'myopia',tag:'Eye Health',tagColor:'#378ADD',title:"The Myopia Pandemic: Why Your Child's Screen Time Matters Now",summary:"Global nearsightedness rates have surged. Here's what parents need to know, backed by the latest research.",date:'Apr 2026',readTime:'9 min',body:`<h2>A Global Vision Crisis</h2><p>Myopia has reached pandemic proportions. A JAMA Ophthalmology (2023) study found that myopia progression in school-aged children more than doubled during COVID-19 home confinement.</p><h2>The Screen Time Link</h2><p>A JAMA Network Open (2025) dose-response meta-analysis of 335,000+ individuals confirmed myopia risk increases most sharply between 1 and 4 hours of daily screen time. Smartphones showed particularly strong associations due to shorter viewing distances.</p><h2>The Protective Role of Outdoor Time</h2><p>Children who spend at least 90 minutes per day outdoors have significantly lower myopia rates. Bright daylight (10,000–100,000 lux) vastly exceeds indoor light (300–500 lux), creating a fundamentally different visual environment for developing eyes.</p>`},
+    {id:'deepwork',tag:'Productivity',tagColor:'#D4537E',title:"Deep Work in the Age of Distraction: A Practical Guide",summary:"Cal Newport's concept of 'Deep Work' is a cornerstone of modern productivity thinking. Here's how to actually achieve it.",date:'Apr 2026',readTime:'8 min',body:`<h2>What Is Deep Work?</h2><p>Coined by Cal Newport, "Deep Work" refers to professional activities performed in distraction-free concentration that push cognitive capabilities to their limit. The ability to perform deep work is becoming increasingly rare — and increasingly valuable.</p><h2>The Neuroscience</h2><p>Deep focus increases prefrontal cortex activity while suppressing the default mode network. Research on expert performance consistently finds that top performers across domains engage in no more than 4 hours of true deep work per day.</p><h2>Building the Practice</h2><p>Treat focus time as a non-negotiable appointment. Research on interruption recovery shows that after a single notification, it takes an average of 23 minutes to return to full focus depth. Start with single Pomodoro blocks and build to 90-minute sessions over weeks.</p>`},
+    {id:'sleep',tag:'Science',tagColor:'#E24B4A',title:"Why Sleep Is Your Most Powerful Productivity Tool",summary:"No amount of technique or caffeine can compensate for sleep deprivation. Here's what the science says.",date:'Apr 2026',readTime:'8 min',body:`<h2>The Myth of the Productive Night Owl</h2><p>Sleep is not passive inactivity. It is when the brain consolidates memories, processes emotions, and clears metabolic waste. Decades of research have established that chronic sleep deprivation impairs virtually every domain of cognitive function.</p><h2>Sleep and Memory</h2><p>During slow-wave and REM sleep, the brain replays and strengthens neural connections formed during learning. All-nighters before exams are not just ineffective — they actively impair the consolidation that makes information accessible under test conditions.</p><h2>Practical Optimization</h2><p>Maintain consistent sleep/wake times even on weekends. Keep your bedroom cool (~18–19°C). Avoid screens 60 minutes before bed. Limit caffeine after 2 PM — its 5–7 hour half-life means a 3 PM coffee still has half its effect at 8–10 PM.</p>`},
+    {id:'breath',tag:'Science',tagColor:'#EF9F27',title:"Physiological Sighs and Box Breathing: Reset Your Focus in 2 Minutes",summary:"Two breathing techniques, backed by neuroscience, can shift your mental state faster than any other method.",date:'Apr 2026',readTime:'6 min',body:`<h2>Why Breathing Controls Your Brain</h2><p>The breath is the only autonomic function that can be voluntarily controlled, making it a direct access point to the nervous system. By manipulating breathing patterns, you can measurably shift between sympathetic arousal (stress) and parasympathetic activation (rest).</p><h2>The Physiological Sigh</h2><p>Researched by Stanford's Dr. Andrew Huberman: a double inhale through the nose followed by a long exhale through the mouth. The double inhale reinflates collapsed alveoli; the extended exhale triggers the parasympathetic system via the vagus nerve. Results: measurable heart rate drop within 1–2 breath cycles.</p><h2>Box Breathing</h2><p>Used by Navy SEALs: inhale 4 counts, hold 4, exhale 4, hold 4. Repeat 4–6 cycles. Balances sympathetic and parasympathetic tone, builds CO2 tolerance, and reduces anxiety sensitivity. Use at the start of demanding Pomodoro sessions.</p>`},
+    {id:'bluelight',tag:'Eye Health',tagColor:'#378ADD',title:"Blue Light, Sleep, and Your Eyes: Separating Fact from Fiction",summary:"Blue light is a major talking point in eye care. What does the evidence actually show?",date:'Apr 2026',readTime:'7 min',body:`<h2>The Solid Science: Blue Light and Sleep</h2><p>The retina contains ipRGCs — photoreceptors maximally sensitive to blue light (~480nm) that directly regulate the brain's master clock and suppress melatonin. Evening screen exposure can delay melatonin onset by up to 1.5 hours and reduce levels by ~50%.</p><h2>Blue Light and Eye Damage: More Complicated</h2><p>The American Academy of Ophthalmology has explicitly stated it does not recommend blue-light-blocking glasses for screen users, citing lack of evidence. Eye strain is more accurately explained by reduced blink rate, ciliary muscle fatigue, and screen glare — none specifically related to light wavelength.</p><h2>The Evidence-Based Approach</h2><p>Use night mode after sunset. Address glare with anti-reflective coatings. Save blue-light glasses for evening if you want them. Daytime blue light is important for mood, alertness, and circadian calibration — blocking it indiscriminately can be counterproductive.</p>`},
+    {id:'nutrition',tag:'Productivity',tagColor:'#EF9F27',title:"Brain Food: How Nutrition Directly Impacts Focus",summary:"What you eat before a Pomodoro session matters more than most productivity guides acknowledge.",date:'Apr 2026',readTime:'7 min',body:`<h2>Your Brain Is Metabolically Expensive</h2><p>The brain represents ~2% of body weight but consumes ~20% of resting energy expenditure — running almost exclusively on glucose. Blood sugar stability is therefore a direct determinant of cognitive performance.</p><h2>The Blood Sugar Problem</h2><p>High-refined-carb diets produce glucose spikes followed by crashes. During a glucose crash, working memory capacity drops, attention narrows, and decision quality declines — the biological basis of the post-lunch slump.</p><h2>Key Strategies</h2><p>Prioritize low-glycemic foods (whole grains, legumes, nuts). Pair carbs with protein and healthy fats. Higher DHA omega-3 intake is consistently linked to improved sustained attention and working memory. For caffeine: strategic morning/early-afternoon use (100–200mg) delivers genuine benefits without undermining sleep.</p>`},
+    {id:'exercise',tag:'Science',tagColor:'#1D9E75',title:"Exercise and the Brain: Why 20 Minutes of Movement Changes Everything",summary:"The cognitive benefits of physical exercise are among the most robust findings in neuroscience.",date:'Apr 2026',readTime:'7 min',body:`<h2>Exercise Is Cognitive Enhancement</h2><p>Regular aerobic exercise increases hippocampal volume, enhances prefrontal cortex function, and elevates BDNF — "miracle-gro for the brain." Regular exercisers consistently outperform sedentary individuals on tests of attention, working memory, and cognitive flexibility across all age groups.</p><h2>The Acute Effect</h2><p>Even a single 20-minute session of moderate aerobic exercise produces an immediate 1–3 hour improvement in cognitive performance via increased cerebral blood flow, elevated catecholamines, and BDNF upregulation. Schedule a brisk walk before demanding Pomodoro blocks for measurably better focus quality.</p><h2>Eye Health Bonus</h2><p>Outdoor physical activity is one of the strongest protective factors against myopia progression — combining the retinal dopamine stimulation of bright outdoor light with the direct ocular blood flow benefits of cardiovascular exercise.</p>`}
+  ],
+  ko: [
+    {id:'sci',tag:'과학',tagColor:'#E24B4A',title:"왜 25분인가? 집중력 주기의 신경과학",summary:"짧은 구조적 작업 간격은 임의적인 것이 아닙니다 — 뇌가 실제로 주의력과 인지 자원을 관리하는 방식에 근거하고 있습니다.",date:'2026.04',readTime:'8분',body:`<h2>뇌는 기계처럼 작동할 수 없다</h2><p>인간의 주의력은 고정된 자원이 아니라 끊임없이 변동하는 생물학적 자원입니다. '주의력 감퇴(vigilance decrement)'는 단일 작업에 방해 없이 집중한 지 약 25~30분 후부터 주의 유지 능력이 크게 떨어진다는 것을 보여줍니다.</p><h2>울트라디안 리듬</h2><p>1950년대 수면 연구자 나다니엘 클라이트만이 발견한 울트라디안 리듬은 약 90~120분마다 반복되는 생물학적 주기로, 각성도와 인지 성능을 조절합니다. 25분 포모도로는 이 고성능 구간에 정확히 맞아 들어갑니다.</p><h2>연구 결과</h2><p>2023년 영국 교육심리학 저널(Biwer et al.) 연구에서 체계적 휴식 그룹은 더 높은 집중도와 동기를 보고했습니다. 5,270명+ 참가자를 포함한 32개 연구 검토에서 집중력(r=0.72), 성과(r=0.65), 피로 감소(r=−0.55)와의 긍정적 상관관계가 확인되었습니다.</p>`},
+    {id:'opt',tag:'눈 건강',tagColor:'#378ADD',title:"안경사의 디지털 눈 피로 완전 가이드",summary:"디지털 화면 사용이 전 세계적으로 급증하면서, 컴퓨터 시력 증후군 예방은 이제 필수입니다.",date:'2026.04',readTime:'10분',body:`<h2>우리 시대의 조용한 유행병</h2><p>미국 안과학회 2023년 보고서에 따르면 1억 400만 명 이상의 미국 근로자가 하루 7시간 이상 화면을 봅니다. 관리되지 않는 DES의 비용은 2023년 한 해에만 약 1,510억 달러로 추산됩니다.</p><h2>눈에 일어나는 일</h2><p>모양체 근육이 지속적으로 수축하며 피로가 쌓입니다. 눈 깜빡임 횟수가 분당 15회에서 5회까지 떨어져 건성안으로 이어집니다.</p><h2>근시와의 연관성</h2><p>JAMA 네트워크 오픈(2025)의 335,000명+ 메타 분석은 화면 시간 1~4시간 구간에서 근시 위험이 가장 급격히 증가함을 확인했습니다.</p><h2>20-20-20 법칙</h2><p>20분마다 6미터 거리를 20초간 바라보세요. 정기적 휴식이라는 핵심 원칙은 근거 기반이 강합니다.</p>`},
+    {id:'flow',tag:'생산성',tagColor:'#7F77DD',title:"플로우 상태 vs. 포모도로: 둘 다 가질 수 있을까?",summary:"포모도로의 엄격한 간격이 깊은 집중을 방해한다는 비판, 과학이 실제로 말하는 것을 알아봅니다.",date:'2026.04',readTime:'7분',body:`<h2>핵심 긴장</h2><p>칙센트미하이의 '플로우' — 노력 없이 깊이 흡수된 집중 상태 — 는 인지 성능의 성배입니다. 25분마다 울리는 타이머는 아마도 가장 효과적인 플로우 방해 요소일 것입니다.</p><h2>연구 결과</h2><p>2024년 네덜란드 연구는 포모도로 사용자가 자율 규제자보다 높은 집중도를 보이지만, 집중 상태에서 의무적 휴식이 방해될 수 있다고 보고했습니다.</p><h2>실용적 통합</h2><p>포모도로를 엄격한 법칙이 아닌 유연한 틀로 사용하세요. 진정한 플로우에 들어갔을 때 10~15분 연장하는 것은 완전히 합리적입니다. Pomo.의 '시간 추가' 기능이 이를 지원합니다.</p>`},
+    {id:'myopia',tag:'눈 건강',tagColor:'#378ADD',title:"근시 팬데믹: 아이의 화면 시간이 지금 중요한 이유",summary:"전 세계 근시 비율이 급증했습니다. 최신 연구를 바탕으로 부모가 알아야 할 것들을 알아봅니다.",date:'2026.04',readTime:'9분',body:`<h2>전 세계적 시력 위기</h2><p>JAMA 안과학(2023) 연구에 따르면 코로나19 봉쇄 기간 학령기 아동의 근시 진행 속도가 팬데믹 이전 대비 두 배 이상 빨라졌습니다.</p><h2>화면 시간과의 연관성</h2><p>JAMA 네트워크 오픈(2025) 335,000명+ 메타 분석은 하루 화면 시간 1~4시간 사이에 근시 위험이 가장 급격히 증가함을 확인했습니다.</p><h2>야외 활동의 보호 효과</h2><p>매일 최소 90분 야외 활동을 하는 아이들은 근시 비율이 유의미하게 낮습니다. 밝은 야외 빛(10,000~100,000럭스)은 실내 빛(300~500럭스)을 훨씬 초과합니다.</p>`},
+    {id:'deepwork',tag:'생산성',tagColor:'#D4537E',title:"산만함의 시대에서 깊은 집중: 실용 가이드",summary:"칼 뉴포트의 '딥 워크' 개념, 실제로 어떻게 달성하는지 알아봅니다.",date:'2026.04',readTime:'8분',body:`<h2>딥 워크란 무엇인가</h2><p>칼 뉴포트가 정의한 딥 워크는 인지 능력의 한계까지 밀어붙이는 방해 없는 집중 상태의 작업입니다. 이 능력은 점점 드물어지고 동시에 더 가치 있어지고 있습니다.</p><h2>신경과학</h2><p>깊은 집중은 전전두엽 피질 활동을 높이고 기본 모드 네트워크를 억제합니다. 전문가 연구에 따르면 최고 성과자들은 하루 최대 4시간의 진정한 딥 워크에 참여합니다.</p><h2>습관 구축</h2><p>이메일 알림 하나가 완전한 집중 복귀까지 평균 23분이 걸립니다. 단일 포모도로로 시작해 주 단위로 90분 블록으로 늘려가세요.</p>`},
+    {id:'sleep',tag:'과학',tagColor:'#E24B4A',title:"수면이 최강의 생산성 도구인 이유",summary:"어떤 기법이나 카페인도 수면 부족을 보상할 수 없습니다. 과학이 말하는 것을 알아봅니다.",date:'2026.04',readTime:'8분',body:`<h2>생산적인 야행성 신화</h2><p>수면은 기억 통합, 감정 처리, 대사 폐기물 청소가 이루어지는 능동적 생물학적 과정입니다. 만성 수면 부족은 인지 기능의 거의 모든 영역을 손상시킵니다.</p><h2>수면과 기억</h2><p>서파 수면과 REM 수면 중 그날 학습한 신경 연결이 강화됩니다. 시험 전 밤샘 공부는 바로 이 통합 과정을 방해하여 역효과를 냅니다.</p><h2>실용적 최적화</h2><p>주말에도 일관된 취침/기상 시간을 유지하세요. 취침 60분 전 화면을 피하세요. 카페인의 반감기(5~7시간)를 고려해 오후 2시 이후 섭취를 제한하세요.</p>`},
+    {id:'breath',tag:'과학',tagColor:'#EF9F27',title:"생리적 한숨과 박스 호흡: 2분 안에 집중력 리셋",summary:"신경과학이 뒷받침하는 두 가지 호흡 기법이 정신 상태를 가장 빠르게 바꿉니다.",date:'2026.04',readTime:'6분',body:`<h2>왜 호흡이 뇌를 제어하는가</h2><p>호흡은 자율 신경계에 대한 유일한 직접 접근 경로입니다. 의도적인 호흡 조작으로 교감신경 각성과 부교감신경 활성화 사이를 측정 가능하게 전환할 수 있습니다.</p><h2>생리적 한숨</h2><p>스탠퍼드 앤드루 휴버만 박사 연구: 코로 이중 흡입 후 입으로 긴 날숨. 1~2번의 호흡 주기 내에 심박수와 코르티솔이 측정 가능하게 저하됩니다.</p><h2>박스 호흡</h2><p>해군 특수부대에서 사용: 4박자 흡입 → 유지 → 날숨 → 유지, 4~6회 반복. 까다로운 포모도로 시작 전에 사용하면 집중 질이 향상됩니다.</p>`},
+    {id:'bluelight',tag:'눈 건강',tagColor:'#378ADD',title:"청색광, 수면, 눈: 사실과 허구 구분하기",summary:"청색광은 눈 건강의 주요 화제입니다. 실제 증거는 무엇을 말할까요?",date:'2026.04',readTime:'7분',body:`<h2>확실한 과학: 청색광과 수면</h2><p>망막의 ipRGC는 청색광(~480nm)에 최대 반응하며 멜라토닌 생산을 억제합니다. 취침 전 화면 노출은 멜라토닌 시작을 최대 1.5시간 지연시키고 수준을 ~50% 낮출 수 있습니다.</p><h2>눈 손상에 대한 더 복잡한 이야기</h2><p>미국 안과학회는 증거 부족을 이유로 청색광 차단 안경을 권장하지 않는다고 명시했습니다. 눈 피로는 깜빡임 감소, 모양체 근육 피로, 화면 눈부심으로 더 정확하게 설명됩니다.</p><h2>근거 기반 접근</h2><p>일몰 후 야간 모드를 사용하세요. 낮 시간 청색광은 기분, 각성도, 일주기 리듬에 중요하므로 무분별하게 차단하지 마세요.</p>`},
+    {id:'nutrition',tag:'생산성',tagColor:'#EF9F27',title:"뇌 음식: 영양이 집중력에 직접 미치는 영향",summary:"포모도로 세션 전 무엇을 먹는지는 생각보다 훨씬 중요합니다.",date:'2026.04',readTime:'7분',body:`<h2>뇌는 대사적으로 비싼 기관</h2><p>뇌는 체중의 2%지만 안정 시 에너지의 20%를 소비하며, 정상적으로 거의 전적으로 포도당에 의존합니다. 혈당 안정성이 인지 성능의 직접적 결정 요인입니다.</p><h2>혈당 롤러코스터</h2><p>정제 탄수화물 식단은 혈당 급등 후 급락을 만들어, 작업 기억 저하와 주의력 감소로 이어집니다. 이것이 오후 슬럼프의 생물학적 기반입니다.</p><h2>핵심 전략</h2><p>저혈당지수 식품을 우선하고, 탄수화물을 단백질·건강한 지방과 함께 섭취하세요. 높은 DHA 오메가-3 섭취는 지속 주의력과 작업 기억 향상과 일관되게 연관됩니다.</p>`},
+    {id:'exercise',tag:'과학',tagColor:'#1D9E75',title:"운동과 뇌: 20분의 움직임이 모든 것을 바꾸는 이유",summary:"신체 운동의 인지적 이점은 신경과학에서 가장 강력한 연구 결과 중 하나입니다.",date:'2026.04',readTime:'7분',body:`<h2>운동은 인지 향상이다</h2><p>규칙적인 유산소 운동은 해마 부피 증가, 전전두엽 피질 향상, BDNF 상승을 만들어냅니다. 규칙적 운동자는 모든 연령대에서 주의력, 작업 기억, 인지 유연성 검사에서 더 좋은 성과를 냅니다.</p><h2>즉각 효과</h2><p>단 20분의 중등도 유산소 운동만으로도 이후 1~3시간 동안 인지 성능이 즉각 향상됩니다. 까다로운 포모도로 전에 빠른 걷기를 넣어보세요.</p><h2>눈 건강 보너스</h2><p>야외 신체 활동은 근시 진행에 대한 가장 강력한 보호 인자 중 하나입니다. 포모도로 휴식 중 짧은 야외 산책은 인지 성능과 시력 건강에 동시에 투자하는 것입니다.</p>`}
+  ]
+};
+
+const ABOUT_DATA = {
+  ko:`<h2>1. 집중력의 과학</h2><p>인간의 집중력은 한정된 자원입니다. 뇌과학적으로 25-30분 후에 '주의력 감퇴'가 발생합니다. Pomo.는 이 주기를 체계적으로 관리합니다.</p><h2>2. 안경사의 시각: 20-20-20 법칙</h2><p>매 20분마다 6미터 이상의 먼 곳을 20초간 바라보며 안구 근육을 이완시키세요.</p><h2>3. FAQ</h2><ul><li><strong>Q: 25분이 필수인가요?</strong> A: 아닙니다. 초보자는 25/5로 시작하고 집중력이 쌓이면 50/10으로 전환하세요.</li><li><strong>Q: 데이터는 어디에 저장되나요?</strong> A: 모든 데이터는 브라우저 LocalStorage에만 저장됩니다.</li></ul>`,
+  en:`<h2>1. The Science of Focus</h2><p>Vigilance decrement sets in after 25-30 minutes. Pomo. manages this cycle systematically.</p><h2>2. An Optician's Perspective</h2><p>Follow the 20-20-20 Rule: every 20 minutes, look 20 feet away for 20 seconds.</p><h2>3. FAQ</h2><ul><li><strong>Q: Is 25 minutes mandatory?</strong> A: No. Build focus stamina and move to 50/10 cycles.</li><li><strong>Q: Where is my data?</strong> A: Stored strictly in your browser's LocalStorage.</li></ul>`
+};
+
+// =============================================
+// 4. GLOBAL STATE
+// =============================================
+const COL={focus:'#E24B4A',short:'#1D9E75',long:'#378ADD',quick:'#EF9F27',study:'#7F77DD',deep:'#D4537E'};
+const FM=['focus','quick','study','deep'];
+const CIRC=2*Math.PI*108;
+let siteLang='ko';
+let view='focus',activeMode=null,iv=null;
+let settings={focus:25,quick:15,study:30,deep:60,short:5,long:15};
+let sSecs={focus:0,quick:0,study:0,deep:0,short:0,long:0};
+let rem={focus:1500,quick:900,study:1800,deep:3600,short:300,long:900};
+const minInput=document.getElementById('curMin');
+const secInput=document.getElementById('curSec');
+const atValInp=document.getElementById('atVal');
+
+// =============================================
+// 5. HELPERS
+// =============================================
+function pad(n){return n<10?'0'+n:''+n;}
+function tsec(k){return settings[k]*60+sSecs[k];}
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
+function t(key){return(I18N[siteLang]||I18N.ko)[key]||key;}
+function tMode(key){return((I18N[siteLang]||I18N.ko).modes||{})[key]||key;}
+
+// =============================================
+// 6. I18N APPLY
+// =============================================
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n'),val=t(k);if(val)el.textContent=val;
+  });
+  document.getElementById('ti-focus').value=tMode('focus');
+  document.getElementById('ti-quick').value=tMode('quick');
+  document.getElementById('ti-study').value=tMode('study');
+  document.getElementById('ti-deep').value=tMode('deep');
+  document.getElementById('ti-short').textContent=tMode('short');
+  document.getElementById('ti-long').textContent=tMode('long');
+  document.getElementById('blog-h').textContent=t('blog-h');
+  document.getElementById('blog-sub').textContent=t('blog-sub');
+  document.getElementById('about-content').innerHTML=ABOUT_DATA[siteLang]||ABOUT_DATA.ko;
+  renderBlog();render();
+}
+function applySiteLang(l){siteLang=l;applyI18n();}
+
+// =============================================
+// 7. TIMER RENDER
+// =============================================
+function render(){
+  const s=rem[view];
+  document.getElementById('tnum').textContent=pad(Math.floor(s/60))+':'+pad(s%60);
+  const fg=document.getElementById('ringFg');
+  fg.style.strokeDashoffset=CIRC*(1-(s/Math.max(1,tsec(view))));
+  fg.style.stroke=COL[view]||'#E24B4A';
+  document.getElementById('tlbl').textContent=tMode(view);
+  document.getElementById('playBtn').style.background=COL[view]||'#E24B4A';
+  minInput.value=settings[view];
+  secInput.value=pad(sSecs[view]);
+  document.getElementById('atDisp').textContent=atValInp.value||5;
+}
+
+// =============================================
+// 8. TIME ADJUSTMENT
+// =============================================
+function applyTimeChange(){
+  let m=parseInt(minInput.value)||0,s=parseInt(secInput.value)||0;
+  m=clamp(m,0,180);s=clamp(s,0,59);
+  settings[view]=m;sSecs[view]=s;
+  if(activeMode!==view)rem[view]=tsec(view);
+  render();
+}
+document.getElementById('minPlus').onclick=()=>{settings[view]=clamp(settings[view]+1,0,180);if(activeMode!==view)rem[view]=tsec(view);render();};
+document.getElementById('minMinus').onclick=()=>{settings[view]=clamp(settings[view]-1,0,180);if(activeMode!==view)rem[view]=tsec(view);render();};
+document.getElementById('secPlus').onclick=()=>{sSecs[view]=clamp(sSecs[view]+5,0,55);if(activeMode!==view)rem[view]=tsec(view);render();};
+document.getElementById('secMinus').onclick=()=>{sSecs[view]=clamp(sSecs[view]-5,0,55);if(activeMode!==view)rem[view]=tsec(view);render();};
+[minInput,secInput].forEach(el=>{el.onblur=applyTimeChange;el.onkeydown=e=>{if(e.key==='Enter'){applyTimeChange();el.blur();}};});
+document.getElementById('atPlus').onclick=()=>{atValInp.value=Math.min(60,(parseInt(atValInp.value)||0)+1);document.getElementById('atDisp').textContent=atValInp.value;};
+document.getElementById('atMinus').onclick=()=>{atValInp.value=Math.max(1,(parseInt(atValInp.value)||0)-1);document.getElementById('atDisp').textContent=atValInp.value;};
+atValInp.oninput=()=>{document.getElementById('atDisp').textContent=atValInp.value||5;};
+document.getElementById('atBtn').onclick=()=>{rem[view]+=((parseInt(atValInp.value)||0)*60);render();};
+
+// =============================================
+// 9. PLAY / RESET
+// =============================================
+document.getElementById('playBtn').onclick=()=>{
+  if(!cachedSounds.ac) buildSounds();
+  if(activeMode===view){clearInterval(iv);activeMode=null;document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';}
+  else{activeMode=view;document.getElementById('playIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    iv=setInterval(()=>{if(rem[activeMode]<=0){clearInterval(iv);activeMode=null;document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';return;}rem[activeMode]--;render();},1000);}
+};
+document.getElementById('resetBtn').onclick=()=>{
+  if(activeMode===view){clearInterval(iv);activeMode=null;document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';}
+  rem[view]=tsec(view);render();
+};
+
+// =============================================
+// 10. MODE SWITCHING
+// =============================================
+function switchView(k){
+  view=k;
+  document.querySelectorAll('.tinp').forEach(b=>b.classList.toggle('active',b.dataset.m===k));
+  document.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('active',b.dataset.m===k));
+  render();
+}
+document.querySelectorAll('.tinp').forEach(b=>b.onclick=()=>switchView(b.dataset.m));
+document.querySelectorAll('.mbtn').forEach(b=>b.onclick=()=>switchView(b.dataset.m));
+
+// =============================================
+// 11. INNER TABS
+// =============================================
+document.getElementById('tnav-timer').onclick=()=>switchTPage('timer');
+document.getElementById('tnav-stats').onclick=()=>switchTPage('stats');
+document.getElementById('tnav-seq').onclick=()=>switchTPage('seq');
+function switchTPage(p){
+  ['timer','stats','seq'].forEach(k=>{
+    document.getElementById('tpg-'+k).classList.toggle('on',k===p);
+    document.getElementById('tnav-'+k).classList.toggle('active',k===p);
+  });
+  if(p==='stats') renderStats();
+}
+
+// =============================================
+// 12. STATS
+// =============================================
+function todayKey(){return new Date().toISOString().slice(0,10);}
+function loadStats(){return JSON.parse(localStorage.getItem('pomo_stats')||'{}');}
+function saveStats(s){localStorage.setItem('pomo_stats',JSON.stringify(s));}
+function fmtTime(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h>0?h+'h '+m+'m':m+'m';}
+
+function recordSession(modeKey, durSecs){
+  const s=loadStats(), k=todayKey();
+  if(!s[k]) s[k]={sessions:[],totalFocusSecs:0,byMode:{}};
+  const name=tMode(modeKey);
+  s[k].sessions.push({name, modeKey, dur:durSecs, time:new Date().toLocaleTimeString()});
+  if(FM.includes(modeKey)){
+    s[k].totalFocusSecs+=durSecs;
+    s[k].byMode[modeKey]=(s[k].byMode[modeKey]||0)+durSecs;
+  }
+  saveStats(s);
+  renderStats();
+}
+
+function renderStats(){
+  const s=loadStats(), k=todayKey(), today=s[k]||{sessions:[],totalFocusSecs:0,byMode:{}};
+  document.getElementById('stats-date').textContent=k;
+  document.getElementById('stat-sessions').textContent=today.sessions.filter(x=>FM.includes(x.modeKey)).length;
+  document.getElementById('stat-focus-time').textContent=fmtTime(today.totalFocusSecs||0);
+  document.getElementById('stat-total').textContent=fmtTime(Object.values(s).reduce((a,d)=>a+(d.totalFocusSecs||0),0));
+  // streak
+  let streak=0, d=new Date();
+  while(true){const dk=d.toISOString().slice(0,10);if(!s[dk]||!s[dk].totalFocusSecs)break;streak++;d.setDate(d.getDate()-1);}
+  document.getElementById('stat-streak').textContent=streak;
+  // bars
+  const bars=document.getElementById('modeBars'); bars.innerHTML='';
+  const maxSec=Math.max(1,...FM.map(m=>today.byMode[m]||0));
+  FM.forEach(m=>{
+    const sec=today.byMode[m]||0; if(!sec) return;
+    bars.innerHTML+=`<div class="bar-row"><span class="bar-lbl">${tMode(m)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(sec/maxSec*100)}%;background:${COL[m]}"></div></div><span class="bar-val">${fmtTime(sec)}</span></div>`;
+  });
+  // history
+  const list=document.getElementById('historyList'); list.innerHTML='';
+  if(!today.sessions.length){
+    list.innerHTML=`<div class="history-empty">${t('no-sessions')}</div>`;return;
+  }
+  [...today.sessions].reverse().forEach(s=>{
+    list.innerHTML+=`<div class="history-item"><div class="hi-dot" style="background:${COL[s.modeKey]||'#888'}"></div><span class="hi-name">${s.name}</span><span class="hi-dur">${fmtTime(s.dur)}</span><span class="hi-time">${s.time}</span></div>`;
+  });
+}
+
+document.getElementById('stats-reset-btn').onclick=()=>{
+  const s=loadStats(),k=todayKey();delete s[k];saveStats(s);renderStats();
+};
+
+// =============================================
+// 13. NAV & PAGES
+// =============================================
+const PAGES=['timer','blog','article','about','privacy'];
+function show(p){
+  PAGES.forEach(k=>document.getElementById('pg-'+k).classList.toggle('on',k===p));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const nl=document.getElementById('nl-'+p);if(nl)nl.classList.add('active');
+  window.scrollTo(0,0);if(p==='blog')renderBlog();
+}
+function renderBlog(){
+  const list=document.getElementById('blogList');list.innerHTML='';
+  (BLOG_DATA[siteLang]||BLOG_DATA.ko).forEach(a=>{
+    const card=document.createElement('div');card.className='blog-card';
+    card.innerHTML=`<span class="blog-tag" style="background:${a.tagColor}22;color:${a.tagColor}">${a.tag}</span><h3>${a.title}</h3><p>${a.summary}</p><div class="blog-meta">${a.date} · ${a.readTime}</div>`;
+    card.onclick=()=>openArticle(a.id);list.appendChild(card);
+  });
+}
+function openArticle(id){
+  const a=(BLOG_DATA[siteLang]||BLOG_DATA.ko).find(x=>x.id===id);if(!a)return;
+  document.getElementById('articleContent').innerHTML=`<span class="blog-tag" style="background:${a.tagColor}22;color:${a.tagColor};display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.75rem">${a.tag}</span><h1>${a.title}</h1><div class="article-meta"><span>${a.date}</span></div><div class="article-body">${a.body}</div>`;
+  show('article');
+}
+
+// =============================================
+// 14. SOUNDS
+// =============================================
+let cachedSounds={};
+
+function buildSounds(){
+  try{
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    const sr=ac.sampleRate;
+    function makeBuf(freq,dur,wave){
+      const len=Math.floor(sr*dur);
+      const buf=ac.createBuffer(1,len,sr);
+      const ch=buf.getChannelData(0);
+      for(let i=0;i<len;i++){
+        const t=i/sr, env=1-(t/dur);
+        ch[i]=(wave==='tri'?(2/Math.PI)*Math.asin(Math.sin(2*Math.PI*freq*t)):Math.sin(2*Math.PI*freq*t))*env*0.7;
+      }
+      return buf;
+    }
+    cachedSounds={
+      ac,
+      bell: makeBuf(880,1.2,'sine'),
+      ding: makeBuf(1200,0.6,'tri'),
+      soft: makeBuf(440,1.0,'sine')
+    };
+  }catch(e){console.warn('buildSounds error',e);}
+}
+
+function playSound(type){
+  if(type==='none'||!cachedSounds.ac) return;
+  try{
+    const ac=cachedSounds.ac;
+    if(ac.state==='suspended') ac.resume();
+    const src=ac.createBufferSource();
+    src.buffer=cachedSounds[type]||cachedSounds.bell;
+    src.connect(ac.destination);
+    src.start();
+  }catch(e){console.warn('playSound error',e);}
+}
+
+document.getElementById('soundTestBtn').onclick=()=>{
+  if(!cachedSounds.ac) buildSounds();
+  playSound(document.getElementById('soundSel').value);
+};
+
+// =============================================
+// 15. SEQUENCE
+// =============================================
+const ALL_MODES=[
+  {k:'focus',label:()=>tMode('focus'),min:()=>settings.focus},
+  {k:'quick',label:()=>tMode('quick'),min:()=>settings.quick},
+  {k:'study',label:()=>tMode('study'),min:()=>settings.study},
+  {k:'deep',label:()=>tMode('deep'),min:()=>settings.deep},
+  {k:'short',label:()=>tMode('short'),min:()=>settings.short},
+  {k:'long',label:()=>tMode('long'),min:()=>settings.long},
+];
+let seqList=[];
+
+function buildSGrid(){
+  const grid=document.getElementById('sGrid');grid.innerHTML='';
+  ALL_MODES.forEach(m=>{
+    const btn=document.createElement('button');btn.className='sgbtn';
+    btn.style.background=COL[m.k];
+    btn.innerHTML=`<span class="sgbtn-left"><span class="sgbtn-dot"></span>${m.label()}</span><span class="sgbtn-time">${m.min()}m</span>`;
+    btn.onclick=()=>addToSeq(m.k);
+    grid.appendChild(btn);
+  });
+}
+
+function addToSeq(k){
+  seqList.push(k);renderSeqTrack();
+}
+
+function renderSeqTrack(){
+  const track=document.getElementById('sTrack');track.innerHTML='';
+  if(seqList.length===0){
+    track.innerHTML=`<span class="sempty" data-i18n="add-below">${t('add-below')}</span>`;
+    document.getElementById('sInfo').textContent='';return;
+  }
+  seqList.forEach((k,i)=>{
+    const chip=document.createElement('span');chip.className='schip';
+    chip.style.background=COL[k];
+    chip.innerHTML=`${tMode(k)}<button class="xbtn" onclick="removeSeq(${i})">✕</button>`;
+    track.appendChild(chip);
+    if(i<seqList.length-1){const arr=document.createElement('span');arr.className='sarrow';arr.textContent='→';track.appendChild(arr);}
+  });
+  const total=seqList.reduce((a,k)=>a+settings[k],0);
+  document.getElementById('sInfo').textContent=`${seqList.length}개 · 총 ${total}분`;
+}
+
+function removeSeq(i){seqList.splice(i,1);renderSeqTrack();}
+
+document.getElementById('sClear').onclick=()=>{seqList=[];seqRunning=false;seqIdx=0;updateSeqStatus();renderSeqTrack();};
+
+let seqRunning=false,seqIdx=0;
+
+function updateSeqStatus(){
+  const dot=document.getElementById('sDot'),txt=document.getElementById('sTxt'),btn=document.getElementById('sOnBtn'),bar=document.getElementById('sNowBar');
+  if(seqRunning){
+    dot.classList.add('on');txt.classList.add('on');
+    txt.textContent=siteLang==='ko'?'시퀀스 실행 중':'Sequence running';
+    btn.textContent=siteLang==='ko'?'중지':'Stop';btn.classList.add('on');
+    bar.classList.add('vis');
+    const k=seqList[seqIdx];
+    document.getElementById('sNowChip').textContent=tMode(k);
+    document.getElementById('sNowChip').style.background=COL[k];
+    document.getElementById('sNowStep').textContent=`${seqIdx+1} / ${seqList.length}`;
+  } else {
+    dot.classList.remove('on');txt.classList.remove('on');
+    txt.textContent=t('seq-off');
+    btn.textContent=t('start');btn.classList.remove('on');
+    bar.classList.remove('vis');
+  }
+}
+
+function startSeq(){
+  if(seqList.length===0)return;
+  seqRunning=true;seqIdx=0;
+  switchView(seqList[0]);
+  if(activeMode){clearInterval(iv);activeMode=null;document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';}
+  rem[seqList[0]]=tsec(seqList[0]);
+  render();updateSeqStatus();
+  // 자동 진행: 타이머 끝나면 다음 시퀀스로
+  clearInterval(iv);
+  activeMode=seqList[0];
+  document.getElementById('playIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+  iv=setInterval(()=>{
+    if(!seqRunning){clearInterval(iv);return;}
+    if(rem[activeMode]>0){rem[activeMode]--;render();return;}
+    // 현재 스텝 완료
+    seqIdx++;
+    if(seqIdx>=seqList.length){
+      // 시퀀스 종료
+      clearInterval(iv);activeMode=null;seqRunning=false;
+      document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';
+      updateSeqStatus();return;
+    }
+    // 다음 스텝
+    const nk=seqList[seqIdx];
+    switchView(nk);activeMode=nk;
+    rem[nk]=tsec(nk);
+    render();updateSeqStatus();
+  },1000);
+}
+
+function stopSeq(){
+  seqRunning=false;seqIdx=0;
+  clearInterval(iv);activeMode=null;
+  document.getElementById('playIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';
+  updateSeqStatus();
+}
+
+document.getElementById('sOnBtn').onclick=()=>{
+  if(seqRunning)stopSeq();else startSeq();
+};
+
+// =============================================
+// 16. INIT
+// =============================================
+// 테마 버튼 이벤트
+document.getElementById('themeToggleBtn').addEventListener('click', function(){
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+// 저장된 테마 불러오기
+applyTheme(localStorage.getItem('pomo_theme') || 'dark');
+
+// 언어
+document.getElementById('globalLangSel').value='ko';
+document.getElementById('globalLangSel').onchange=function(){applySiteLang(this.value);};
+
+applyI18n();
+render();
+buildSounds();
+buildSGrid();
+renderSeqTrack();
+renderStats();
+</script>
+</body>
+</html>
